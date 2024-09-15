@@ -51,40 +51,40 @@ export const validationMiddleware = <T>(validator: BaseValidator<T>) => {
 };
 
 export const isRequired = (value: any): boolean | string =>
-    value !== null && value !== undefined ? true : 'Este campo es requerido.';
+    value !== null && value !== undefined ? true : 'This field is required.';
 
 export const isString = (value: any): boolean | string =>
-    typeof value === 'string' ? true : 'Debe ser un string.';
+    typeof value === 'string' ? true : 'Must be a string.';
 
 export const isNumber = (value: any): boolean | string =>
-    typeof value === 'number' ? true : 'Debe ser un número.';
+    typeof value === 'number' ? true : 'Must be a number.';
 
 export const minLength = (min: number) => (value: any): boolean | string =>
-    typeof value === 'string' && value.length >= min ? true : `Debe tener al menos ${min} caracteres.`;
+    typeof value === 'string' && value.length >= min ? true : `Must be at least ${min} characters long.`;
 
 export const maxLength = (max: number) => (value: any): boolean | string =>
-    typeof value === 'string' && value.length <= max ? true : `Debe tener máximo ${max} caracteres.`;
+    typeof value === 'string' && value.length <= max ? true : `Must be no more than ${max} characters long.`;
 
 export const isEmail = (value: any): string | boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (typeof value === 'string' && emailRegex.test(value)) {
         return true;
     }
-    return 'Debe ser un correo electrónico válido.';
-}
+    return 'Must be a valid email address.';
+};
 
 export const isDate = (value: any): string | boolean => {
     const date = new Date(value);
     if (!isNaN(date.getTime())) {
         return true;
     }
-    return 'Debe ser una fecha válida.';
-}
+    return 'Must be a valid date.';
+};
 
 export const isNumericString = (value: any): string | boolean => {
     const numericRegex = /^[0-9]+$/;
     if (typeof value === 'string' && numericRegex.test(value)) {
         return true;
     }
-    return 'Debe contener una cadena de números.';
-}
+    return 'Must contain only numeric characters.';
+};
