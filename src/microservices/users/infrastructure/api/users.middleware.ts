@@ -1,14 +1,10 @@
-import { NextFunction, Request, Response } from "express";
+import { PersonValidator } from "../../application/validations/person.validator";
+import { validationMiddleware } from "../../../../api-gateway/middlewares/validation.middleware";
+
+const userValidator = new PersonValidator();
 
 export class UsersMiddleware {
     constructor() { }
-
-    async validateAdd(req: Request, res: Response, next: NextFunction) {
-        //if (validations.length > 0) return res.status(400).json({ errorMessage: null });
-        next();
-    }
-    async validateEdit(req: Request, res: Response, next: NextFunction) {
-        // return res.status(400).json({ errorMessage: null });
-        next();
-    }
+    validateAdd = validationMiddleware(userValidator);
+    validateEdit = validationMiddleware(userValidator);
 }

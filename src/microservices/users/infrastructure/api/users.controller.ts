@@ -4,16 +4,21 @@ import { EncryptionService } from "../../services/encryption.service";
 import { PersonManagement } from "../../application/use-cases/person-management";
 import { UserManagement } from "../../application/use-cases/user-management";
 import { UserSession } from "../../application/use-cases/user-session";
+import { UsersMiddleware } from "./users.middleware";
 
 export class UsersController {
     private readonly _encryptionService!: EncryptionService;
+    private readonly _usersMiddleware!: UsersMiddleware;
 
     constructor(
         private readonly _userSession: UserSession,
         private readonly _userManagement: UserManagement,
         private readonly _personManagement: PersonManagement,
-        encryptionService: EncryptionService
-    ) { this._encryptionService = encryptionService }
+        encryptionService: EncryptionService,
+    ) {
+        this._encryptionService = encryptionService,
+            this._usersMiddleware = new UsersMiddleware();
+    }
 
     async getList(req: Request, res: Response) {
         res.status(200).json(await this._userManagement.getList(req.query));
@@ -37,7 +42,9 @@ export class UsersController {
     }
 
     async add(req: Request, res: Response) {
-        res.status(200).json(await this._userManagement.add(req.body));
+        this._usersMiddleware.validateAdd(req, res, async () => {
+            res.status(200).json(await this._userManagement.add(req.body));
+        });
     }
 
     async edit(req: Request, res: Response) {

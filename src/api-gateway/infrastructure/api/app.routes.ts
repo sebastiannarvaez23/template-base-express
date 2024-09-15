@@ -31,12 +31,22 @@ export class AppRoutes {
     this._app.use(cors());
     this._app.use(express.json());
     this._app.use(express.static("public"));
+
     this._app.use((req: Request, res: Response, next: NextFunction) => {
       const originalJson = res.json.bind(res);
+
       res.json = (body?: any): Response => {
-        let response: any = {};
-        response.data = body;
-        response.errors = [];
+        let response: any = {
+          data: body?.data || null,
+          errors: []
+        };
+        if (body?.errors) {
+          response.errors = Array.isArray(body.errors) ? body.errors : [body.errors];
+        }
+        if (typeof body === 'object' && body !== null) {
+          const { errors, data, ...rest } = body;
+          response.data = { ...response.data, ...rest };
+        }
         return originalJson(response);
       };
       next();
