@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 
 import { EncryptionService } from "../../services/encryption.service";
 import { PersonManagement } from "../../application/use-cases/person-management";
