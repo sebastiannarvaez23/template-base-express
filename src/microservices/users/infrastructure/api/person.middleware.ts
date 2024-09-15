@@ -3,7 +3,7 @@ import { validationMiddleware } from "../../../../api-gateway/middlewares/valida
 
 const userValidator = new PersonValidator();
 
-export class UsersMiddleware {
+export class PersonMiddleware {
     constructor() { }
     validateAdd = validationMiddleware(userValidator);
     validateEdit = validationMiddleware(userValidator);

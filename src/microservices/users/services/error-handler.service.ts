@@ -10,9 +10,7 @@ export class ErrorHandlerService {
         if (err instanceof UniqueConstraintError) {
             const errors = err.errors.reduce((acc: { [key: string]: string[] }, e: ValidationErrorItem) => {
                 const field = e.path || 'unknown';
-                if (!acc[field]) {
-                    acc[field] = [];
-                }
+                if (!acc[field]) acc[field] = [];
                 acc[field].push('Must be unique.');
                 return acc;
             }, {});

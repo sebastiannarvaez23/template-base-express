@@ -4,7 +4,7 @@ import { PersonsRepositoryImpl } from "./repositories/persons.repository-impl";
 import { UserManagement } from "../application/use-cases/user-management";
 import { PersonsController } from "./api/users.controller";
 import { UserSession } from "../application/use-cases/user-session";
-import { UsersMiddleware } from "./api/users.middleware";
+import { UsersMiddleware } from "./api/person.middleware";
 import { UsersRepositoryImpl } from "./repositories/users.repository-impl";
 
 const encryptionService = new EncryptionService();
