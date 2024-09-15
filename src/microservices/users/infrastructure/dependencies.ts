@@ -1,18 +1,10 @@
-import { EncryptionService } from "../services/encryption.service";
 import { PersonManagement } from "../application/use-cases/person-management";
 import { PersonsRepositoryImpl } from "./repositories/persons.repository-impl";
-import { UserManagement } from "../application/use-cases/user-management";
 import { PersonsController } from "./api/users.controller";
-import { UserSession } from "../application/use-cases/user-session";
-import { UsersMiddleware } from "./api/person.middleware";
-import { UsersRepositoryImpl } from "./repositories/users.repository-impl";
+import { PersonMiddleware } from "./api/person.middleware";
 
-const encryptionService = new EncryptionService();
-const usersRepository = new UsersRepositoryImpl();
 const personsRepository = new PersonsRepositoryImpl();
-const userSession = new UserSession(usersRepository);
-const userManagement = new UserManagement(usersRepository, personsRepository);
 const personManagement = new PersonManagement(personsRepository);
 
-export const usersMiddleware = new UsersMiddleware();
-export const usersController = new PersonsController(userSession, userManagement, personManagement, encryptionService);
+export const usersMiddleware = new PersonMiddleware();
+export const usersController = new PersonsController(personManagement);
