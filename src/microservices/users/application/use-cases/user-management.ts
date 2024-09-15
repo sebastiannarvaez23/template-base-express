@@ -35,7 +35,7 @@ export class UserManagement {
             return await this._personsRepository.add(person);
         } catch (e) {
             console.debug('---> add', e);
-            return null;
+            throw e;
         }
     }
 

@@ -88,3 +88,8 @@ export const isNumericString = (value: any): string | boolean => {
     }
     return 'Must contain only numeric characters.';
 };
+
+export const isUnique = async (value: any, checkUniqueFn: (value: any) => Promise<boolean>): Promise<boolean | string> => {
+    const isUniqueValue = await checkUniqueFn(value);
+    return isUniqueValue ? true : 'Must be unique.';
+};

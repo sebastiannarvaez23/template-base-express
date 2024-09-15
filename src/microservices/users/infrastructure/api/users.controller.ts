@@ -1,23 +1,24 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
 import { EncryptionService } from "../../services/encryption.service";
 import { PersonManagement } from "../../application/use-cases/person-management";
 import { UserManagement } from "../../application/use-cases/user-management";
 import { UserSession } from "../../application/use-cases/user-session";
 import { UsersMiddleware } from "./users.middleware";
+import { ErrorHandlerService } from "../../services/error-handler.service";
 
-export class UsersController {
-    private readonly _encryptionService!: EncryptionService;
-    private readonly _usersMiddleware!: UsersMiddleware;
+export class PersonsController {
+    private readonly _usersMiddleware: UsersMiddleware;
+    private readonly _handlerError: ErrorHandlerService;
 
     constructor(
         private readonly _userSession: UserSession,
         private readonly _userManagement: UserManagement,
         private readonly _personManagement: PersonManagement,
-        encryptionService: EncryptionService,
+        private readonly _encryptionService: EncryptionService
     ) {
-        this._encryptionService = encryptionService,
-            this._usersMiddleware = new UsersMiddleware();
+        this._usersMiddleware = new UsersMiddleware();
+        this._handlerError = new ErrorHandlerService();
     }
 
     async getList(req: Request, res: Response) {
@@ -42,8 +43,13 @@ export class UsersController {
     }
 
     async add(req: Request, res: Response) {
-        this._usersMiddleware.validateAdd(req, res, async () => {
-            res.status(200).json(await this._userManagement.add(req.body));
+        await this._usersMiddleware.validateAdd(req, res, async () => {
+            try {
+                const result = await this._userManagement.add(req.body);
+                res.status(200).json(result);
+            } catch (error) {
+                this._handlerError.handle(error, req, res);
+            }
         });
     }
 

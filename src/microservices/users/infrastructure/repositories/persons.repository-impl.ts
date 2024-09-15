@@ -1,5 +1,6 @@
 import { PersonModel } from "../models/person.model";
 import { PersonsRepository } from "../../domain/repositories/persons.repository";
+import { UniqueConstraintError } from "sequelize";
 
 export class PersonsRepositoryImpl implements PersonsRepository {
 
@@ -24,9 +25,11 @@ export class PersonsRepositoryImpl implements PersonsRepository {
     async add(person: PersonModel): Promise<PersonModel> {
         try {
             return await PersonModel.create(person);
-        } catch (e) {
-            console.debug(e);
-            throw e;
+        } catch (error) {
+            if (error instanceof UniqueConstraintError) {
+                throw error;
+            }
+            throw new Error("An unexpected error occurred.");
         }
     }
 
