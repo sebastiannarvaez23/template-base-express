@@ -6,10 +6,9 @@ import { RouteGroup } from "../../domain/entities/route-group.entity";
 import personsRoutes from "../../../microservices/users/infrastructure/api/persons.routes";
 
 export class AppRoutes {
+  private base: string = '/api/v1/';
 
-  base: string = '/api/v1/';
-
-  routeGroup: RouteGroup[] = [
+  private routeGroup: RouteGroup[] = [
     {
       path: '/api',
       router: apiGatewayRoutes
@@ -22,12 +21,13 @@ export class AppRoutes {
 
   constructor(private readonly _app: Application) { }
 
-  init() {
+  public init() {
     this.middlewares();
     this.routeGroup.forEach(route => this._app.use(route.path, route.router));
+    this.errorHandlingMiddleware();
   }
 
-  middlewares() {
+  private middlewares() {
     this._app.use(cors());
     this._app.use(express.json());
     this._app.use(express.static("public"));
@@ -36,20 +36,32 @@ export class AppRoutes {
       const originalJson = res.json.bind(res);
 
       res.json = (body?: any): Response => {
-        let response: any = {
-          data: body?.data || null,
-          errors: []
-        };
         if (body?.errors) {
-          response.errors = Array.isArray(body.errors) ? body.errors : [body.errors];
+          let response: any = {
+            errors: body?.errors ? Array.isArray(body.errors) ? body.errors : [body.errors] : []
+          };
+          return originalJson(response);
         }
-        if (typeof body === 'object' && body !== null) {
-          const { errors, data, ...rest } = body;
-          response.data = { ...response.data, ...rest };
-        }
-        return originalJson(response);
+        return originalJson({
+          data: body?.data || body || null
+        });
       };
+
       next();
     });
   }
+
+  private errorHandlingMiddleware() {
+    this._app.use((err: any, req: Request, res: Response) => {
+
+      const statusCode = err.statusCode || 500;
+      const message = err.message || 'An unexpected error occurred';
+
+      res.status(statusCode).json({
+        data: null,
+        errors: [{ message }]
+      });
+    });
+  }
+
 }

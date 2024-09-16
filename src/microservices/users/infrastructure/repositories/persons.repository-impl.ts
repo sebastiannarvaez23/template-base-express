@@ -1,6 +1,7 @@
 import { PersonModel } from "../models/person.model";
 import { PersonsRepository } from "../../domain/repositories/persons.repository";
 import { UniqueConstraintError } from "sequelize";
+import { PersonEntity } from "../../domain/entities/person.entity";
 
 export class PersonsRepositoryImpl implements PersonsRepository {
 
@@ -13,7 +14,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
         }
     }
 
-    async get(id: string): Promise<PersonModel | null> {
+    async get(id: string): Promise<PersonEntity | null> {
         try {
             return await PersonModel.findOne({ where: { id } });
         } catch (e) {
@@ -22,9 +23,9 @@ export class PersonsRepositoryImpl implements PersonsRepository {
         }
     }
 
-    async add(person: PersonModel): Promise<PersonModel> {
+    async add(person: PersonEntity): Promise<PersonEntity> {
         try {
-            return await PersonModel.create(person);
+            return (await PersonModel.create(person));
         } catch (error) {
             if (error instanceof UniqueConstraintError) {
                 throw error;
@@ -33,7 +34,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
         }
     }
 
-    async edit(id: string, person: PersonModel): Promise<PersonModel> {
+    async edit(id: string, person: PersonEntity): Promise<PersonEntity> {
         try {
             const [affectRows, editedPerson] = await PersonModel.update(person, {
                 where: {
@@ -42,22 +43,6 @@ export class PersonsRepositoryImpl implements PersonsRepository {
                 returning: true
             });
             return editedPerson[0];
-        } catch (e) {
-            console.debug(e);
-            throw e;
-        }
-    }
-
-    async editByUser(id: string, person: PersonModel): Promise<PersonModel[]> {
-        try {
-            const [affectRows, editedPerson] = await PersonModel.update(person, {
-                where: {
-                    id: id,
-                },
-                returning: true
-            });
-
-            return editedPerson;
         } catch (e) {
             console.debug(e);
             throw e;

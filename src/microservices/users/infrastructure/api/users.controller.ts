@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 
-import { EncryptionService } from "../../services/encryption.service";
 import { PersonManagement } from "../../application/use-cases/person-management";
-import { UserSession } from "../../application/use-cases/user-session";
 import { PersonMiddleware } from "./person.middleware";
 import { ErrorHandlerService } from "../../services/error-handler.service";
 

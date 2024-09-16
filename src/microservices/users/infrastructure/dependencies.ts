@@ -7,4 +7,4 @@ const personsRepository = new PersonsRepositoryImpl();
 const personManagement = new PersonManagement(personsRepository);
 
 export const usersMiddleware = new PersonMiddleware();
-export const usersController = new PersonsController(personManagement);
+export const personController = new PersonsController(personManagement);

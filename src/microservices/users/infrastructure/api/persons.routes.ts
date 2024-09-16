@@ -1,18 +1,18 @@
 import express from 'express';
-import { usersController } from '../dependencies';
+import { personController } from '../dependencies';
 
 const personsRoutes = express.Router();
 
 personsRoutes.get("/",
-    usersController.getList.bind(usersController));
+    personController.getList.bind(personController));
 
 personsRoutes.get("/:id",
-    usersController.get.bind(usersController));
+    personController.get.bind(personController));
 
 personsRoutes.post("/",
-    usersController.add.bind(usersController));
+    personController.add.bind(personController));
 
 personsRoutes.put("/:id",
-    usersController.edit.bind(usersController));
+    personController.edit.bind(personController));
 
 export default personsRoutes;
