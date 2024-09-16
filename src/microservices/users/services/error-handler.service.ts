@@ -1,10 +1,9 @@
-// src/microservices/users/services/error-handler.service.ts
-
-import { Request, Response, NextFunction } from 'express';
+import { HttpError } from '../../../api-gateway/domain/entities/error.entity';
+import { Request, Response } from 'express';
 import { UniqueConstraintError, ValidationErrorItem } from 'sequelize';
 
 export class ErrorHandlerService {
-    handle(err: any, req: Request, res: Response) {
+    handle(err: HttpError | Error, req: Request, res: Response) {
         console.error('Error caught by ErrorHandlerService:', err);
 
         if (err instanceof UniqueConstraintError) {
@@ -21,8 +20,8 @@ export class ErrorHandlerService {
             });
         }
 
-        if (err instanceof Error) {
-            return res.status(500).json({
+        if (err instanceof HttpError) {
+            return res.status(err.statusCode).json({
                 data: null,
                 errors: [{ message: err.message }]
             });

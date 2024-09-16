@@ -1,7 +1,8 @@
+import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
+import { PersonEntity } from "../../domain/entities/person.entity";
 import { PersonModel } from "../models/person.model";
 import { PersonsRepository } from "../../domain/repositories/persons.repository";
 import { UniqueConstraintError } from "sequelize";
-import { PersonEntity } from "../../domain/entities/person.entity";
 
 export class PersonsRepositoryImpl implements PersonsRepository {
 
@@ -18,7 +19,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
         try {
             const person = await PersonModel.findOne({ where: { id } });
             if (!person) {
-                throw new Error('Person not found');
+                throw new HttpError('Person not found', 404);
             }
             return person;
         } catch (error) {
@@ -35,7 +36,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
             if (error instanceof UniqueConstraintError) {
                 throw error;
             }
-            throw new Error("An unexpected error occurred.");
+            throw new HttpError("An unexpected error occurred.", 500);
         }
     }
 
@@ -62,7 +63,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
             });
 
             if (!personToDelete) {
-                throw new Error('Person not found');
+                throw new HttpError('Person not found', 404);
             }
 
             // Realiza el soft delete (marca el registro como eliminado)
