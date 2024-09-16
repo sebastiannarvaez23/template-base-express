@@ -16,10 +16,14 @@ export class PersonsRepositoryImpl implements PersonsRepository {
 
     async get(id: string): Promise<PersonEntity | null> {
         try {
-            return await PersonModel.findOne({ where: { id } });
-        } catch (e) {
-            console.debug(e);
-            throw e;
+            const person = await PersonModel.findOne({ where: { id } });
+            if (!person) {
+                throw new Error('Person not found');
+            }
+            return person;
+        } catch (error) {
+            console.debug(error);
+            throw error;
         }
     }
 
@@ -27,6 +31,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
         try {
             return (await PersonModel.create(person));
         } catch (error) {
+            console.debug(error);
             if (error instanceof UniqueConstraintError) {
                 throw error;
             }
@@ -43,9 +48,30 @@ export class PersonsRepositoryImpl implements PersonsRepository {
                 returning: true
             });
             return editedPerson[0];
-        } catch (e) {
-            console.debug(e);
-            throw e;
+        } catch (error) {
+            console.debug(error);
+            throw error;
+        }
+    }
+
+    async delete(id: string): Promise<PersonEntity> {
+        try {
+            // Encuentra la persona antes de marcarla como eliminada
+            const personToDelete = await PersonModel.findOne({
+                where: { id: id }
+            });
+
+            if (!personToDelete) {
+                throw new Error('Person not found');
+            }
+
+            // Realiza el soft delete (marca el registro como eliminado)
+            await personToDelete.destroy();
+
+            return personToDelete;
+        } catch (error) {
+            console.debug(error);
+            throw error;
         }
     }
 }

@@ -1,6 +1,7 @@
 import { DataTypes, Model } from "sequelize";
-import database from "../../../../config/database";
+
 import { PersonEntity } from "../../domain/entities/person.entity";
+import database from "../../../../config/database";
 
 export class PersonModel extends Model<PersonEntity> implements PersonEntity {
   id?: string;
@@ -11,6 +12,7 @@ export class PersonModel extends Model<PersonEntity> implements PersonEntity {
   birthDate!: Date;
   createdAt?: Date;
   updatedAt?: Date;
+  deletedAt?: Date;
 }
 
 PersonModel.init(
@@ -50,12 +52,18 @@ PersonModel.init(
       type: DataTypes.DATE,
       field: "updated_at",
     },
+    deletedAt: {
+      type: DataTypes.DATE,
+      field: "deleted_at",
+    }
   },
   {
     sequelize: database,
     tableName: "persons",
-    timestamps: false,
+    timestamps: true,
+    paranoid: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
+    deletedAt: "deleted_at",
   }
 );

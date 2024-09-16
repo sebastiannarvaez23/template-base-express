@@ -17,12 +17,20 @@ export class PersonsController {
     }
 
     async getList(req: Request, res: Response) {
-        res.status(200).json(await this._personManagement.getList(req.query));
+        try {
+            res.status(200).json(await this._personManagement.getList(req.query));
+        } catch (error) {
+            this._handlerError.handle(error, req, res);
+        }
     }
 
     async get(req: Request, res: Response) {
         const { id } = req.params;
-        res.status(200).json(await this._personManagement.get(id));
+        try {
+            res.status(200).json(await this._personManagement.get(id));
+        } catch (error) {
+            this._handlerError.handle(error, req, res);
+        }
     }
 
     async add(req: Request, res: Response) {
@@ -46,4 +54,13 @@ export class PersonsController {
             }
         });
     }
+
+    async delete(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+            res.status(200).json(await this._personManagement.delete(id));
+        } catch (error) {
+            this._handlerError.handle(error, req, res);
+        }
+    };
 }

@@ -42,11 +42,10 @@ export class AppRoutes {
           };
           return originalJson(response);
         }
-        return originalJson({
-          data: body?.data || body || null
-        });
+        return originalJson(
+          body?.data || body || null
+        );
       };
-
       next();
     });
   }

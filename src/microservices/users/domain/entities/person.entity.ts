@@ -7,4 +7,5 @@ export interface PersonEntity {
     birthDate?: Date;
     createdAt?: Date;
     updatedAt?: Date;
+    deletedAt?: Date;
 }

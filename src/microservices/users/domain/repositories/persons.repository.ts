@@ -5,4 +5,5 @@ export interface PersonsRepository {
     get(id: string): Promise<PersonEntity | null>;
     add(person: PersonEntity): Promise<PersonEntity>;
     edit(id: string, person: PersonEntity): Promise<PersonEntity>;
+    delete(id: string): Promise<PersonEntity>;
 }

@@ -11,7 +11,7 @@ export class PersonManagement {
             return await this._personsRepository.getList();
         } catch (e) {
             console.debug(e);
-            return null;
+            throw e;
         }
     }
 
@@ -20,7 +20,7 @@ export class PersonManagement {
             return await this._personsRepository.get(id);
         } catch (e) {
             console.debug(e);
-            return null;
+            throw e;
         }
     }
 
@@ -36,6 +36,16 @@ export class PersonManagement {
     async edit(id: string, person: PersonEntity): Promise<PersonEntity | null> {
         try {
             const resultUser = await this._personsRepository.edit(id, person);
+            return resultUser;
+        } catch (e) {
+            console.debug(e)
+            throw e;
+        }
+    }
+
+    async delete(id: string): Promise<PersonEntity | null> {
+        try {
+            const resultUser = await this._personsRepository.delete(id);
             return resultUser;
         } catch (e) {
             console.debug(e)

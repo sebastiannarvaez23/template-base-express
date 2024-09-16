@@ -15,4 +15,7 @@ personsRoutes.post("/",
 personsRoutes.put("/:id",
     personController.edit.bind(personController));
 
+personsRoutes.delete("/:id",
+    personController.delete.bind(personController));
+
 export default personsRoutes;
