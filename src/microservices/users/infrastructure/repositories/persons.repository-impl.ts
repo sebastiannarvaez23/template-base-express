@@ -57,18 +57,13 @@ export class PersonsRepositoryImpl implements PersonsRepository {
 
     async delete(id: string): Promise<PersonEntity> {
         try {
-            // Encuentra la persona antes de marcarla como eliminada
             const personToDelete = await PersonModel.findOne({
                 where: { id: id }
             });
-
             if (!personToDelete) {
                 throw new HttpError('Person not found', 404);
             }
-
-            // Realiza el soft delete (marca el registro como eliminado)
             await personToDelete.destroy();
-
             return personToDelete;
         } catch (error) {
             console.debug(error);
