@@ -49,10 +49,9 @@ export class AppRoutes {
   }
 
   private errorHandlingMiddleware() {
-    this._app.use((err: any, req: Request, res: Response) => {
+    this._app.use((err: any, req: Request, res: Response, next: NextFunction) => {
       const statusCode = err.statusCode || 500;
       const message = err.message || 'An unexpected error occurred';
-
       res.status(statusCode).json({
         data: null,
         errors: [{ message }]

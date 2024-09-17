@@ -1,6 +1,6 @@
 import { HttpError } from '../../../api-gateway/domain/entities/error.entity';
 import { Request, Response } from 'express';
-import { UniqueConstraintError, ValidationErrorItem } from 'sequelize';
+import { UniqueConstraintError, ValidationErrorItem, DatabaseError } from 'sequelize';
 
 export class ErrorHandlerService {
     handle(err: HttpError | Error, req: Request, res: Response) {
@@ -17,6 +17,24 @@ export class ErrorHandlerService {
             return res.status(400).json({
                 data: null,
                 errors
+            });
+        }
+
+        if (err instanceof DatabaseError) {
+            // Access the error code from err.original
+            const errorCode = (err.original as any).code;
+
+            if (errorCode === '22P02') {
+                return res.status(400).json({
+                    data: null,
+                    errors: [{ message: 'Invalid UUID format.' }]
+                });
+            }
+
+            // Handle other DatabaseErrors
+            return res.status(500).json({
+                data: null,
+                errors: [{ message: 'Database error occurred.' }]
             });
         }
 
