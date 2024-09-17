@@ -3,6 +3,8 @@ import database from "./config/database";
 import dotenv from "dotenv";
 import express, { Application } from 'express';
 
+import 'reflect-metadata';
+
 import { AppRoutes } from "./api-gateway/infrastructure/api/app.routes";
 
 async function main() {

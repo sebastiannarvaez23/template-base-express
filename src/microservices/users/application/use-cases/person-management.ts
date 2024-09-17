@@ -1,12 +1,13 @@
 import { PersonEntity } from '../../domain/entities/person.entity';
 import { PersonsRepository } from "../../domain/repositories/persons.repository";
+import { PersonModel } from '../../infrastructure/models/person.model';
 
 export class PersonManagement {
     constructor(
         private readonly _personsRepository: PersonsRepository
     ) { }
 
-    async getList(query: any): Promise<PersonEntity[] | null> {
+    async getList(query: any): Promise<PersonModel[] | null> {
         try {
             return await this._personsRepository.getList();
         } catch (e) {
@@ -15,7 +16,7 @@ export class PersonManagement {
         }
     }
 
-    async get(id: string): Promise<PersonEntity | null> {
+    async get(id: string): Promise<PersonModel | null> {
         try {
             return await this._personsRepository.get(id);
         } catch (e) {
@@ -43,7 +44,7 @@ export class PersonManagement {
         }
     }
 
-    async delete(id: string): Promise<PersonEntity | null> {
+    async delete(id: string): Promise<PersonModel | null> {
         try {
             const resultUser = await this._personsRepository.delete(id);
             return resultUser;

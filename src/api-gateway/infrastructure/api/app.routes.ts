@@ -38,13 +38,11 @@ export class AppRoutes {
       res.json = (body?: any): Response => {
         if (body?.errors) {
           let response: any = {
-            errors: body?.errors ? Array.isArray(body.errors) ? body.errors : [body.errors] : []
+            errors: Array.isArray(body.errors) ? body.errors : [body.errors]
           };
           return originalJson(response);
         }
-        return originalJson(
-          body?.data || body || null
-        );
+        return originalJson(body?.data || body || null);
       };
       next();
     });
@@ -52,7 +50,6 @@ export class AppRoutes {
 
   private errorHandlingMiddleware() {
     this._app.use((err: any, req: Request, res: Response) => {
-
       const statusCode = err.statusCode || 500;
       const message = err.message || 'An unexpected error occurred';
 
@@ -62,5 +59,4 @@ export class AppRoutes {
       });
     });
   }
-
 }

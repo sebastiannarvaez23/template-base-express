@@ -1,5 +1,7 @@
 import { config } from 'dotenv';
-import { Dialect, Sequelize } from 'sequelize';
+import { Sequelize, SequelizeOptions } from 'sequelize-typescript';  // Importa SequelizeOptions
+import { PersonModel } from '../microservices/users/infrastructure/models/person.model';
+import { Dialect } from 'sequelize';
 
 config();
 
@@ -9,15 +11,13 @@ const password: string = 'admin';
 const host: string = process.env.DB_HOST!;
 const driver: Dialect = process.env.DB_DRIVER as Dialect;
 
-const database = new Sequelize(
-    name,
-    user,
-    password,
-    {
-        host: host,
-        port: 5432,
-        dialect: driver
-    }
-);
+const databaseOptions: SequelizeOptions = {
+    host: host,
+    port: 5432,
+    dialect: driver,
+    models: [PersonModel],
+};
+
+const database = new Sequelize(name, user, password, databaseOptions);
 
 export default database;

@@ -1,9 +1,10 @@
+import { PersonModel } from '../../infrastructure/models/person.model';
 import { PersonEntity } from '../entities/person.entity';
 
 export interface PersonsRepository {
-    getList(): Promise<PersonEntity[]>;
-    get(id: string): Promise<PersonEntity | null>;
-    add(person: PersonEntity): Promise<PersonEntity>;
-    edit(id: string, person: PersonEntity): Promise<PersonEntity>;
-    delete(id: string): Promise<PersonEntity>;
+    getList(): Promise<PersonModel[]>;
+    get(id: string): Promise<PersonModel | null>;
+    add(person: PersonEntity): Promise<PersonModel>;
+    edit(id: string, person: PersonEntity): Promise<PersonModel>;
+    delete(id: string): Promise<PersonModel>;
 }

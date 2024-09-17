@@ -1,8 +1,9 @@
+import { Optional, UniqueConstraintError } from "sequelize";
+
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
 import { PersonEntity } from "../../domain/entities/person.entity";
 import { PersonModel } from "../models/person.model";
 import { PersonsRepository } from "../../domain/repositories/persons.repository";
-import { UniqueConstraintError } from "sequelize";
 
 export class PersonsRepositoryImpl implements PersonsRepository {
 
@@ -15,7 +16,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
         }
     }
 
-    async get(id: string): Promise<PersonEntity | null> {
+    async get(id: string): Promise<PersonModel | null> {
         try {
             const person = await PersonModel.findOne({ where: { id } });
             if (!person) {
@@ -28,9 +29,9 @@ export class PersonsRepositoryImpl implements PersonsRepository {
         }
     }
 
-    async add(person: PersonEntity): Promise<PersonEntity> {
+    async add(person: PersonEntity): Promise<PersonModel> {
         try {
-            return (await PersonModel.create(person));
+            return (await PersonModel.create(person as Optional<any, string>));
         } catch (error) {
             console.debug(error);
             if (error instanceof UniqueConstraintError) {
@@ -40,14 +41,15 @@ export class PersonsRepositoryImpl implements PersonsRepository {
         }
     }
 
-    async edit(id: string, person: PersonEntity): Promise<PersonEntity> {
+    async edit(id: string, person: PersonEntity): Promise<PersonModel> {
         try {
-            const [affectRows, editedPerson] = await PersonModel.update(person, {
+            const [affectRows, editedPerson] = await PersonModel.update(person as Optional<any, string>, {
                 where: {
                     id: id,
                 },
                 returning: true
             });
+            if (!editedPerson[0]) throw new HttpError('Person not found', 404)
             return editedPerson[0];
         } catch (error) {
             console.debug(error);
@@ -55,7 +57,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
         }
     }
 
-    async delete(id: string): Promise<PersonEntity> {
+    async delete(id: string): Promise<PersonModel> {
         try {
             const personToDelete = await PersonModel.findOne({
                 where: { id: id }

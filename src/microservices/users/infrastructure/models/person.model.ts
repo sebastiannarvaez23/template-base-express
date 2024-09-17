@@ -1,66 +1,69 @@
-import { DataTypes, Model } from "sequelize";
+import { Column, CreatedAt, DataType, DeletedAt, Model, Table, UpdatedAt } from 'sequelize-typescript';
 
-import { PersonEntity } from "../../domain/entities/person.entity";
-import database from "../../../../config/database";
+@Table({
+  timestamps: true,
+  tableName: 'persons',
+  paranoid: true,
+  modelName: 'PersonModel'
+})
+export class PersonModel extends Model {
 
-export class PersonModel extends Model<PersonEntity> implements PersonEntity {
-  id?: string;
-  firstName!: string;
-  lastName!: string;
-  email!: string;
-  phone!: string;
-  birthDate!: Date;
-  createdAt?: Date;
-  updatedAt?: Date;
-  deletedAt?: Date;
+  @Column({
+    primaryKey: true,
+    type: DataType.UUIDV4,
+    field: 'id',
+    defaultValue: DataType.UUIDV4
+  })
+  declare id: string;
+
+  @Column({
+    type: DataType.STRING,
+    field: 'first_name',
+  })
+  declare firstName: string;
+
+  @Column({
+    type: DataType.STRING,
+    field: 'last_name',
+  })
+  declare lastName: string;
+
+  @Column({
+    type: DataType.STRING,
+    field: 'email',
+  })
+  declare email: string;
+
+  @Column({
+    type: DataType.STRING,
+    field: 'phone',
+  })
+  declare phone: string;
+
+  @Column({
+    type: DataType.DATE,
+    field: 'birth_date',
+  })
+  declare birthDate: Date;
+
+  @CreatedAt
+  @Column({
+    type: DataType.DATE,
+    field: 'created_at', // Ajusta el nombre del campo aquí
+  })
+  declare createdAt: Date;
+
+  @UpdatedAt
+  @Column({
+    type: DataType.DATE,
+    field: 'updated_at', // Ajusta el nombre del campo aquí
+  })
+  declare updatedAt: Date;
+
+  @DeletedAt
+  @Column({
+    type: DataType.DATE,
+    field: 'deleted_at', // Ajusta el nombre del campo aquí
+  })
+  declare deletedAt: Date;
 }
-
-PersonModel.init(
-  {
-    id: {
-      type: DataTypes.UUID,
-      primaryKey: true,
-      field: "id",
-      defaultValue: DataTypes.UUIDV4,
-    },
-    firstName: {
-      type: DataTypes.STRING,
-      field: "first_name",
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      field: "last_name",
-    },
-    email: {
-      type: DataTypes.STRING,
-      field: "email",
-      unique: true,
-    },
-    phone: {
-      type: DataTypes.STRING,
-      field: "phone",
-    },
-    birthDate: {
-      type: DataTypes.DATE,
-      field: "birth_date",
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      field: "created_at",
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      field: "updated_at",
-    },
-    deletedAt: {
-      type: DataTypes.DATE,
-      field: "deleted_at",
-    }
-  },
-  {
-    sequelize: database,
-    tableName: "persons",
-    timestamps: true,
-    paranoid: true,
-  }
-);
