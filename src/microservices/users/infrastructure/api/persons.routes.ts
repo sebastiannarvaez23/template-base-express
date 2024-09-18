@@ -1,4 +1,5 @@
 import express from 'express';
+
 import { personController } from '../dependencies';
 
 const personsRoutes = express.Router();

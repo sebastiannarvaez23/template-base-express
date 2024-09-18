@@ -1,7 +1,9 @@
 import { config } from 'dotenv';
-import { Sequelize, SequelizeOptions } from 'sequelize-typescript';  // Importa SequelizeOptions
-import { PersonModel } from '../microservices/users/infrastructure/models/person.model';
+import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
+
 import { Dialect } from 'sequelize';
+import { PersonModel } from '../microservices/users/infrastructure/models/person.model';
+import { UserModel } from '../microservices/users/infrastructure/models/user.model';
 
 config();
 
@@ -15,7 +17,7 @@ const databaseOptions: SequelizeOptions = {
     host: host,
     port: 5432,
     dialect: driver,
-    models: [PersonModel],
+    models: [UserModel, PersonModel],
 };
 
 const database = new Sequelize(name, user, password, databaseOptions);

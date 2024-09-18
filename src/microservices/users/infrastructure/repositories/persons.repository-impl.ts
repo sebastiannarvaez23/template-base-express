@@ -31,7 +31,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
 
     async add(person: PersonEntity): Promise<PersonModel> {
         try {
-            return (await PersonModel.create(person as Optional<any, string>));
+            return await PersonModel.create(person as Optional<any, string>);
         } catch (error) {
             console.debug(error);
             if (error instanceof UniqueConstraintError) {

@@ -17,15 +17,6 @@ export class UsersController {
         this._handlerError = new ErrorHandlerService();
     }
 
-    async get(req: Request, res: Response) {
-        const { id } = req.params;
-        try {
-            res.status(200).json(await this._userManagement.get(id));
-        } catch (error) {
-            this._handlerError.handle(error as HttpError | Error, req, res);
-        }
-    }
-
     async add(req: Request, res: Response) {
         await this._usersMiddleware.validateAdd(req, res, async () => {
             try {
@@ -36,13 +27,4 @@ export class UsersController {
             }
         });
     }
-
-    async delete(req: Request, res: Response) {
-        try {
-            const { id } = req.params;
-            res.status(200).json(await this._userManagement.delete(id));
-        } catch (error) {
-            this._handlerError.handle(error as HttpError | Error, req, res);
-        }
-    };
 }

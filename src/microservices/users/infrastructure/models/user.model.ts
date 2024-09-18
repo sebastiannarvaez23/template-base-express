@@ -1,66 +1,74 @@
-import { DataTypes, Model } from "sequelize";
+import { Column, CreatedAt, DataType, DeletedAt, Model, Table, UpdatedAt } from 'sequelize-typescript';
 
-import { UserEntity } from "../../domain/entities/user.entity";
-import database from "../../../../config/database";
-import { PersonModel } from "./person.model";
+@Table({
+  timestamps: true,
+  tableName: 'users',
+  paranoid: true,
+  modelName: 'UserModel'
+})
+export class UserModel extends Model {
 
-export class UserModel extends Model<UserEntity> implements UserEntity {
-  id?: string;
-  nickname!: string;
-  password!: string;
-  lastAuth!: Date;
-  origin!: string;
-  active!: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-  deletedAt?: Date;
+  @Column({
+    primaryKey: true,
+    type: DataType.UUID,
+    field: 'id',
+    defaultValue: DataType.UUIDV4
+  })
+  declare id: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    field: 'nickname'
+  })
+  declare nickname: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    field: 'password_hash'
+  })
+  declare password: string;
+
+  @Column({
+    type: DataType.DATE,
+    field: 'last_auth',
+    allowNull: true
+  })
+  declare lastAuth: Date | null;
+
+  @Column({
+    type: DataType.STRING,
+    field: 'origin',
+    allowNull: true
+  })
+  declare origin: string | null;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    field: 'active',
+    defaultValue: true
+  })
+  declare active: boolean;
+
+  @CreatedAt
+  @Column({
+    type: DataType.DATE,
+    field: 'created_at',
+  })
+  declare createdAt: Date;
+
+  @UpdatedAt
+  @Column({
+    type: DataType.DATE,
+    field: 'updated_at',
+  })
+  declare updatedAt: Date;
+
+  @DeletedAt
+  @Column({
+    type: DataType.DATE,
+    field: 'deleted_at',
+  })
+  declare deletedAt: Date;
 }
-
-UserModel.init(
-  {
-    id: {
-      type: DataTypes.UUID,
-      primaryKey: true,
-      field: 'id',
-      defaultValue: DataTypes.UUIDV4,
-    },
-    nickname: {
-      type: DataTypes.STRING,
-      field: 'nickname'
-    },
-    password: {
-      type: DataTypes.STRING,
-      field: 'password_hash'
-    },
-    lastAuth: {
-      type: DataTypes.DATE,
-      field: 'last_auth'
-    },
-    origin: {
-      type: DataTypes.STRING,
-      field: 'origin'
-    },
-    active: {
-      type: DataTypes.BOOLEAN,
-      field: "active",
-    },
-    createdAt: {
-      field: "created_at",
-      type: DataTypes.DATE,
-    },
-    updatedAt: {
-      field: "updated_at",
-      type: DataTypes.DATE,
-    },
-    deletedAt: {
-      type: DataTypes.DATE,
-      field: "deleted_at",
-    },
-  },
-  {
-    sequelize: database,
-    tableName: 'users',
-    timestamps: true,
-    paranoid: true,
-  }
-);

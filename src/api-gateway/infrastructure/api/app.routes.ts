@@ -4,6 +4,7 @@ import express, { Application, Request, Response, NextFunction } from "express";
 
 import { RouteGroup } from "../../domain/entities/route-group.entity";
 import personsRoutes from "../../../microservices/users/infrastructure/api/persons.routes";
+import usersRoutes from "../../../microservices/users/infrastructure/api/users.routes";
 
 export class AppRoutes {
   private base: string = '/api/v1/';
@@ -16,6 +17,10 @@ export class AppRoutes {
     {
       path: `${this.base}person`,
       router: personsRoutes
+    },
+    {
+      path: `${this.base}user`,
+      router: usersRoutes
     },
   ];
 

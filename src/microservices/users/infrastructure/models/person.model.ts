@@ -49,21 +49,21 @@ export class PersonModel extends Model {
   @CreatedAt
   @Column({
     type: DataType.DATE,
-    field: 'created_at', // Ajusta el nombre del campo aquí
+    field: 'created_at',
   })
   declare createdAt: Date;
 
   @UpdatedAt
   @Column({
     type: DataType.DATE,
-    field: 'updated_at', // Ajusta el nombre del campo aquí
+    field: 'updated_at',
   })
   declare updatedAt: Date;
 
   @DeletedAt
   @Column({
     type: DataType.DATE,
-    field: 'deleted_at', // Ajusta el nombre del campo aquí
+    field: 'deleted_at',
   })
   declare deletedAt: Date;
 }

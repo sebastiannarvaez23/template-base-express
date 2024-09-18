@@ -21,7 +21,6 @@ export class ErrorHandlerService {
         }
 
         if (err instanceof DatabaseError) {
-            // Access the error code from err.original
             const errorCode = (err.original as any).code;
 
             if (errorCode === '22P02') {
@@ -31,7 +30,6 @@ export class ErrorHandlerService {
                 });
             }
 
-            // Handle other DatabaseErrors
             return res.status(500).json({
                 data: null,
                 errors: [{ message: 'Database error occurred.' }]

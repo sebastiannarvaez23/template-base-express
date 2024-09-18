@@ -1,16 +1,10 @@
 import express from 'express';
 
-import { personController } from '../dependencies';
+import { userController } from '../dependencies';
 
-const personsRoutes = express.Router();
+const usersRoutes = express.Router();
 
-personsRoutes.get("/:id",
-    personController.get.bind(personController));
+usersRoutes.post("/",
+    userController.add.bind(userController));
 
-personsRoutes.post("/",
-    personController.add.bind(personController));
-
-personsRoutes.delete("/:id",
-    personController.delete.bind(personController));
-
-export default personsRoutes;
+export default usersRoutes;
