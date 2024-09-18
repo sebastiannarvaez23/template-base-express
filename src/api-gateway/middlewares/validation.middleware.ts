@@ -93,3 +93,11 @@ export const isUnique = async (value: any, checkUniqueFn: (value: any) => Promis
     const isUniqueValue = await checkUniqueFn(value);
     return isUniqueValue ? true : 'Must be unique.';
 };
+
+export const isUUID = (value: any): boolean | string => {
+    const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+    if (typeof value === 'string' && uuidRegex.test(value)) {
+        return true;
+    }
+    return 'Must be a valid UUID.';
+};

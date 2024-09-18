@@ -1,18 +1,18 @@
-import { Column, CreatedAt, DataType, DeletedAt, Model, Table, UpdatedAt } from 'sequelize-typescript';
+import { Column, CreatedAt, DataType, DeletedAt, Model, Table, UpdatedAt, BelongsTo } from 'sequelize-typescript';
+import { UserModel } from './user.model';
 
 @Table({
   timestamps: true,
   tableName: 'persons',
   paranoid: true,
-  modelName: 'PersonModel'
+  modelName: 'PersonModel',
 })
 export class PersonModel extends Model {
-
   @Column({
     primaryKey: true,
-    type: DataType.UUIDV4,
+    type: DataType.UUID,
     field: 'id',
-    defaultValue: DataType.UUIDV4
+    defaultValue: DataType.UUIDV4,
   })
   declare id: string;
 
@@ -46,6 +46,14 @@ export class PersonModel extends Model {
   })
   declare birthDate: Date;
 
+  @Column({
+    type: DataType.UUID,
+    field: 'user_id',
+    allowNull: false,
+    unique: true, // Asegura que cada user_id sea único (relación uno a uno)
+  })
+  declare userId: string;
+
   @CreatedAt
   @Column({
     type: DataType.DATE,
@@ -66,4 +74,10 @@ export class PersonModel extends Model {
     field: 'deleted_at',
   })
   declare deletedAt: Date;
+
+  @BelongsTo(() => UserModel, {
+    foreignKey: 'userId',
+    targetKey: 'id',
+  })
+  declare user: UserModel;
 }

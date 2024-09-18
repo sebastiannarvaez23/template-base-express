@@ -1,4 +1,4 @@
-import { BaseValidator, isRequired, isString, isEmail, minLength, isDate, maxLength, isNumericString } from "../../../../api-gateway/middlewares/validation.middleware";
+import { BaseValidator, isRequired, isString, isEmail, minLength, isDate, maxLength, isNumericString, isUUID } from "../../../../api-gateway/middlewares/validation.middleware";
 import { PersonEntity } from "../../domain/entities/person.entity";
 
 export class PersonValidator extends BaseValidator<PersonEntity> {
@@ -8,7 +8,8 @@ export class PersonValidator extends BaseValidator<PersonEntity> {
             lastName: [isRequired, isString, minLength(3), maxLength(70)],
             email: [isRequired, isString, isEmail, maxLength(100)],
             phone: [isRequired, isString, minLength(10), maxLength(10), isNumericString],
-            birthDate: [isRequired, isDate]
+            birthDate: [isRequired, isDate],
+            userId: [isRequired, isUUID]
         });
     }
 }

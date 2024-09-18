@@ -1,53 +1,53 @@
-import { Column, CreatedAt, DataType, DeletedAt, Model, Table, UpdatedAt } from 'sequelize-typescript';
+import { Column, CreatedAt, DataType, DeletedAt, Model, Table, UpdatedAt, HasOne } from 'sequelize-typescript';
+import { PersonModel } from './person.model';
 
 @Table({
   timestamps: true,
   tableName: 'users',
   paranoid: true,
-  modelName: 'UserModel'
+  modelName: 'UserModel',
 })
 export class UserModel extends Model {
-
   @Column({
     primaryKey: true,
     type: DataType.UUID,
     field: 'id',
-    defaultValue: DataType.UUIDV4
+    defaultValue: DataType.UUIDV4,
   })
   declare id: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
-    field: 'nickname'
+    field: 'nickname',
   })
   declare nickname: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
-    field: 'password_hash'
+    field: 'password_hash',
   })
   declare password: string;
 
   @Column({
     type: DataType.DATE,
     field: 'last_auth',
-    allowNull: true
+    allowNull: true,
   })
   declare lastAuth: Date | null;
 
   @Column({
     type: DataType.STRING,
     field: 'origin',
-    allowNull: true
+    allowNull: true,
   })
   declare origin: string | null;
 
   @Column({
     type: DataType.BOOLEAN,
     field: 'active',
-    defaultValue: true
+    defaultValue: true,
   })
   declare active: boolean;
 
@@ -71,4 +71,10 @@ export class UserModel extends Model {
     field: 'deleted_at',
   })
   declare deletedAt: Date;
+
+  @HasOne(() => PersonModel, {
+    foreignKey: 'userId',
+    sourceKey: 'id',
+  })
+  declare person: PersonModel;
 }
