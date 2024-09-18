@@ -21,13 +21,26 @@ export abstract class BaseValidator<T> {
             const value = (data as any)[field];
             errors[field] = [];
 
-            validators.forEach(validator => {
-                const result = validator(value);
-                if (typeof result === 'string') {
-                    valid = false;
-                    errors[field].push(result);
+
+            if (value !== undefined) {
+                validators.forEach(validator => {
+                    const result = validator(value);
+                    if (typeof result === 'string') {
+                        valid = false;
+                        errors[field].push(result);
+                    }
+                });
+            } else {
+
+                const nullableResult = validators.find(v => v === isNullable);
+                if (nullableResult) {
+                    const result = nullableResult(value);
+                    if (typeof result === 'string') {
+                        valid = false;
+                        errors[field].push(result);
+                    }
                 }
-            });
+            }
 
             if (errors[field].length === 0) {
                 delete errors[field];
@@ -53,17 +66,33 @@ export const validationMiddleware = <T>(validator: BaseValidator<T>) => {
 export const isRequired = (value: any): boolean | string =>
     value !== null && value !== undefined ? true : 'This field is required.';
 
-export const isString = (value: any): boolean | string =>
-    typeof value === 'string' ? true : 'Must be a string.';
+export const isString = (value: any): boolean | string => {
+    if (value === null || value === undefined) {
+        return true;
+    }
+    return typeof value === 'string' ? true : 'Must be a string.';
+};
 
 export const isNumber = (value: any): boolean | string =>
     typeof value === 'number' ? true : 'Must be a number.';
 
-export const minLength = (min: number) => (value: any): boolean | string =>
-    typeof value === 'string' && value.length >= min ? true : `Must be at least ${min} characters long.`;
+export const minLength = (min: number) => (value: any): boolean | string => {
+    if (value === null || value === undefined) {
+        return true;
+    }
+    return typeof value === 'string' && value.length >= min
+        ? true
+        : `Must be at least ${min} characters long.`;
+};
 
-export const maxLength = (max: number) => (value: any): boolean | string =>
-    typeof value === 'string' && value.length <= max ? true : `Must be no more than ${max} characters long.`;
+export const maxLength = (max: number) => (value: any): boolean | string => {
+    if (value === null || value === undefined) {
+        return true;
+    }
+    return typeof value === 'string' && value.length <= max
+        ? true
+        : `Must be no more than ${max} characters long.`;
+};
 
 export const isEmail = (value: any): string | boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -100,4 +129,18 @@ export const isUUID = (value: any): boolean | string => {
         return true;
     }
     return 'Must be a valid UUID.';
+};
+
+export const isBoolean = (value: any): boolean | string => {
+    if (value === undefined || value === null) {
+        return true;
+    }
+    return typeof value === 'boolean' ? true : 'Must be a boolean value.';
+};
+
+export const isNullable = (value: any): boolean | string => {
+    if (value === undefined || value === null) {
+        return true;
+    }
+    return true;
 };
