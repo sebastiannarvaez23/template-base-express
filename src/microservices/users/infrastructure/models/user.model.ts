@@ -20,13 +20,14 @@ export class UserModel extends Model {
     type: DataType.STRING,
     allowNull: false,
     field: 'nickname',
+    unique: true,
   })
   declare nickname: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
-    field: 'password_hash',
+    field: 'password',
   })
   declare password: string;
 

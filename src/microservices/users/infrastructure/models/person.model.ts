@@ -50,7 +50,7 @@ export class PersonModel extends Model {
     type: DataType.UUID,
     field: 'user_id',
     allowNull: false,
-    unique: true, // Asegura que cada user_id sea único (relación uno a uno)
+    unique: true,
   })
   declare userId: string;
 
