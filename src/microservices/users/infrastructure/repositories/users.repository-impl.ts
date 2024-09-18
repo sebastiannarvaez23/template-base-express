@@ -18,4 +18,16 @@ export class UsersRepositoryImpl implements UsersRepository {
             throw new HttpError("An unexpected error occurred.", 500);
         }
     }
+
+    async getUserByNickName(nickname: string): Promise<UserModel | null> {
+        try {
+            return await UserModel.findOne({ where: { nickname } });
+        } catch (error) {
+            console.debug(error);
+            if (error instanceof UniqueConstraintError) {
+                throw error;
+            }
+            throw new HttpError("An unexpected error occurred.", 500);
+        }
+    }
 }

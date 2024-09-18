@@ -3,4 +3,5 @@ import { UserEntity } from "../entities/user.entity";
 
 export interface UsersRepository {
     add(user: UserEntity): Promise<UserModel>;
+    getUserByNickName(nickname: string): Promise<UserModel | null>;
 }

@@ -27,4 +27,15 @@ export class UsersController {
             }
         });
     }
+
+    async authentication(req: Request, res: Response) {
+        await this._usersMiddleware.validateAuth(req, res, async () => {
+            try {
+                const result = await this._userManagement.authentication(req.body);
+                res.status(200).json(result);
+            } catch (error) {
+                this._handlerError.handle(error as HttpError | Error, req, res);
+            }
+        });
+    }
 }

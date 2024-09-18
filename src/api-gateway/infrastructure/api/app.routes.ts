@@ -1,13 +1,17 @@
-import apiGatewayRoutes from "./api-gateway.routes";
 import cors from "cors";
 import express, { Application, Request, Response, NextFunction } from "express";
 
+import { AuthMiddleware } from "../../../microservices/users/infrastructure/middlewares/auth.middleware";
 import { RouteGroup } from "../../domain/entities/route-group.entity";
+import apiGatewayRoutes from "./api-gateway.routes";
 import personsRoutes from "../../../microservices/users/infrastructure/api/persons.routes";
 import usersRoutes from "../../../microservices/users/infrastructure/api/users.routes";
 
 export class AppRoutes {
   private base: string = '/api/v1/';
+  private SECRET: string = process.env.SECRET_KEY!;
+
+  private authMiddleware: AuthMiddleware = new AuthMiddleware(this.SECRET);
 
   private routeGroup: RouteGroup[] = [
     {
@@ -28,7 +32,13 @@ export class AppRoutes {
 
   public init() {
     this.middlewares();
-    this.routeGroup.forEach(route => this._app.use(route.path, route.router));
+    this.routeGroup.forEach(route => {
+      if (route.path === `${this.base}person`) {
+        this._app.use(route.path, this.authMiddleware.authenticateToken, route.router);
+      } else {
+        this._app.use(route.path, route.router);
+      }
+    });
     this.errorHandlingMiddleware();
   }
 

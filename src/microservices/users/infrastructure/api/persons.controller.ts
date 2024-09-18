@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
 import { ErrorHandlerService } from "../../services/error-handler.service";
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
@@ -7,18 +8,25 @@ import { PersonMiddleware } from "../middlewares/person.middleware";
 
 export class PersonsController {
 
+    private readonly _SECRET: string;
     private readonly _personMiddleware: PersonMiddleware;
     private readonly _handlerError: ErrorHandlerService;
 
     constructor(
         private readonly _personManagement: PersonManagement,
     ) {
+        this._SECRET = process.env.SECRET_KEY!;
         this._personMiddleware = new PersonMiddleware();
         this._handlerError = new ErrorHandlerService();
     }
 
     async getList(req: Request, res: Response) {
         try {
+            const token = req.headers.authorization?.split(" ")[1];
+            if (!token) throw new HttpError("Token not provided", 401);
+            const payload = jwt.verify(token, this._SECRET) as JwtPayload;
+            if (Date.now() > payload.exp!) throw new HttpError("Token expired", 401)
+
             res.status(200).json(await this._personManagement.getList(req.query));
         } catch (error) {
             this._handlerError.handle(error as HttpError | Error, req, res);
