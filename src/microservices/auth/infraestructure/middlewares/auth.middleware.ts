@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
+import { validationMiddleware } from "../../../../api-gateway/middlewares/validation.middleware";
+import { AuthValidator } from "../../application/validations/auth.validator";
 
 declare global {
     namespace Express {
@@ -12,11 +14,17 @@ declare global {
 }
 
 export class AuthMiddleware {
+
     private secret: string;
+    private authValidator;
 
     constructor(secret: string) {
         this.secret = secret;
+        this.authValidator = new AuthValidator();
+        this.validateAuth = validationMiddleware(this.authValidator);
     }
+
+    public validateAuth;
 
     public authenticateToken = (req: Request, res: Response, next: NextFunction) => {
         const token = req.headers.authorization?.split(" ")[1];

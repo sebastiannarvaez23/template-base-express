@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { personController } from '../dependencies';
-import { AuthMiddleware } from '../middlewares/auth.middleware';
+import { AuthMiddleware } from '../../../auth/infraestructure/middlewares/auth.middleware';
 
 const personsRoutes = express.Router();
 const authMiddleware = new AuthMiddleware(process.env.SECRET_KEY!);

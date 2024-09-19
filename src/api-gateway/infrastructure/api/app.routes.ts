@@ -1,9 +1,10 @@
 import cors from "cors";
 import express, { Application, Request, Response, NextFunction } from "express";
 
-import { AuthMiddleware } from "../../../microservices/users/infrastructure/middlewares/auth.middleware";
+import { AuthMiddleware } from "../../../microservices/auth/infraestructure/middlewares/auth.middleware";
 import { RouteGroup } from "../../domain/entities/route-group.entity";
 import apiGatewayRoutes from "./api-gateway.routes";
+import authRoutes from "../../../microservices/auth/infraestructure/api/auth.routes";
 import personsRoutes from "../../../microservices/users/infrastructure/api/persons.routes";
 import usersRoutes from "../../../microservices/users/infrastructure/api/users.routes";
 
@@ -25,6 +26,10 @@ export class AppRoutes {
     {
       path: `${this.base}user`,
       router: usersRoutes
+    },
+    {
+      path: `${this.base}auth`,
+      router: authRoutes
     },
   ];
 
