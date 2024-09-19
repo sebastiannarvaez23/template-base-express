@@ -21,16 +21,13 @@ export abstract class BaseValidator<T> {
             const value = (data as any)[field];
             errors[field] = [];
 
-            // Check if the value is undefined and handle it accordingly
             if (value === undefined) {
-                // Check if isRequired validator is present
                 const isRequiredValidator = validators.find(v => v === isRequired);
                 if (isRequiredValidator) {
                     valid = false;
                     errors[field].push(isRequired(value).toString());
                 }
             } else {
-                // Apply all validators
                 validators.forEach(validator => {
                     const result = validator(value);
                     if (typeof result === 'string') {

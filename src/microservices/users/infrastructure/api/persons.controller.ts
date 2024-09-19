@@ -22,12 +22,10 @@ export class PersonsController {
 
     async getList(req: Request, res: Response) {
         try {
-            const token = req.headers.authorization?.split(" ")[1];
-            if (!token) throw new HttpError("Token not provided", 401);
-            const payload = jwt.verify(token, this._SECRET) as JwtPayload;
-            if (Date.now() > payload.exp!) throw new HttpError("Token expired", 401)
-
-            res.status(200).json(await this._personManagement.getList(req.query));
+            const page = parseInt(req.query.page as string) || 1;
+            const limit = parseInt(req.query.limit as string) || 10;
+            const offset = (page - 1) * limit;
+            res.status(200).json(await this._personManagement.getList({ limit, offset }));
         } catch (error) {
             this._handlerError.handle(error as HttpError | Error, req, res);
         }

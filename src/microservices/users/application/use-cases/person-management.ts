@@ -7,9 +7,9 @@ export class PersonManagement {
         private readonly _personsRepository: PersonsRepository
     ) { }
 
-    async getList(query: any): Promise<PersonModel[] | null> {
+    async getList({ limit, offset }: { limit: number; offset: number }): Promise<{ rows: PersonModel[]; count: number; }> {
         try {
-            return await this._personsRepository.getList();
+            return await this._personsRepository.getList({ limit, offset });
         } catch (e) {
             console.debug(e);
             throw e;
