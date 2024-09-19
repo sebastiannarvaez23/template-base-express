@@ -8,14 +8,14 @@ import { PersonMiddleware } from "../middlewares/person.middleware";
 
 export class PersonsController {
 
-    private readonly _SECRET: string;
+    private readonly _LIST_PAGINATION_LIMIT: number;
     private readonly _personMiddleware: PersonMiddleware;
     private readonly _handlerError: ErrorHandlerService;
 
     constructor(
         private readonly _personManagement: PersonManagement,
     ) {
-        this._SECRET = process.env.SECRET_KEY!;
+        this._LIST_PAGINATION_LIMIT = Number(process.env.LIST_PAGINATION_LIMIT!);
         this._personMiddleware = new PersonMiddleware();
         this._handlerError = new ErrorHandlerService();
     }
@@ -23,7 +23,7 @@ export class PersonsController {
     async getList(req: Request, res: Response) {
         try {
             const page = parseInt(req.query.page as string) || 1;
-            const limit = parseInt(req.query.limit as string) || 10;
+            const limit = this._LIST_PAGINATION_LIMIT || 10;
             const offset = (page - 1) * limit;
             res.status(200).json(await this._personManagement.getList({ limit, offset }));
         } catch (error) {
