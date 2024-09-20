@@ -1,4 +1,5 @@
-import { BaseValidator, isRequired, isString, minLength, isDate, maxLength, isBoolean, isNullable } from '../../../../api-gateway/middlewares/validation.middleware';
+import { BaseValidator } from '../../../../api-gateway/middlewares/validators/validation.middleware';
+import { isRequired, isString, minLength, isDate, maxLength, isBoolean, isNullable } from '../../../../api-gateway/middlewares/validators/validation.type';
 import { UserEntity } from "../../domain/entities/user.entity";
 
 export class UserValidator extends BaseValidator<UserEntity> {
