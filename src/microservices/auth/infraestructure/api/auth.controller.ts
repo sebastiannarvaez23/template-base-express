@@ -8,12 +8,14 @@ import { createClient } from 'redis';
 export class AuthController {
 
     private readonly _SECRET: string;
+    private readonly _SESION_MS_EXP: string;
     private readonly _authMiddleware: AuthMiddleware;
     private readonly _handlerError: ErrorHandlerService;
     private readonly _redisClient;
 
     constructor(private readonly _authManagement: AuthManagement) {
         this._SECRET = process.env.SECRET_KEY!;
+        this._SESION_MS_EXP = process.env.SESION_MS_EXP!;
         this._authMiddleware = new AuthMiddleware(this._SECRET);
         this._handlerError = new ErrorHandlerService();
 
@@ -24,23 +26,38 @@ export class AuthController {
         this._redisClient.connect().catch(console.error);
     }
 
-    private async storeTokenInRedis(token: string) {
-        const expiryTime = 3600;
-        await this._redisClient.setEx(token, expiryTime, JSON.stringify({ valid: true }))
-            .catch(err => {
-                console.error('Error storing the token in Redis:', err);
-                throw new HttpError("Error storing the token", 500);
-            });
+    private async storeTokenInRedis(userId: string, token: string) {
+        const expiryTime = Number(this._SESION_MS_EXP) / 1000;
+        await this._redisClient.setEx(userId, expiryTime, token).catch(err => {
+            console.error('Error storing the token in Redis:', err);
+            throw new HttpError("Error storing the token", 500);
+        });
+    }
+
+    private async getTokenFromRedis(userId: string) {
+        const token = await this._redisClient.get(userId).catch(err => {
+            console.error('Error retrieving the token from Redis:', err);
+            throw new HttpError("Error retrieving the token", 500);
+        });
+        return token;
     }
 
     async authentication(req: Request, res: Response) {
         await this._authMiddleware.validateAuth(req, res, async () => {
             try {
+                const { nickname } = req.body;
+                const existingToken = await this.getTokenFromRedis(nickname);
+
+                if (existingToken) {
+                    return res.status(200).json({ token: existingToken });
+                }
+
                 const result = await this._authManagement.authentication(req.body);
                 const token = result.token;
-                await this.storeTokenInRedis(token!);
 
-                res.status(200).json(result);
+                await this.storeTokenInRedis(nickname, token!);
+
+                res.status(200).json({ token });
             } catch (error) {
                 this._handlerError.handle(error as HttpError | Error, req, res);
             }
@@ -50,11 +67,15 @@ export class AuthController {
     async logout(req: Request, res: Response) {
         try {
             const authHeader = req.headers['authorization'];
-            if (!authHeader) throw new HttpError('No token provided', 400)
-            const token = authHeader.split(' ')[1];
-            if (!token) throw new HttpError('Token not found', 400);
+            const { nickname } = req.body;
 
-            const response = await this._redisClient.del(token).catch(err => {
+            if (!authHeader) throw new HttpError('No token provided', 400);
+
+            const token = authHeader.split(' ')[1];
+
+            if (!token) throw new HttpError('No token provided', 400);
+
+            const response = await this._redisClient.del(nickname).catch(err => {
                 console.error('Error deleting the token from Redis:', err);
                 throw new HttpError('Error deleting the token', 500);
             });
