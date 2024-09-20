@@ -1,9 +1,9 @@
 import { config } from 'dotenv';
 import jwt from 'jsonwebtoken';
 
-import { UsersRepository } from '../../../users/domain/repositories/users.repository';
 import { AuthEntity } from '../../../auth/domain/entities/auth.entity';
 import { HttpError } from '../../../../api-gateway/domain/entities/error.entity';
+import { UsersRepository } from '../../../users/domain/repositories/users.repository';
 
 config();
 
@@ -22,8 +22,8 @@ export class AuthManagement {
     async authentication(auth: AuthEntity): Promise<{ token: string | null }> {
         try {
             const user = await this._userRepository.getUserByNickName(auth.nickname);
-            if (!user) throw new HttpError("User not found", 404);
-            if (user.password !== auth.password) throw new HttpError("Invalid password", 401);
+            if (!user) throw new HttpError("User not found", 404, "000001");
+            if (user.password !== auth.password) throw new HttpError("Invalid password", 401, "000002");
 
             const token = jwt.sign({
                 sub: user.id,

@@ -24,7 +24,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
         try {
             const person = await PersonModel.findOne({ where: { id } });
             if (!person) {
-                throw new HttpError('Person not found', 404);
+                throw new HttpError('Person not found', 404, "000101");
             }
             return person;
         } catch (error) {
@@ -41,7 +41,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
             if (error instanceof UniqueConstraintError) {
                 throw error;
             }
-            throw new HttpError("An unexpected error occurred.", 500);
+            throw new HttpError("An unexpected error occurred.", 500, "000000");
         }
     }
 
@@ -53,7 +53,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
                 },
                 returning: true
             });
-            if (!editedPerson[0]) throw new HttpError('Person not found', 404)
+            if (!editedPerson[0]) throw new HttpError('Person not found', 404, "000101")
             return editedPerson[0];
         } catch (error) {
             console.debug(error);
@@ -67,7 +67,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
                 where: { id: id }
             });
             if (!personToDelete) {
-                throw new HttpError('Person not found', 404);
+                throw new HttpError('Person not found', 404, "000101");
             }
             await personToDelete.destroy();
             return personToDelete;

@@ -72,9 +72,10 @@ export class AppRoutes {
     this._app.use((err: any, req: Request, res: Response, next: NextFunction) => {
       const statusCode = err.statusCode || 500;
       const message = err.message || 'An unexpected error occurred';
+      const internalCode = err.internalCode || 500;
       res.status(statusCode).json({
         data: null,
-        errors: [{ message }]
+        errors: [{ internalCode, message }]
       });
     });
   }

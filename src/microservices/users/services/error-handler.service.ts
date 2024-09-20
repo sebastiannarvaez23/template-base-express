@@ -7,10 +7,11 @@ export class ErrorHandlerService {
         console.error('Error caught by ErrorHandlerService:', err);
 
         if (err instanceof UniqueConstraintError) {
-            const errors = err.errors.reduce((acc: { [key: string]: string[] }, e: ValidationErrorItem) => {
+            const errors = err.errors.reduce((acc: { [key: string]: string[] | string }, e: ValidationErrorItem) => {
+                acc["internalCode"] = "000000";
                 const field = e.path || 'unknown';
                 if (!acc[field]) acc[field] = [];
-                acc[field].push('Must be unique.');
+                (acc[field] as string[]).push('Must be unique.');
                 return acc;
             }, {});
 
@@ -26,26 +27,38 @@ export class ErrorHandlerService {
             if (errorCode === '22P02') {
                 return res.status(400).json({
                     data: null,
-                    errors: [{ message: 'Invalid UUID format.' }]
+                    errors: [{
+                        internalCode: "000001",
+                        message: 'Invalid UUID format.'
+                    }]
                 });
             }
 
             return res.status(500).json({
                 data: null,
-                errors: [{ message: 'Database error occurred.' }]
+                errors: [{
+                    internalCode: "000002",
+                    message: 'Database error occurred.'
+                }]
             });
         }
 
         if (err instanceof HttpError) {
             return res.status(err.statusCode).json({
                 data: null,
-                errors: [{ message: err.message }]
+                errors: [{
+                    internalCode: err.internalCode,
+                    message: err.message
+                }]
             });
         }
 
         return res.status(500).json({
             data: null,
-            errors: [{ message: "An unexpected error occurred." }]
+            errors: [{
+                internalCode: "000000",
+                message: "An unexpected error occurred."
+            }]
         });
     }
 }

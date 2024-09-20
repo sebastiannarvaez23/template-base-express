@@ -15,7 +15,7 @@ export class UsersRepositoryImpl implements UsersRepository {
             if (error instanceof UniqueConstraintError) {
                 throw error;
             }
-            throw new HttpError("An unexpected error occurred.", 500);
+            throw new HttpError("An unexpected error occurred.", 500, "000000");
         }
     }
 
@@ -27,7 +27,7 @@ export class UsersRepositoryImpl implements UsersRepository {
             if (error instanceof UniqueConstraintError) {
                 throw error;
             }
-            throw new HttpError("An unexpected error occurred.", 500);
+            throw new HttpError("An unexpected error occurred.", 500, "000000");
         }
     }
 }

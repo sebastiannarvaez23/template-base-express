@@ -13,26 +13,27 @@ export abstract class BaseValidator<T> {
         this.rules = rules;
     }
 
-    validate(data: T): { valid: boolean, errors: Record<string, string[]> } {
-        const errors: Record<string, string[]> = {};
+    validate(data: T): { valid: boolean, errors: Record<string, string[] | string> } {
+        const errors: Record<string, string[] | string> = {};
         let valid = true;
 
         for (const [field, validators] of Object.entries(this.rules)) {
             const value = (data as any)[field];
+            errors["internalCode"] = "000000";
             errors[field] = [];
 
             if (value === undefined) {
                 const isRequiredValidator = validators.find(v => v === isRequired);
                 if (isRequiredValidator) {
                     valid = false;
-                    errors[field].push(isRequired(value).toString());
+                    (errors[field] as string[]).push(isRequired(value).toString());
                 }
             } else {
                 validators.forEach(validator => {
                     const result = validator(value);
                     if (typeof result === 'string') {
                         valid = false;
-                        errors[field].push(result);
+                        (errors[field] as string[]).push(result);
                     }
                 });
             }
