@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import jwt, { JwtPayload } from 'jsonwebtoken';
 
 import { ErrorHandlerService } from "../../services/error-handler.service";
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";

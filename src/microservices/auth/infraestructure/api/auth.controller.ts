@@ -10,6 +10,7 @@ export class AuthController {
 
     private readonly _SECRET: string;
     private readonly _SESION_MS_EXP: string;
+    private readonly _URL_REDIS: string;
     private readonly _authMiddleware: AuthMiddleware;
     private readonly _handlerError: ErrorHandlerService;
     private readonly _redisClient;
@@ -17,11 +18,12 @@ export class AuthController {
     constructor(private readonly _authManagement: AuthManagement) {
         this._SECRET = process.env.SECRET_KEY!;
         this._SESION_MS_EXP = process.env.SESION_MS_EXP!;
+        this._URL_REDIS = process.env.URL_REDIS!;
         this._authMiddleware = new AuthMiddleware(this._SECRET);
         this._handlerError = new ErrorHandlerService();
 
         this._redisClient = createClient({
-            url: 'redis://localhost:6379',
+            url: this._URL_REDIS,
         });
 
         this._redisClient.connect().catch(console.error);
