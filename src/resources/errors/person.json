@@ -1,7 +1,7 @@
 {
-    "000000": {
-        "serverStatusCode": "",
-        "messageClient": "",
-        "messageLog": ""
+    "020001": {
+        "serverStatusCode": 404,
+        "messageClient": "Person not found",
+        "messageLog": "Person not found"
     }
 }

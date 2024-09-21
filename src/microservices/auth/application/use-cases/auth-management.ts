@@ -22,8 +22,8 @@ export class AuthManagement {
     async authentication(auth: AuthEntity): Promise<{ token: string | null }> {
         try {
             const user = await this._userRepository.getUserByNickName(auth.nickname);
-            if (!user) throw new HttpError("User not found", 404, "000001");
-            if (user.password !== auth.password) throw new HttpError("Invalid password", 401, "000002");
+            if (!user) throw new HttpError("010001");
+            if (user.password !== auth.password) throw new HttpError("010002");
 
             const token = jwt.sign({
                 sub: user.id,

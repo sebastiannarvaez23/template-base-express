@@ -1,6 +1,6 @@
+import { AuthEntity } from '../../domain/entities/auth.entity';
 import { BaseValidator } from '../../../../api-gateway/middlewares/validators/validation.middleware';
 import { isRequired, isString, minLength, maxLength } from '../../../../api-gateway/middlewares/validators/validation.type';
-import { AuthEntity } from '../../domain/entities/auth.entity';
 
 export class AuthValidator extends BaseValidator<AuthEntity> {
     constructor() {

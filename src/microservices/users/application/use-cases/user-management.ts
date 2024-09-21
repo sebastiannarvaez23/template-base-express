@@ -24,7 +24,6 @@ export class UserManagement {
         try {
             return await this._userRepository.add(user);
         } catch (e) {
-            console.debug(e);
             throw e;
         }
     }

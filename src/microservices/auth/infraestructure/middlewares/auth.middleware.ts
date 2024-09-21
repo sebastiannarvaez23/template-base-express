@@ -29,18 +29,18 @@ export class AuthMiddleware {
     public authenticateToken = (req: Request, res: Response, next: NextFunction) => {
         const token = req.headers.authorization?.split(" ")[1];
         if (!token) {
-            return next(new HttpError("Token not provided", 401, "000005"));
+            return next(new HttpError("000003"));
         }
 
         try {
             const payload = jwt.verify(token, this.secret) as JwtPayload;
             if (Date.now() > (payload.exp || 0)) {
-                throw new HttpError("Token expired", 401, "000008");
+                throw new HttpError("000006");
             }
             req.user = payload;
             next();
         } catch (err) {
-            next(new HttpError("Invalid token", 401, "000009"));
+            next(new HttpError("000007"));
         }
     };
 }

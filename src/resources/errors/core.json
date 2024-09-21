@@ -1,7 +1,52 @@
 {
     "000000": {
-        "serverStatusCode": "",
-        "messageClient": "",
-        "messageLog": ""
+        "serverStatusCode": 500,
+        "messageClient": "An unexpected error occurred",
+        "messageLog": "An unexpected error occurred"
+    },
+    "000001": {
+        "serverStatusCode": 500,
+        "messageClient": "Error storing the token",
+        "messageLog": "Error storing the token"
+    },
+    "000002": {
+        "serverStatusCode": 500,
+        "messageClient": "Error retrieving the token",
+        "messageLog": "Error retrieving the token"
+    },
+    "000003": {
+        "serverStatusCode": 400,
+        "messageClient": "No token provided",
+        "messageLog": "No token provided"
+    },
+    "000004": {
+        "serverStatusCode": 500,
+        "messageClient": "Error deleting the token",
+        "messageLog": "Error deleting the token"
+    },
+    "000005": {
+        "serverStatusCode": 404,
+        "messageClient": "Token not found",
+        "messageLog": "Token not found"
+    },
+    "000006": {
+        "serverStatusCode": 401,
+        "messageClient": "Token expired",
+        "messageLog": "Token expired"
+    },
+    "000007": {
+        "serverStatusCode": 401,
+        "messageClient": "Invalid token",
+        "messageLog": "Invalid token"
+    },
+    "000008": {
+        "serverStatusCode": 400,
+        "messageClient": "Invalid UUID format",
+        "messageLog": "Invalid UUID format"
+    },
+    "000009": {
+        "serverStatusCode": 400,
+        "messageClient": "A record with the same data already exists. Please verify the information provided.",
+        "messageLog": "Unique constraint violation: A record with the same unique field(s) already exists"
     }
 }

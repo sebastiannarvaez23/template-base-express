@@ -1,4 +1,4 @@
-import { HttpError } from '../../../api-gateway/domain/entities/error.entity';
+import { HttpError } from '../domain/entities/error.entity';
 import { Request, Response } from 'express';
 import { UniqueConstraintError, ValidationErrorItem, DatabaseError } from 'sequelize';
 
@@ -8,57 +8,59 @@ export class ErrorHandlerService {
 
         if (err instanceof UniqueConstraintError) {
             const errors = err.errors.reduce((acc: { [key: string]: string[] | string }, e: ValidationErrorItem) => {
-                acc["internalCode"] = "000000";
                 const field = e.path || 'unknown';
                 if (!acc[field]) acc[field] = [];
-                (acc[field] as string[]).push('Must be unique.');
+                (acc[field] as string[]).push('Must be unique');
                 return acc;
             }, {});
 
-            return res.status(400).json({
+            const httpError = new HttpError("000009");
+            return res.status(httpError.statusCode).json({
                 data: null,
-                errors
+                errors: {
+                    internalCode: httpError.internalCode,
+                    message: httpError.message,
+                    details: errors
+                }
             });
         }
 
         if (err instanceof DatabaseError) {
             const errorCode = (err.original as any).code;
 
+            let httpError: HttpError;
             if (errorCode === '22P02') {
-                return res.status(400).json({
-                    data: null,
-                    errors: [{
-                        internalCode: "000001",
-                        message: 'Invalid UUID format.'
-                    }]
-                });
+                httpError = new HttpError("000008");
+            } else {
+                httpError = new HttpError("000009");
             }
 
-            return res.status(500).json({
+            return res.status(httpError.statusCode).json({
                 data: null,
-                errors: [{
-                    internalCode: "000002",
-                    message: 'Database error occurred.'
-                }]
+                errors: {
+                    internalCode: httpError.internalCode,
+                    message: httpError.message
+                }
             });
         }
 
         if (err instanceof HttpError) {
             return res.status(err.statusCode).json({
                 data: null,
-                errors: [{
+                errors: {
                     internalCode: err.internalCode,
                     message: err.message
-                }]
+                }
             });
         }
 
-        return res.status(500).json({
+        const genericError = new HttpError("000000");
+        return res.status(genericError.statusCode).json({
             data: null,
-            errors: [{
-                internalCode: "000000",
-                message: "An unexpected error occurred."
-            }]
+            errors: {
+                internalCode: genericError.internalCode,
+                message: genericError.message
+            }
         });
     }
 }

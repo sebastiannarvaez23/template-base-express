@@ -11,11 +11,10 @@ export class UsersRepositoryImpl implements UsersRepository {
         try {
             return await UserModel.create(user as Optional<any, string>);
         } catch (error) {
-            console.debug(error);
             if (error instanceof UniqueConstraintError) {
                 throw error;
             }
-            throw new HttpError("An unexpected error occurred.", 500, "000000");
+            throw new HttpError("000000");
         }
     }
 
@@ -23,11 +22,10 @@ export class UsersRepositoryImpl implements UsersRepository {
         try {
             return await UserModel.findOne({ where: { nickname } });
         } catch (error) {
-            console.debug(error);
             if (error instanceof UniqueConstraintError) {
                 throw error;
             }
-            throw new HttpError("An unexpected error occurred.", 500, "000000");
+            throw new HttpError("000000");
         }
     }
 }

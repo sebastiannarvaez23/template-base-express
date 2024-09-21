@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { ErrorHandlerService } from "../../services/error-handler.service";
+import { ErrorHandlerService } from "../../../../api-gateway/services/error-handler.service";
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
 import { UserManagement } from "../../application/use-cases/user-management";
 import { UserMiddleware } from "../middlewares/user.middleware";

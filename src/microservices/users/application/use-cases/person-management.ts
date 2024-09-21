@@ -11,7 +11,6 @@ export class PersonManagement {
         try {
             return await this._personsRepository.getList({ limit, offset });
         } catch (e) {
-            console.debug(e);
             throw e;
         }
     }
@@ -20,7 +19,6 @@ export class PersonManagement {
         try {
             return await this._personsRepository.get(id);
         } catch (e) {
-            console.debug(e);
             throw e;
         }
     }
@@ -29,7 +27,6 @@ export class PersonManagement {
         try {
             return await this._personsRepository.add(person);
         } catch (e) {
-            console.debug(e);
             throw e;
         }
     }
@@ -39,7 +36,6 @@ export class PersonManagement {
             const resultUser = await this._personsRepository.edit(id, person);
             return resultUser;
         } catch (e) {
-            console.debug(e)
             throw e;
         }
     }
@@ -49,7 +45,6 @@ export class PersonManagement {
             const resultUser = await this._personsRepository.delete(id);
             return resultUser;
         } catch (e) {
-            console.debug(e)
             throw e;
         }
     }
