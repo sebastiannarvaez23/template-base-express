@@ -1,11 +1,11 @@
-import { Server } from './config/server';
-import database from "./config/database";
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 import express, { Application } from 'express';
 
-import 'reflect-metadata';
+import { AppRoutes } from './api-gateway/infrastructure/api/app.routes';
+import { Server } from './config/server';
+import { DatabaseConfig } from './config/database';
 
-import { AppRoutes } from "./api-gateway/infrastructure/api/app.routes";
+import 'reflect-metadata';
 
 async function main() {
     try {
@@ -13,10 +13,12 @@ async function main() {
         const app: Application = express();
         const server = new Server(app);
         const appRoutes = new AppRoutes(app);
+        const appConfig = new DatabaseConfig();
 
-        await database.authenticate();
+        await appConfig.getDatabase().authenticate();
         appRoutes.init();
         server.raise();
+        return app;
     } catch (error) {
         console.debug(error);
     }

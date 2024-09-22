@@ -1,4 +1,3 @@
-import { createClient } from 'redis';
 import { Request, Response } from "express";
 
 import { AuthManagement } from "../../application/use-cases/auth-management";
@@ -10,37 +9,35 @@ export class AuthController {
 
     private readonly _SECRET: string;
     private readonly _SESION_MS_EXP: string;
-    private readonly _URL_REDIS: string;
     private readonly _authMiddleware: AuthMiddleware;
     private readonly _handlerError: ErrorHandlerService;
-    private readonly _redisClient;
 
-    constructor(private readonly _authManagement: AuthManagement) {
+    constructor(
+        private readonly _authManagement: AuthManagement,
+        private readonly _redisClient: any,
+    ) {
         this._SECRET = process.env.SECRET_KEY!;
         this._SESION_MS_EXP = process.env.SESION_MS_EXP!;
-        this._URL_REDIS = process.env.URL_REDIS!;
         this._authMiddleware = new AuthMiddleware(this._SECRET);
         this._handlerError = new ErrorHandlerService();
-
-        this._redisClient = createClient({
-            url: this._URL_REDIS,
-        });
-
-        this._redisClient.connect().catch(console.error);
     }
 
     private async storeTokenInRedis(userId: string, token: string) {
         const expiryTime = Number(this._SESION_MS_EXP) / 1000;
-        await this._redisClient.setEx(userId, expiryTime, token).catch(err => {
-            throw new HttpError("000001");
-        });
+        await this._redisClient.setEx(userId, expiryTime, token)
+            .catch((err: any) => {
+                throw new HttpError("000001");
+            });
     }
 
     private async getTokenFromRedis(userId: string) {
-        const token = await this._redisClient.get(userId).catch(err => {
+        try {
+            const token = await this._redisClient.get(userId);
+            return token;
+        } catch (err) {
+            console.error('Error retrieving token from Redis:', err);
             throw new HttpError("000002");
-        });
-        return token;
+        }
     }
 
     async authentication(req: Request, res: Response) {
@@ -76,9 +73,10 @@ export class AuthController {
 
             if (!token) throw new HttpError("000003");
 
-            const response = await this._redisClient.del(nickname).catch(err => {
-                throw new HttpError("000004");
-            });
+            const response = await this._redisClient.del(nickname)
+                .catch((err: any) => {
+                    throw new HttpError("000004");
+                });
 
             if (response === 1) {
                 return res.status(200).json({ message: 'Logout successful' });
