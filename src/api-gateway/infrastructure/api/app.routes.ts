@@ -6,6 +6,7 @@ import { RouteGroup } from "../../domain/entities/route-group.entity";
 import apiGatewayRoutes from "./api-gateway.routes";
 import authRoutes from "../../../microservices/auth/infraestructure/api/auth.routes";
 import personsRoutes from "../../../microservices/users/infrastructure/api/persons.routes";
+import rolesRoutes from "../../../microservices/security/infraestructure/api/roles.routes";
 import usersRoutes from "../../../microservices/users/infrastructure/api/users.routes";
 
 export class AppRoutes {
@@ -20,16 +21,20 @@ export class AppRoutes {
       router: apiGatewayRoutes
     },
     {
-      path: `${this.base}person`,
-      router: personsRoutes
+      path: `${this.base}auth`,
+      router: authRoutes
     },
     {
       path: `${this.base}user`,
       router: usersRoutes
     },
     {
-      path: `${this.base}auth`,
-      router: authRoutes
+      path: `${this.base}person`,
+      router: personsRoutes
+    },
+    {
+      path: `${this.base}role`,
+      router: rolesRoutes
     },
   ];
 

@@ -1,0 +1,51 @@
+import { RoleEntity } from "../../domain/entities/role.entity";
+import { RoleModel } from "../../infraestructure/models/role.model";
+import { RolesRepository } from "../../domain/repositories/roles.repository";
+
+export class RoleManagement {
+    constructor(
+        private readonly _rolesRepository: RolesRepository
+    ) { }
+
+    async getList({ limit, offset }: { limit: number; offset: number }): Promise<{ rows: RoleModel[]; count: number; }> {
+        try {
+            return await this._rolesRepository.getList({ limit, offset });
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    async get(id: string): Promise<RoleModel | null> {
+        try {
+            return await this._rolesRepository.get(id);
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    async add(person: RoleEntity): Promise<RoleEntity | null> {
+        try {
+            return await this._rolesRepository.add(person);
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    async edit(id: string, person: RoleEntity): Promise<RoleEntity | null> {
+        try {
+            const resultRole = await this._rolesRepository.edit(id, person);
+            return resultRole;
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    async delete(id: string): Promise<RoleModel | null> {
+        try {
+            const resultRole = await this._rolesRepository.delete(id);
+            return resultRole;
+        } catch (e) {
+            throw e;
+        }
+    }
+}

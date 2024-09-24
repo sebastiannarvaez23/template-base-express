@@ -1,4 +1,5 @@
 import { Column, CreatedAt, DataType, DeletedAt, Model, Table, UpdatedAt, BelongsTo } from 'sequelize-typescript';
+
 import { UserModel } from './user.model';
 
 @Table({
@@ -19,30 +20,35 @@ export class PersonModel extends Model {
   @Column({
     type: DataType.STRING,
     field: 'first_name',
+    allowNull: false,
   })
   declare firstName: string;
 
   @Column({
     type: DataType.STRING,
     field: 'last_name',
+    allowNull: false,
   })
   declare lastName: string;
 
   @Column({
     type: DataType.STRING,
     field: 'email',
+    allowNull: false,
   })
   declare email: string;
 
   @Column({
     type: DataType.STRING,
     field: 'phone',
+    allowNull: false,
   })
   declare phone: string;
 
   @Column({
     type: DataType.DATE,
     field: 'birth_date',
+    allowNull: false,
   })
   declare birthDate: Date;
 
