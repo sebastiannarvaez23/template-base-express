@@ -1,6 +1,7 @@
-import { Column, CreatedAt, DataType, DeletedAt, Model, Table, UpdatedAt, BelongsTo } from 'sequelize-typescript';
+import { Column, CreatedAt, DataType, DeletedAt, Model, Table, UpdatedAt, BelongsTo, ForeignKey } from 'sequelize-typescript';
 
 import { UserModel } from './user.model';
+import { RoleModel } from '../../../security/infraestructure/models/role.model';
 
 @Table({
   timestamps: true,
@@ -60,6 +61,14 @@ export class PersonModel extends Model {
   })
   declare userId: string;
 
+  @ForeignKey(() => RoleModel)
+  @Column({
+    type: DataType.UUID,
+    field: 'role_id',
+    allowNull: false,
+  })
+  declare roleId: string;
+
   @CreatedAt
   @Column({
     type: DataType.DATE,
@@ -86,4 +95,10 @@ export class PersonModel extends Model {
     targetKey: 'id',
   })
   declare user: UserModel;
+
+  @BelongsTo(() => RoleModel, {
+    foreignKey: 'roleId',
+    targetKey: 'id',
+  })
+  declare role: RoleModel;
 }

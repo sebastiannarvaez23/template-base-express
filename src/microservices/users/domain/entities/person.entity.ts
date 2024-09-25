@@ -1,3 +1,5 @@
+import { RoleEntity } from "../../../security/domain/entities/role.entity";
+
 export interface PersonEntity {
     id?: string;
     firstName?: string;
@@ -5,6 +7,7 @@ export interface PersonEntity {
     email?: string;
     phone?: string;
     birthDate?: Date;
+    role?: RoleEntity;
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;

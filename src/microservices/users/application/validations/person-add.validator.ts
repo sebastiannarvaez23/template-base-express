@@ -10,7 +10,8 @@ export class PersonAddValidator extends BaseValidator<PersonEntity> {
             email: [isRequired, isString, isEmail, maxLength(100)],
             phone: [isRequired, isString, minLength(10), maxLength(10), isNumericString],
             birthDate: [isRequired, isDate],
-            userId: [isRequired, isUUID]
+            userId: [isRequired, isUUID],
+            roleId: [isRequired, isUUID],
         });
     }
 }
