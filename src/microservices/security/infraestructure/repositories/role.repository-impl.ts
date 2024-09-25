@@ -4,6 +4,7 @@ import { HttpError } from "../../../../api-gateway/domain/entities/error.entity"
 import { RoleEntity } from "../../domain/entities/role.entity";
 import { RoleModel } from "../models/role.model";
 import { RolesRepository } from "../../domain/repositories/roles.repository";
+import { ServiceModel } from "../models/service.model";
 
 export class RolesRepositoryImpl implements RolesRepository {
 
@@ -13,6 +14,12 @@ export class RolesRepositoryImpl implements RolesRepository {
                 order: [["createdAt", "desc"]],
                 limit: limit,
                 offset: offset,
+                include: [{
+                    model: ServiceModel,
+                    through: {
+                        attributes: []
+                    }
+                }],
             });
         } catch (e) {
             console.debug(e);

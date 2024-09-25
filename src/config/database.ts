@@ -4,6 +4,7 @@ import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 
 import { PersonModel } from '../microservices/users/infrastructure/models/person.model';
 import { RoleModel } from '../microservices/security/infraestructure/models/role.model';
+import { RoleServiceModel } from '../microservices/security/infraestructure/models/role-service.model';
 import { ServiceModel } from '../microservices/security/infraestructure/models/service.model';
 import { UserModel } from '../microservices/users/infrastructure/models/user.model';
 
@@ -25,7 +26,7 @@ export class DatabaseConfig {
             host: host,
             port: 5432,
             dialect: driver,
-            models: [UserModel, PersonModel, RoleModel, ServiceModel],
+            models: [UserModel, PersonModel, RoleModel, ServiceModel, RoleServiceModel],
         };
 
         this.sequelize = new Sequelize(name, user, password, databaseOptions);

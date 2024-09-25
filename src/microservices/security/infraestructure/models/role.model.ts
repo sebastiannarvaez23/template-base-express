@@ -47,6 +47,6 @@ export class RoleModel extends Model {
     })
     declare deletedAt: Date;
 
-    /* @BelongsToMany(() => ServiceModel, () => RoleServiceModel)
-    services!: ServiceModel[]; */
+    @BelongsToMany(() => ServiceModel, () => RoleServiceModel)
+    services!: ServiceModel[];
 }
