@@ -25,7 +25,7 @@ export class ServicesRepositoryImpl implements ServicesRepository {
             const service = await ServiceModel.findOne(
                 { where: { id } });
             if (!service) {
-                throw new HttpError("020001");
+                throw new HttpError("040001");
             }
             return service;
         } catch (error) {
@@ -54,7 +54,7 @@ export class ServicesRepositoryImpl implements ServicesRepository {
                 },
                 returning: true
             });
-            if (!editedService[0]) throw new HttpError("020001")
+            if (!editedService[0]) throw new HttpError("040001")
             return editedService[0];
         } catch (error) {
             throw error;
@@ -67,7 +67,7 @@ export class ServicesRepositoryImpl implements ServicesRepository {
                 where: { id: id }
             });
             if (!serviceToDelete) {
-                throw new HttpError("020001");
+                throw new HttpError("040001");
             }
             await serviceToDelete.destroy();
             return serviceToDelete;

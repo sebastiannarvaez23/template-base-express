@@ -1,0 +1,7 @@
+{
+    "030001": {
+        "serverStatusCode": 404,
+        "messageClient": "Role not found",
+        "messageLog": "Role not found"
+    }
+}

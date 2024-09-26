@@ -32,7 +32,7 @@ export class RolesRepositoryImpl implements RolesRepository {
             const person = await RoleModel.findOne(
                 { where: { id } });
             if (!person) {
-                throw new HttpError("020001");
+                throw new HttpError("030001");
             }
             return person;
         } catch (error) {
@@ -61,7 +61,7 @@ export class RolesRepositoryImpl implements RolesRepository {
                 },
                 returning: true
             });
-            if (!editedPerson[0]) throw new HttpError("020001")
+            if (!editedPerson[0]) throw new HttpError("030001")
             return editedPerson[0];
         } catch (error) {
             throw error;
@@ -74,7 +74,7 @@ export class RolesRepositoryImpl implements RolesRepository {
                 where: { id: id }
             });
             if (!personToDelete) {
-                throw new HttpError("020001");
+                throw new HttpError("030001");
             }
             await personToDelete.destroy();
             return personToDelete;
