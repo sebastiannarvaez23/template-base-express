@@ -1,10 +1,8 @@
 import { config } from 'dotenv';
-import jwt from 'jsonwebtoken';
 
+import { EncryptionService } from '../../../../api-gateway/services/encryption.service';
 import { UserEntity } from "../../domain/entities/user.entity";
 import { UsersRepository } from '../../domain/repositories/users.repository';
-import { AuthEntity } from '../../../auth/domain/entities/auth.entity';
-import { HttpError } from '../../../../api-gateway/domain/entities/error.entity';
 
 config();
 
@@ -15,6 +13,7 @@ export class UserManagement {
 
     constructor(
         private readonly _userRepository: UsersRepository,
+        private readonly _encriptionService: EncryptionService,
     ) {
         this._SECRET = process.env.SECRET_KEY!;
         this._SESION_MS_EXP = Number(process.env.SESION_MS_EXP)!;
@@ -22,6 +21,7 @@ export class UserManagement {
 
     async add(user: UserEntity): Promise<UserEntity | null> {
         try {
+            user.password = this._encriptionService.encrypt(user.password!);
             return await this._userRepository.add(user);
         } catch (e) {
             throw e;
