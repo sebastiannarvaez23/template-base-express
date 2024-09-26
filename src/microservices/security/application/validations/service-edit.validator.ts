@@ -5,7 +5,8 @@ import { ServiceEntity } from "../../domain/entities/service.entity";
 export class ServiceEditValidator extends BaseValidator<ServiceEntity> {
     constructor() {
         super({
-
+            name: [isRequired, isString, maxLength(70)],
+            code: [isRequired, isNumericString, maxLength(6)]
         });
     }
 }
