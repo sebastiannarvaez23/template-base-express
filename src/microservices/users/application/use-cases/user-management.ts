@@ -8,16 +8,10 @@ config();
 
 export class UserManagement {
 
-    private readonly _SECRET: string;
-    private readonly _SESION_MS_EXP: number;
-
     constructor(
         private readonly _userRepository: UsersRepository,
         private readonly _encriptionService: EncryptionService,
-    ) {
-        this._SECRET = process.env.SECRET_KEY!;
-        this._SESION_MS_EXP = Number(process.env.SESION_MS_EXP)!;
-    }
+    ) { }
 
     async add(user: UserEntity): Promise<UserEntity | null> {
         try {
