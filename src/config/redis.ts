@@ -1,23 +1,52 @@
 import { config } from 'dotenv';
 import { createClient } from 'redis';
+import { HttpError } from '../api-gateway/domain/entities/error.entity';
 
 config();
 
 export class RedisConfig {
 
-    public redisClient: any;
+    private readonly _redisClient: any;
+    private readonly _redisUrl: string;
+    private readonly _SESION_MS_EXP: string;
 
     constructor() {
-        const redisUrl: string = process.env.URL_REDIS!;
-        this.redisClient = createClient({ url: redisUrl });
-        this.redisClient.connect();
+        this._redisUrl = process.env.URL_REDIS!;
+        this._SESION_MS_EXP = process.env.SESION_MS_EXP!;
+        this._redisClient = createClient({ url: this._redisUrl });
+
+        this._redisClient.on('error', (err: any) => {
+            console.error('Redis Client Error', err);
+        });
+
+        this._redisClient.connect();
     }
 
-    public getRedisClient() {
-        return this.redisClient;
+    async storeTokenInRedis(nickname: string, token: string) {
+        const expiryTime = Number(this._SESION_MS_EXP);
+        console.log({ expiryTime });
+        if (isNaN(expiryTime)) {
+            throw new HttpError("Invalid expiry time");
+        }
+
+        await this._redisClient.setEx(nickname, expiryTime, token)
+            .catch((err: any) => {
+                console.error('Error storing token in Redis:', err);
+                throw new HttpError("000001");
+            });
+    }
+
+    async getTokenFromRedis(nickname: string) {
+        try {
+            const token = await this._redisClient.get(nickname);
+            return token;
+        } catch (err) {
+            console.error('Error retrieving token from Redis:', err);
+            throw new HttpError("000002");
+        }
     }
 
     public closeConn() {
-        this.redisClient.close();
+        this._redisClient.quit();
     }
 }

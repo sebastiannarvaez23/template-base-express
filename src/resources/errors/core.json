@@ -48,5 +48,15 @@
         "serverStatusCode": 400,
         "messageClient": "A record with the same data already exists. Please verify the information provided.",
         "messageLog": "Unique constraint violation: A record with the same unique field(s) already exists"
+    },
+    "000010": {
+        "serverStatusCode": 403,
+        "messageClient": "Access denied. Not authorized.",
+        "messageLog": "Access denied. Not authorized"
+    },
+    "000011": {
+        "serverStatusCode": 403,
+        "messageClient": "Access denied. You do not have permissions for this service.",
+        "messageLog": "Access denied. You do not have permissions for this service"
     }
 }

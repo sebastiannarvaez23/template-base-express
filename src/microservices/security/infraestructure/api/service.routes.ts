@@ -1,10 +1,12 @@
 import express from 'express';
 
-import { serviceController } from '../dependencies';
 import { AuthMiddleware } from '../../../auth/infraestructure/middlewares/auth.middleware';
+import { RedisConfig } from '../../../../config/redis';
+import { serviceController } from '../dependencies';
 
 const servicesRoutes = express.Router();
-const authMiddleware = new AuthMiddleware(process.env.SECRET_KEY!);
+const redis: any = new RedisConfig();
+const authMiddleware = new AuthMiddleware(process.env.SECRET_KEY!, redis);
 
 servicesRoutes.get("/",
     authMiddleware.authenticateToken,

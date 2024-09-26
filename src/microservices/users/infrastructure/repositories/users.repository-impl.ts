@@ -1,6 +1,9 @@
 import { Optional, UniqueConstraintError } from "sequelize";
 
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
+import { PersonModel } from "../models/person.model";
+import { RoleModel } from "../../../security/infraestructure/models/role.model";
+import { ServiceModel } from "../../../security/infraestructure/models/service.model";
 import { UserEntity } from "../../domain/entities/user.entity";
 import { UserModel } from "../models/user.model";
 import { UsersRepository } from "../../domain/repositories/users.repository";
@@ -18,10 +21,29 @@ export class UsersRepositoryImpl implements UsersRepository {
         }
     }
 
-    async getUserByNickName(nickname: string): Promise<UserModel | null> {
+    async getUserByNickName(nickname: string): Promise<PersonModel | null> {
         try {
-            return await UserModel.findOne({ where: { nickname } });
+            return await PersonModel.findOne({
+                include: [
+                    {
+                        model: UserModel,
+                        where: { nickname },
+                    },
+                    {
+                        model: RoleModel,
+                        include: [
+                            {
+                                model: ServiceModel,
+                                through: {
+                                    attributes: []
+                                }
+                            }
+                        ]
+                    }
+                ]
+            });
         } catch (error) {
+            console.error(error);
             if (error instanceof UniqueConstraintError) {
                 throw error;
             }

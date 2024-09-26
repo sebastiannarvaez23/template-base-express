@@ -43,7 +43,6 @@ export abstract class BaseValidator<T> {
                 delete errors[field];
             }
         }
-
         return { valid, errors };
     }
 }
@@ -51,11 +50,9 @@ export abstract class BaseValidator<T> {
 export const validationMiddleware = <T>(validator: BaseValidator<T>) => {
     return (req: Request, res: Response, next: NextFunction) => {
         const { valid, errors } = validator.validate(req.body);
-
         if (!valid) {
             return res.status(400).json({ errors });
         }
-
         next();
     };
 };

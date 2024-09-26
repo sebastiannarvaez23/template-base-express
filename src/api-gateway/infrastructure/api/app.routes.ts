@@ -9,12 +9,14 @@ import personsRoutes from "../../../microservices/users/infrastructure/api/perso
 import rolesRoutes from "../../../microservices/security/infraestructure/api/roles.routes";
 import servicesRoutes from "../../../microservices/security/infraestructure/api/service.routes";
 import usersRoutes from "../../../microservices/users/infrastructure/api/users.routes";
+import { RedisConfig } from "../../../config/redis";
 
 export class AppRoutes {
   private base: string = '/api/v1/';
   private SECRET: string = process.env.SECRET_KEY!;
+  private redis: any = new RedisConfig();
 
-  private authMiddleware: AuthMiddleware = new AuthMiddleware(this.SECRET);
+  private authMiddleware: AuthMiddleware = new AuthMiddleware(this.SECRET, this.redis);
 
   private routeGroup: RouteGroup[] = [
     {

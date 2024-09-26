@@ -1,10 +1,14 @@
 import express from 'express';
 
-import { personController } from '../dependencies';
 import { AuthMiddleware } from '../../../auth/infraestructure/middlewares/auth.middleware';
+import { AuthorizationMiddleware } from '../../../auth/infraestructure/middlewares/authorization.middleware';
+import { personController } from '../dependencies';
+import { RedisConfig } from '../../../../config/redis';
 
 const personsRoutes = express.Router();
-const authMiddleware = new AuthMiddleware(process.env.SECRET_KEY!);
+const redis: any = new RedisConfig();
+const authMiddleware = new AuthMiddleware(process.env.SECRET_KEY!, redis);
+const authorizationMiddleware = new AuthorizationMiddleware();
 
 personsRoutes.get("/",
     authMiddleware.authenticateToken,
@@ -16,6 +20,7 @@ personsRoutes.get("/:id",
 
 personsRoutes.post("/",
     authMiddleware.authenticateToken,
+    authorizationMiddleware.checkAccess('00001'),
     personController.add.bind(personController));
 
 personsRoutes.put("/:id",

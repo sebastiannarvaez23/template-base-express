@@ -21,19 +21,25 @@ export class AuthManagement {
 
     async authentication(auth: AuthEntity): Promise<{ token: string | null }> {
         try {
-            const user = await this._userRepository.getUserByNickName(auth.nickname);
-            if (!user) throw new HttpError("010001");
-            if (user.password !== auth.password) throw new HttpError("010002");
+            const person = await this._userRepository.getUserByNickName(auth.nickname);
+
+            if (!person?.user) throw new HttpError("010001");
+            if (person?.user.password !== auth.password) throw new HttpError("010002");
+
+            const role = person.role.name;
+            const services = person.role.services.map((service: any) => service.code);
 
             const token = jwt.sign({
-                sub: user.id,
-                name: user.nickname,
-                exp: Date.now() + 60 * this._SESION_MS_EXP
+                sub: person.user.id,
+                name: person.user.nickname,
+                role: role,
+                services: services,
+                exp: Date.now() + 60 * this._SESION_MS_EXP,
             }, this._SECRET);
 
-            return await { token };
+            return { token };
+
         } catch (e) {
-            console.debug(e);
             throw e;
         }
     }

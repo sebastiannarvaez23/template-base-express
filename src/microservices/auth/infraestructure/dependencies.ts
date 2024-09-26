@@ -7,6 +7,4 @@ const redisConfig = new RedisConfig()
 const usersRepository = new UsersRepositoryImpl();
 const authManagement = new AuthManagement(usersRepository);
 
-const redisClient = redisConfig.getRedisClient();
-
-export const authController = new AuthController(authManagement, redisClient);
+export const authController = new AuthController(authManagement, redisConfig);
