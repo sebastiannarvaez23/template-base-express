@@ -1,4 +1,4 @@
-import { validationMiddleware } from "../../../../api-gateway/middlewares/validators/validation.middleware";
+import { validationMiddleware } from "../../../../lib-core/middlewares/validators/validation.middleware";
 import { ServiceAddValidator } from "../../application/validations/service-add.validator";
 import { ServiceEditValidator } from "../../application/validations/service-edit.validator";
 

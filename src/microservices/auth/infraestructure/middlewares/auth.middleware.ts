@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
-import { validationMiddleware } from "../../../../api-gateway/middlewares/validators/validation.middleware";
+import { validationMiddleware } from "../../../../lib-core/middlewares/validators/validation.middleware";
 import { AuthValidator } from "../../application/validations/auth.validator";
 
 declare global {

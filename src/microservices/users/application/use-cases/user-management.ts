@@ -1,8 +1,8 @@
-import { config } from 'dotenv';
+import { config } from "dotenv";
 
-import { EncryptionService } from '../../../../api-gateway/services/encryption.service';
+import { EncryptionService } from "../../../../lib-core/services/encryption.service";
 import { UserEntity } from "../../domain/entities/user.entity";
-import { UsersRepository } from '../../domain/repositories/users.repository';
+import { UsersRepository } from "../../domain/repositories/users.repository";
 
 config();
 

@@ -1,4 +1,4 @@
-import { EncryptionService } from "../../../api-gateway/services/encryption.service";
+import { EncryptionService } from "../../../lib-core/services/encryption.service";
 import { PersonManagement } from "../application/use-cases/person-management";
 import { PersonsController } from "./api/persons.controller";
 import { PersonsRepositoryImpl } from "./repositories/persons.repository-impl";

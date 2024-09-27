@@ -1,5 +1,5 @@
-import { BaseValidator } from "../../../../api-gateway/middlewares/validators/validation.middleware";
-import { isRequired, isString, isEmail, minLength, isDate, maxLength, isNumericString } from "../../../../api-gateway/middlewares/validators/validation.type";
+import { BaseValidator } from "../../../../lib-core/middlewares/validators/validation.middleware";
+import { isRequired, isString, isEmail, minLength, isDate, maxLength, isNumericString } from "../../../../lib-core/middlewares/validators/validation.type";
 import { PersonEntity } from "../../domain/entities/person.entity";
 
 export class PersonEditValidator extends BaseValidator<PersonEntity> {

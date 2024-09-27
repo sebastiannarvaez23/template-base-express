@@ -1,6 +1,7 @@
-import { HttpError } from '../domain/entities/error.entity';
-import { Request, Response } from 'express';
-import { UniqueConstraintError, ValidationErrorItem, DatabaseError } from 'sequelize';
+import { Request, Response } from "express";
+import { UniqueConstraintError, ValidationErrorItem, DatabaseError } from "sequelize";
+
+import { HttpError } from "../../api-gateway/domain/entities/error.entity";
 
 export class ErrorHandlerService {
     handle(err: HttpError | Error, req: Request, res: Response) {

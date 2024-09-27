@@ -2,8 +2,9 @@ import { Request, Response } from "express";
 
 import { AuthManagement } from "../../application/use-cases/auth-management";
 import { AuthMiddleware } from "../middlewares/auth.middleware";
-import { ErrorHandlerService } from "../../../../api-gateway/services/error-handler.service";
+import { ErrorHandlerService } from "../../../../lib-core/services/error-handler.service";
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
+import { RedisConfig } from "../../../../config/redis";
 
 export class AuthController {
 
@@ -13,7 +14,7 @@ export class AuthController {
 
     constructor(
         private readonly _authManagement: AuthManagement,
-        private readonly _redis: any,
+        private readonly _redis: RedisConfig,
     ) {
         this._SECRET = process.env.SECRET_KEY!;
         this._authMiddleware = new AuthMiddleware(this._SECRET, _redis);
@@ -32,9 +33,7 @@ export class AuthController {
 
                 const result = await this._authManagement.authentication(req.body);
                 const token = result.token;
-
                 await this._redis.storeTokenInRedis(nickname, token!);
-
                 res.status(200).json({ token });
             } catch (error) {
                 this._handlerError.handle(error as HttpError | Error, req, res);
@@ -53,7 +52,7 @@ export class AuthController {
 
             if (!token) throw new HttpError("000003");
 
-            const response = await this._redis.del(nickname)
+            const response = await this._redis.deleteToken(nickname)
                 .catch((err: any) => {
                     throw new HttpError("000004");
                 });

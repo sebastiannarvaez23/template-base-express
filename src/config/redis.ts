@@ -8,11 +8,11 @@ export class RedisConfig {
 
     private readonly _redisClient: any;
     private readonly _redisUrl: string;
-    private readonly _SESION_MS_EXP: string;
+    private readonly _SESION_MS_EXP: number;
 
     constructor() {
         this._redisUrl = process.env.URL_REDIS!;
-        this._SESION_MS_EXP = process.env.SESION_MS_EXP!;
+        this._SESION_MS_EXP = Number(process.env.SESION_MS_EXP!);
         this._redisClient = createClient({ url: this._redisUrl });
 
         this._redisClient.on('error', (err: any) => {
@@ -23,8 +23,7 @@ export class RedisConfig {
     }
 
     async storeTokenInRedis(nickname: string, token: string) {
-        const expiryTime = Number(this._SESION_MS_EXP);
-        console.log({ expiryTime });
+        const expiryTime = Date.now() + 60 * this._SESION_MS_EXP;
         if (isNaN(expiryTime)) {
             throw new HttpError("Invalid expiry time");
         }
@@ -38,8 +37,16 @@ export class RedisConfig {
 
     async getTokenFromRedis(nickname: string) {
         try {
-            const token = await this._redisClient.get(nickname);
-            return token;
+            return await this._redisClient.get(nickname);
+        } catch (err) {
+            console.error('Error retrieving token from Redis:', err);
+            throw new HttpError("000002");
+        }
+    }
+
+    async deleteToken(nickname: string) {
+        try {
+            return await this._redisClient.del(nickname);
         } catch (err) {
             console.error('Error retrieving token from Redis:', err);
             throw new HttpError("000002");
