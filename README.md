@@ -10,7 +10,7 @@
 - **Autenticación**: JWT y sistema White List incluido.
 
 ### Alternativas
-Existen diferentes Frameworks como Django que cuenta con estas caracteristicas y más para desarrollar un backend robusto, sin embargo esta plantilla cuenta con la base escalable para una arquitectura basada en microservicios, pruebala y hazla tan flexible como la necesites.
+Existen diferentes Frameworks como Django que cuenta con estas caracteristicas y más para desarrollar un backend robusto, sin embargo esta plantilla cuenta con la base escalable para una arquitectura basada en microservicios con distribución hexagonal, pruebala y hazla tan flexible como la necesites.
 
 ## Insignias
 
