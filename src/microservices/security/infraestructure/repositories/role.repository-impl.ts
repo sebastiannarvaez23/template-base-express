@@ -82,4 +82,32 @@ export class RolesRepositoryImpl implements RolesRepository {
             throw error;
         }
     }
+
+    async addServiceAssignment(roleId: string, services: string[]): Promise<RoleModel> {
+        try {
+            // Buscar el rol
+            let role = await RoleModel.findOne({
+                where: { id: roleId }
+            });
+            if (!role) {
+                throw new HttpError("030001");
+            }
+            const serviceInstances = await ServiceModel.findAll({
+                where: { id: services }
+            });
+            if (serviceInstances.length !== services.length) {
+                throw new HttpError("040002");
+            }
+            await role.$add('services', serviceInstances);
+            role = await RoleModel.findOne({
+                where: { id: roleId },
+                include: [ServiceModel],
+            });
+            if (!role) throw new HttpError("030001");
+            return role;
+
+        } catch (error) {
+            throw error;
+        }
+    }
 }

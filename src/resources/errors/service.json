@@ -3,5 +3,10 @@
         "serverStatusCode": 404,
         "messageClient": "Service not found",
         "messageLog": "Service not found"
+    },
+    "040002": {
+        "serverStatusCode": 404,
+        "messageClient": "Some of the services do not exist, please validate the information",
+        "messageLog": "Some of the services do not exist, please validate the information"
     }
 }
