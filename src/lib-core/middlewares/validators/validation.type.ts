@@ -66,3 +66,31 @@ export const isBoolean = (value: any): boolean | string => {
 export const isNullable = (value: any): boolean | string => {
     return value === undefined || value === null ? true : 'Value cannot be null.';
 };
+
+export const isArray = (
+    typeValidator: (value: any) => boolean | string,
+    allowDuplicates: boolean = true
+) => (value: any): boolean | string => {
+    // Verifica si el valor es un array
+    if (!Array.isArray(value)) {
+        return 'Must be an array.';
+    }
+
+    // Verifica que cada elemento del array cumpla con el validador de tipo
+    for (const element of value) {
+        const isValid = typeValidator(element);
+        if (isValid !== true) {
+            return `Array element is invalid: ${isValid}`;
+        }
+    }
+
+    // Verifica duplicados si no se permiten
+    if (!allowDuplicates) {
+        const uniqueElements = new Set(value);
+        if (uniqueElements.size !== value.length) {
+            return 'Array contains duplicate values, which are not allowed.';
+        }
+    }
+
+    return true;
+};

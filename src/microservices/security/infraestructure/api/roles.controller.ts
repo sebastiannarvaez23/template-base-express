@@ -71,11 +71,13 @@ export class RolesController {
     };
 
     async addServiceAssignment(req: Request, res: Response) {
-        try {
-            const { id } = req.params;
-            res.status(200).json(await this._roleManagement.addServiceAssignment(id, req.body));
-        } catch (error) {
-            this._handlerError.handle(error as HttpError | Error, req, res);
-        }
+        await this._roleMiddleware.validateRolAddServiceAssignment(req, res, async () => {
+            try {
+                const { id } = req.params;
+                res.status(200).json(await this._roleManagement.addServiceAssignment(id, req.body));
+            } catch (error) {
+                this._handlerError.handle(error as HttpError | Error, req, res);
+            }
+        });
     }
 }
