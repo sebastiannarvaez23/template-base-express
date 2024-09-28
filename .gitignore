@@ -1,3 +1,8 @@
+models/
+postgres/
+redis/
+seeders/
+
 # Logs
 logs
 *.log

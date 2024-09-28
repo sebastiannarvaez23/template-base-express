@@ -20,11 +20,12 @@ export class DatabaseConfig {
         const user: string = process.env.DB_USER!;
         const password: string = process.env.DB_PASSWORD!;
         const host: string = process.env.DB_HOST!;
+        const port: number = Number(process.env.DB_PORT!);
         const driver: Dialect = process.env.DB_DRIVER as Dialect;
 
         const databaseOptions: SequelizeOptions = {
             host: host,
-            port: 5432,
+            port: port,
             dialect: driver,
             models: [UserModel, PersonModel, RoleModel, ServiceModel, RoleServiceModel],
         };
@@ -33,6 +34,13 @@ export class DatabaseConfig {
     }
 
     public getDatabase() {
+        this.sequelize.sync({ alter: true })
+            .then(() => {
+                console.log('Base de datos y tablas sincronizadas');
+            })
+            .catch((err) => {
+                console.error('Error al sincronizar:', err);
+            });
         return this.sequelize;
     }
 }
