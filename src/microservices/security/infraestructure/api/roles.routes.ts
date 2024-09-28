@@ -38,6 +38,6 @@ rolesRoutes.post("/service-assignment/:id",
 rolesRoutes.delete("/service-assignment/:id",
     authMiddleware.authenticateToken,
     //authorizationMiddleware.checkAccess('0307'),
-    roleController.delete.bind(roleController));
+    roleController.deleteServiceAssignment.bind(roleController));
 
 export default rolesRoutes;

@@ -57,4 +57,13 @@ export class RoleManagement {
             throw e;
         }
     }
+
+    async deleteServiceAssignment(id: string, services: { services: string[] }): Promise<RoleModel | null> {
+        try {
+            const resultRole = await this._rolesRepository.deleteServiceAssignment(id, services.services);
+            return resultRole;
+        } catch (e) {
+            throw e;
+        }
+    }
 }

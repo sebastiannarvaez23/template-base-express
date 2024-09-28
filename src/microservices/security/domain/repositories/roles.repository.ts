@@ -8,4 +8,5 @@ export interface RolesRepository {
     edit(id: string, person: RoleEntity): Promise<RoleModel>;
     delete(id: string): Promise<RoleModel>;
     addServiceAssignment(roleId: string, services: string[]): Promise<RoleModel>;
+    deleteServiceAssignment(roleId: string, services: string[]): Promise<RoleModel>;
 }
