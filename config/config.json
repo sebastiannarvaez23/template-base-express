@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "root",
+    "password": "root",
+    "database": "tebaex",
+    "host": "127.0.0.1",
+    "port": 7894,
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "root",
+    "password": "root",
+    "database": "tebaex",
+    "host": "127.0.0.1",
+    "port": 7894,
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "root",
+    "password": "root",
+    "database": "tebaex",
+    "host": "127.0.0.1",
+    "port": 7894,
+    "dialect": "postgres"
+  }
+}
