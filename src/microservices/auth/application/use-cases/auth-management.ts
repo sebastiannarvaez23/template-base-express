@@ -10,13 +10,13 @@ config();
 export class AuthManagement {
 
     private readonly _SECRET: string;
-    private readonly _SESION_MS_EXP: number;
+    private readonly _SESION_SG_EXP: number;
 
     constructor(
         private readonly _userRepository: UsersRepository,
     ) {
         this._SECRET = process.env.SECRET_KEY!;
-        this._SESION_MS_EXP = Number(process.env.SESION_MS_EXP)!;
+        this._SESION_SG_EXP = Number(process.env.SESION_SG_EXP)!;
     }
 
     async authentication(auth: AuthEntity): Promise<{ token: string | null }> {
@@ -34,7 +34,7 @@ export class AuthManagement {
                 name: person.user.nickname,
                 role: role,
                 services: services,
-                exp: Date.now() + 60 * this._SESION_MS_EXP,
+                exp: Date.now() + this._SESION_SG_EXP * 1000,
             }, this._SECRET);
 
             return { token };

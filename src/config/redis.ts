@@ -8,11 +8,11 @@ export class RedisConfig {
 
     private readonly _redisClient: any;
     private readonly _redisUrl: string;
-    private readonly _SESION_MS_EXP: number;
+    private readonly _SESION_SG_EXP: number;
 
     constructor() {
         this._redisUrl = process.env.URL_REDIS!;
-        this._SESION_MS_EXP = Number(process.env.SESION_MS_EXP!);
+        this._SESION_SG_EXP = Number(process.env.SESION_SG_EXP!);
         this._redisClient = createClient({ url: this._redisUrl });
 
         this._redisClient.on('error', (err: any) => {
@@ -23,7 +23,7 @@ export class RedisConfig {
     }
 
     async storeTokenInRedis(nickname: string, token: string) {
-        const expiryTime = Date.now() + 60 * this._SESION_MS_EXP;
+        const expiryTime = this._SESION_SG_EXP;
         if (isNaN(expiryTime)) {
             throw new HttpError("Invalid expiry time");
         }
