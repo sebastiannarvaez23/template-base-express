@@ -15,11 +15,9 @@ import usersRoutes from "../../../microservices/users/infrastructure/api/users.r
 export class AppRoutes {
 
   private base: string = '/api/v1/';
-  private SECRET: string = process.env.SECRET_KEY!;
   private redis: RedisConfig = new RedisConfig();
   private authValidator: AuthValidator = new AuthValidator();
-
-  private authMiddleware: AuthMiddleware = new AuthMiddleware(this.SECRET, this.redis, this.authValidator);
+  private authMiddleware: AuthMiddleware = new AuthMiddleware(this.redis, this.authValidator);
 
   private routeGroup: RouteGroup[] = [
     {

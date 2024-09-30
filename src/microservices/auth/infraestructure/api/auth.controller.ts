@@ -8,18 +8,12 @@ import { RedisConfig } from "../../../../config/redis";
 
 export class AuthController {
 
-    private readonly _SECRET: string;
-    private readonly _authMiddleware: AuthMiddleware;
-    private readonly _handlerError: ErrorHandlerService;
-
     constructor(
         private readonly _authManagement: AuthManagement,
         private readonly _redis: RedisConfig,
-    ) {
-        this._SECRET = process.env.SECRET_KEY!;
-        this._authMiddleware = new AuthMiddleware(this._SECRET, _redis);
-        this._handlerError = new ErrorHandlerService();
-    }
+        private readonly _authMiddleware: AuthMiddleware,
+        private readonly _handlerError: ErrorHandlerService
+    ) { }
 
     async authentication(req: Request, res: Response) {
         await this._authMiddleware.validateAuth(req, res, async () => {

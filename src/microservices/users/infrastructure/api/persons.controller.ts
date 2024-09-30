@@ -8,15 +8,13 @@ import { PersonMiddleware } from "../middlewares/person.middleware";
 export class PersonsController {
 
     private readonly _LIST_PAGINATION_LIMIT: number;
-    private readonly _personMiddleware: PersonMiddleware;
-    private readonly _handlerError: ErrorHandlerService;
 
     constructor(
         private readonly _personManagement: PersonManagement,
+        private readonly _personMiddleware: PersonMiddleware,
+        private readonly _handlerError: ErrorHandlerService,
     ) {
         this._LIST_PAGINATION_LIMIT = Number(process.env.LIST_PAGINATION_LIMIT!);
-        this._personMiddleware = new PersonMiddleware();
-        this._handlerError = new ErrorHandlerService();
     }
 
     async getList(req: Request, res: Response) {

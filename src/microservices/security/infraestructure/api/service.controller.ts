@@ -8,15 +8,13 @@ import { ServiceMiddleware } from "../middlewares/service.middleware";
 export class ServicesController {
 
     private readonly _LIST_PAGINATION_LIMIT: number;
-    private readonly _roleMiddleware: ServiceMiddleware;
-    private readonly _handlerError: ErrorHandlerService;
 
     constructor(
         private readonly _serviceManagement: ServiceManagement,
+        private readonly _serviceMiddleware: ServiceMiddleware,
+        private readonly _handlerError: ErrorHandlerService
     ) {
         this._LIST_PAGINATION_LIMIT = Number(process.env.LIST_PAGINATION_LIMIT!);
-        this._roleMiddleware = new ServiceMiddleware();
-        this._handlerError = new ErrorHandlerService();
     }
 
     async getList(req: Request, res: Response) {
@@ -40,7 +38,7 @@ export class ServicesController {
     }
 
     async add(req: Request, res: Response) {
-        await this._roleMiddleware.validateAdd(req, res, async () => {
+        await this._serviceMiddleware.validateAdd(req, res, async () => {
             try {
                 const result = await this._serviceManagement.add(req.body);
                 res.status(200).json(result);
@@ -52,7 +50,7 @@ export class ServicesController {
 
     async edit(req: Request, res: Response) {
         const { id } = req.params;
-        await this._roleMiddleware.validateEdit(req, res, async () => {
+        await this._serviceMiddleware.validateEdit(req, res, async () => {
             try {
                 res.status(200).json(await this._serviceManagement.edit(id, req.body));
             } catch (error) {

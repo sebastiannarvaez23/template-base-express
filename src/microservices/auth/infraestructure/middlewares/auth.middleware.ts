@@ -21,11 +21,10 @@ export class AuthMiddleware {
     private redis: RedisConfig;
 
     constructor(
-        _secret: string,
         _redis: RedisConfig,
         _authValidator: AuthValidator
     ) {
-        this.secret = _secret;
+        this.secret = process.env.SECRET_KEY!;
         this.redis = _redis;
         this.authValidator = _authValidator;
         this.validateAuth = validationMiddleware(this.authValidator);

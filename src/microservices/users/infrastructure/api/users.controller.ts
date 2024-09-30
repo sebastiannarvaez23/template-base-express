@@ -7,15 +7,11 @@ import { UserMiddleware } from "../middlewares/user.middleware";
 
 export class UsersController {
 
-    private readonly _usersMiddleware: UserMiddleware;
-    private readonly _handlerError: ErrorHandlerService;
-
     constructor(
         private readonly _userManagement: UserManagement,
-    ) {
-        this._usersMiddleware = new UserMiddleware();
-        this._handlerError = new ErrorHandlerService();
-    }
+        private readonly _usersMiddleware: UserMiddleware,
+        private readonly _handlerError: ErrorHandlerService,
+    ) { }
 
     async add(req: Request, res: Response) {
         await this._usersMiddleware.validateAdd(req, res, async () => {

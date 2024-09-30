@@ -8,15 +8,13 @@ import { RoleMiddleware } from "../middlewares/role.middleware";
 export class RolesController {
 
     private readonly _LIST_PAGINATION_LIMIT: number;
-    private readonly _roleMiddleware: RoleMiddleware;
-    private readonly _handlerError: ErrorHandlerService;
 
     constructor(
         private readonly _roleManagement: RoleManagement,
+        private readonly _roleMiddleware: RoleMiddleware,
+        private readonly _handlerError: ErrorHandlerService
     ) {
         this._LIST_PAGINATION_LIMIT = Number(process.env.LIST_PAGINATION_LIMIT!);
-        this._roleMiddleware = new RoleMiddleware();
-        this._handlerError = new ErrorHandlerService();
     }
 
     async getList(req: Request, res: Response) {
