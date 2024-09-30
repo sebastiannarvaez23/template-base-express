@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
-import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
-import { validationMiddleware } from "../../../../lib-core/middlewares/validators/validation.middleware";
 import { AuthValidator } from "../../application/validations/auth.validator";
+import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
+import { RedisConfig } from "../../../../config/redis";
+import { validationMiddleware } from "../../../../lib-core/middlewares/validators/validation.middleware";
 
 declare global {
     namespace Express {
@@ -16,16 +17,17 @@ declare global {
 export class AuthMiddleware {
 
     private secret: string;
-    private authValidator;
-    private redis: any;
+    private authValidator: AuthValidator;
+    private redis: RedisConfig;
 
     constructor(
         _secret: string,
-        _redis: any
+        _redis: RedisConfig,
+        _authValidator: AuthValidator
     ) {
         this.secret = _secret;
         this.redis = _redis;
-        this.authValidator = new AuthValidator();
+        this.authValidator = _authValidator;
         this.validateAuth = validationMiddleware(this.authValidator);
     }
 
@@ -33,23 +35,13 @@ export class AuthMiddleware {
 
     public authenticateToken = async (req: Request, res: Response, next: NextFunction) => {
         const token = req.headers.authorization?.split(" ")[1];
-        if (!token) {
-            return next(new HttpError("000003"));
-        }
-
+        if (!token) return next(new HttpError("000003"));
         try {
             const payload = jwt.verify(token, this.secret) as JwtPayload;
-            console.log({ payload });
-
-            if (Date.now() > (payload.exp || 0)) {
-                return next(new HttpError("000006"));
-            }
+            if (Date.now() > (payload.exp || 0)) return next(new HttpError("000006"));
             const nickname = payload.name;
             const storedToken = await this.redis.getTokenFromRedis(nickname);
-            console.log({ storedToken, token });
-            if (storedToken !== token) {
-                return next(new HttpError("000007"));
-            }
+            if (storedToken !== token) return next(new HttpError("000007"));
             req.user = payload;
             next();
         } catch (err) {

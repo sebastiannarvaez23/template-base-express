@@ -2,6 +2,8 @@ import cors from "cors";
 import express, { Application, Request, Response, NextFunction } from "express";
 
 import { AuthMiddleware } from "../../../microservices/auth/infraestructure/middlewares/auth.middleware";
+import { AuthValidator } from "../../../microservices/auth/application/validations/auth.validator";
+import { RedisConfig } from "../../../config/redis";
 import { RouteGroup } from "../../domain/entities/route-group.entity";
 import apiGatewayRoutes from "./api-gateway.routes";
 import authRoutes from "../../../microservices/auth/infraestructure/api/auth.routes";
@@ -9,14 +11,15 @@ import personsRoutes from "../../../microservices/users/infrastructure/api/perso
 import rolesRoutes from "../../../microservices/security/infraestructure/api/roles.routes";
 import servicesRoutes from "../../../microservices/security/infraestructure/api/service.routes";
 import usersRoutes from "../../../microservices/users/infrastructure/api/users.routes";
-import { RedisConfig } from "../../../config/redis";
 
 export class AppRoutes {
+
   private base: string = '/api/v1/';
   private SECRET: string = process.env.SECRET_KEY!;
-  private redis: any = new RedisConfig();
+  private redis: RedisConfig = new RedisConfig();
+  private authValidator: AuthValidator = new AuthValidator();
 
-  private authMiddleware: AuthMiddleware = new AuthMiddleware(this.SECRET, this.redis);
+  private authMiddleware: AuthMiddleware = new AuthMiddleware(this.SECRET, this.redis, this.authValidator);
 
   private routeGroup: RouteGroup[] = [
     {
