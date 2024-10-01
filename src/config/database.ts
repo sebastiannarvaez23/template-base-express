@@ -34,13 +34,15 @@ export class DatabaseConfig {
     }
 
     public getDatabase() {
-        this.sequelize.sync({ alter: true })
-            .then(() => {
-                console.log('Synchronized database and tables');
-            })
-            .catch((err) => {
-                console.error('Error syncing: ', err);
-            });
         return this.sequelize;
+    }
+
+    public async syncDatabase() {
+        try {
+            await this.sequelize.sync({ alter: true });
+            console.log('Synchronized database and tables');
+        } catch (err) {
+            console.error('Error syncing: ', err);
+        }
     }
 }
