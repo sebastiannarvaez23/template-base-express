@@ -9,18 +9,15 @@ export class UsersController {
 
     constructor(
         private readonly _userManagement: UserManagement,
-        private readonly _usersMiddleware: UserMiddleware,
         private readonly _handlerError: ErrorHandlerService,
     ) { }
 
     async add(req: Request, res: Response) {
-        await this._usersMiddleware.validateAdd(req, res, async () => {
-            try {
-                const result = await this._userManagement.add(req.body);
-                res.status(200).json(result);
-            } catch (error) {
-                this._handlerError.handle(error as HttpError | Error, req, res);
-            }
-        });
+        try {
+            const result = await this._userManagement.add(req.body);
+            res.status(200).json(result);
+        } catch (error) {
+            this._handlerError.handle(error as HttpError | Error, req, res);
+        }
     }
 }

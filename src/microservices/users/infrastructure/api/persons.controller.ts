@@ -11,7 +11,6 @@ export class PersonsController {
 
     constructor(
         private readonly _personManagement: PersonManagement,
-        private readonly _personMiddleware: PersonMiddleware,
         private readonly _handlerError: ErrorHandlerService,
     ) {
         this._LIST_PAGINATION_LIMIT = Number(process.env.LIST_PAGINATION_LIMIT!);
