@@ -11,7 +11,6 @@ export class RolesController {
 
     constructor(
         private readonly _roleManagement: RoleManagement,
-        private readonly _roleMiddleware: RoleMiddleware,
         private readonly _handlerError: ErrorHandlerService
     ) {
         this._LIST_PAGINATION_LIMIT = Number(process.env.LIST_PAGINATION_LIMIT!);
@@ -38,25 +37,21 @@ export class RolesController {
     }
 
     async add(req: Request, res: Response) {
-        await this._roleMiddleware.validateAdd(req, res, async () => {
-            try {
-                const result = await this._roleManagement.add(req.body);
-                res.status(200).json(result);
-            } catch (error) {
-                this._handlerError.handle(error as HttpError | Error, req, res);
-            }
-        });
+        try {
+            const result = await this._roleManagement.add(req.body);
+            res.status(200).json(result);
+        } catch (error) {
+            this._handlerError.handle(error as HttpError | Error, req, res);
+        }
     }
 
     async edit(req: Request, res: Response) {
         const { id } = req.params;
-        await this._roleMiddleware.validateEdit(req, res, async () => {
-            try {
-                res.status(200).json(await this._roleManagement.edit(id, req.body));
-            } catch (error) {
-                this._handlerError.handle(error as HttpError | Error, req, res);
-            }
-        });
+        try {
+            res.status(200).json(await this._roleManagement.edit(id, req.body));
+        } catch (error) {
+            this._handlerError.handle(error as HttpError | Error, req, res);
+        }
     }
 
     async delete(req: Request, res: Response) {
@@ -69,24 +64,20 @@ export class RolesController {
     };
 
     async addServiceAssignment(req: Request, res: Response) {
-        await this._roleMiddleware.validateRolAddorDeleteServiceAssignment(req, res, async () => {
-            try {
-                const { id } = req.params;
-                res.status(200).json(await this._roleManagement.addServiceAssignment(id, req.body));
-            } catch (error) {
-                this._handlerError.handle(error as HttpError | Error, req, res);
-            }
-        });
+        try {
+            const { id } = req.params;
+            res.status(200).json(await this._roleManagement.addServiceAssignment(id, req.body));
+        } catch (error) {
+            this._handlerError.handle(error as HttpError | Error, req, res);
+        }
     }
 
     async deleteServiceAssignment(req: Request, res: Response) {
-        await this._roleMiddleware.validateRolAddorDeleteServiceAssignment(req, res, async () => {
-            try {
-                const { id } = req.params;
-                res.status(200).json(await this._roleManagement.deleteServiceAssignment(id, req.body));
-            } catch (error) {
-                this._handlerError.handle(error as HttpError | Error, req, res);
-            }
-        });
+        try {
+            const { id } = req.params;
+            res.status(200).json(await this._roleManagement.deleteServiceAssignment(id, req.body));
+        } catch (error) {
+            this._handlerError.handle(error as HttpError | Error, req, res);
+        }
     }
 }

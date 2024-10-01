@@ -1,7 +1,7 @@
 import express from 'express';
 
-import { roleController } from '../dependencies';
 import { authMiddleware, authorizationMiddleware } from '../../../auth/infraestructure/dependencies';
+import { roleController, roleMiddleware } from '../dependencies';
 
 const rolesRoutes = express.Router();
 
@@ -17,12 +17,14 @@ rolesRoutes.get("/:id",
 
 rolesRoutes.post("/",
     authMiddleware.authenticateToken,
+    roleMiddleware.validateAdd.bind(roleMiddleware),
     authorizationMiddleware.checkAccess('0303'),
     roleController.add.bind(roleController));
 
 rolesRoutes.put("/:id",
     authMiddleware.authenticateToken,
     authorizationMiddleware.checkAccess('0304'),
+    roleMiddleware.validateEdit.bind(roleMiddleware),
     roleController.edit.bind(roleController));
 
 rolesRoutes.delete("/:id",
@@ -32,12 +34,14 @@ rolesRoutes.delete("/:id",
 
 rolesRoutes.post("/service-assignment/:id",
     authMiddleware.authenticateToken,
-    //authorizationMiddleware.checkAccess('0306'),
+    authorizationMiddleware.checkAccess('0306'),
+    roleMiddleware.validateRolAddorDeleteServiceAssignment.bind(roleMiddleware),
     roleController.addServiceAssignment.bind(roleController));
 
 rolesRoutes.delete("/service-assignment/:id",
     authMiddleware.authenticateToken,
-    //authorizationMiddleware.checkAccess('0307'),
+    authorizationMiddleware.checkAccess('0307'),
+    roleMiddleware.validateRolAddorDeleteServiceAssignment.bind(roleMiddleware),
     roleController.deleteServiceAssignment.bind(roleController));
 
 export default rolesRoutes;
