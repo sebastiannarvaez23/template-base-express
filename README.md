@@ -51,13 +51,16 @@ Existen diferentes Frameworks como Django que cuenta con estas caracteristicas y
 1. Instala las dependencias:
    ```bash
    $ npm install
-2. Levanta los contenedores:
+2. Transpila el codigo a JavaScript:
+   ```bash
+   $ npm run build
+3. Levanta los contenedores:
    ```bash
    $ docker-compone up -d
-3. Ejecuta las migraciones:
+4. Ejecuta las migraciones:
    ```bash
-   $ npx sequelize-cli db:migrate
-4. Inicia el servidor de desarrollo:
+   $ npm run migrate
+5. Inicia el servidor de desarrollo:
    ```bash
    $ npm run start
 
