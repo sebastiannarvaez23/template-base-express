@@ -64,6 +64,8 @@ Existen diferentes Frameworks como Django que cuenta con estas caracteristicas y
    ```bash
    $ npm run start
 
+Luego de la ejecución de las migraciones y el inicio del servidor de desarrollo vas a lograr hacer pruebas con un usuario admin que tiene los permisos para consumir todos los servicios. Importa la colección de Postman adjunta en este proyecto y prueba cada uno de los servicios disponibles.
+
 ## Apoyo
 
 Para obtener ayuda, puedes utilizar las siguientes vías:
