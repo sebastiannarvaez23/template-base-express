@@ -103,7 +103,7 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   "include": [
-    "src",
+    "src/**/*",
     "tests",
     "pru/app.routes.spec.ts",
     "pru/person-management.spec.ts",
@@ -112,6 +112,7 @@
     "pru/persons.routes.spec.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist"
   ]
 }
