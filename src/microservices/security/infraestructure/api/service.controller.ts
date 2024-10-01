@@ -11,7 +11,6 @@ export class ServicesController {
 
     constructor(
         private readonly _serviceManagement: ServiceManagement,
-        private readonly _serviceMiddleware: ServiceMiddleware,
         private readonly _handlerError: ErrorHandlerService
     ) {
         this._LIST_PAGINATION_LIMIT = Number(process.env.LIST_PAGINATION_LIMIT!);
@@ -38,25 +37,21 @@ export class ServicesController {
     }
 
     async add(req: Request, res: Response) {
-        await this._serviceMiddleware.validateAdd(req, res, async () => {
-            try {
-                const result = await this._serviceManagement.add(req.body);
-                res.status(200).json(result);
-            } catch (error) {
-                this._handlerError.handle(error as HttpError | Error, req, res);
-            }
-        });
+        try {
+            const result = await this._serviceManagement.add(req.body);
+            res.status(200).json(result);
+        } catch (error) {
+            this._handlerError.handle(error as HttpError | Error, req, res);
+        }
     }
 
     async edit(req: Request, res: Response) {
         const { id } = req.params;
-        await this._serviceMiddleware.validateEdit(req, res, async () => {
-            try {
-                res.status(200).json(await this._serviceManagement.edit(id, req.body));
-            } catch (error) {
-                this._handlerError.handle(error as HttpError | Error, req, res);
-            }
-        });
+        try {
+            res.status(200).json(await this._serviceManagement.edit(id, req.body));
+        } catch (error) {
+            this._handlerError.handle(error as HttpError | Error, req, res);
+        }
     }
 
     async delete(req: Request, res: Response) {

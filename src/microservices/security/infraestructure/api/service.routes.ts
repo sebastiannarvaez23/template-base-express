@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { authMiddleware, authorizationMiddleware } from '../../../auth/infraestructure/dependencies';
-import { serviceController } from '../dependencies';
+import { serviceController, serviceMiddleware } from '../dependencies';
 
 const servicesRoutes = express.Router();
 
@@ -18,11 +18,13 @@ servicesRoutes.get("/:id",
 servicesRoutes.post("/",
     authMiddleware.authenticateToken,
     authorizationMiddleware.checkAccess('0403'),
+    serviceMiddleware.validateAdd.bind(serviceMiddleware),
     serviceController.add.bind(serviceController));
 
 servicesRoutes.put("/:id",
     authMiddleware.authenticateToken,
     authorizationMiddleware.checkAccess('0404'),
+    serviceMiddleware.validateEdit.bind(serviceMiddleware),
     serviceController.edit.bind(serviceController));
 
 servicesRoutes.delete("/:id",

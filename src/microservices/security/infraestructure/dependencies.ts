@@ -8,7 +8,6 @@ import { ServicesController } from "./api/service.controller";
 import { ServicesRepositoryImpl } from "./repositories/service.repository-impl";
 import { ServiceMiddleware } from "./middlewares/service.middleware";
 
-const serviceMiddleware = new ServiceMiddleware();
 const handlerError: ErrorHandlerService = new ErrorHandlerService();
 
 // abstract
@@ -21,6 +20,7 @@ const serviceManagement = new ServiceManagement(servicesRepository);
 
 // dependencies
 
+export const serviceMiddleware = new ServiceMiddleware();
 export const roleMiddleware: RoleMiddleware = new RoleMiddleware();
 export const roleController = new RolesController(roleManagement, handlerError);
-export const serviceController = new ServicesController(serviceManagement, serviceMiddleware, handlerError);
+export const serviceController = new ServicesController(serviceManagement, handlerError);
