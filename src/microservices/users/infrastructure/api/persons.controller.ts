@@ -38,25 +38,21 @@ export class PersonsController {
     }
 
     async add(req: Request, res: Response) {
-        await this._personMiddleware.validateAdd(req, res, async () => {
-            try {
-                const result = await this._personManagement.add(req.body);
-                res.status(200).json(result);
-            } catch (error) {
-                this._handlerError.handle(error as HttpError | Error, req, res);
-            }
-        });
+        try {
+            const result = await this._personManagement.add(req.body);
+            res.status(200).json(result);
+        } catch (error) {
+            this._handlerError.handle(error as HttpError | Error, req, res);
+        }
     }
 
     async edit(req: Request, res: Response) {
         const { id } = req.params;
-        await this._personMiddleware.validateEdit(req, res, async () => {
-            try {
-                res.status(200).json(await this._personManagement.edit(id, req.body));
-            } catch (error) {
-                this._handlerError.handle(error as HttpError | Error, req, res);
-            }
-        });
+        try {
+            res.status(200).json(await this._personManagement.edit(id, req.body));
+        } catch (error) {
+            this._handlerError.handle(error as HttpError | Error, req, res);
+        }
     }
 
     async delete(req: Request, res: Response) {

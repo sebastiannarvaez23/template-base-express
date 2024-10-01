@@ -36,10 +36,10 @@ export class DatabaseConfig {
     public getDatabase() {
         this.sequelize.sync({ alter: true })
             .then(() => {
-                console.log('Base de datos y tablas sincronizadas');
+                console.log('Synchronized database and tables');
             })
             .catch((err) => {
-                console.error('Error al sincronizar:', err);
+                console.error('Error syncing: ', err);
             });
         return this.sequelize;
     }
