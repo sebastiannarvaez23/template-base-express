@@ -1,6 +1,6 @@
 # Template Base Express
 
-**Empieza tu backend en express** aplicando buenas practicas y utilizando la arquitectura hexagonal. Todo esto de forma rapida y organizada.
+**Empieza tu backend en express** aplicando buenas practicas y utilizando la arquitectura hexagonal con vertical slicing. Todo esto de forma rapida y organizada.
 
 ### Características
 - **Usuarios**: CRUD de usuarios.
