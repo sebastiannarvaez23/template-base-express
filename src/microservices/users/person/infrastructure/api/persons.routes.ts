@@ -2,12 +2,16 @@ import express from "express";
 
 import { authMiddleware, authorizationMiddleware, personMiddleware } from "../../../../auth/infraestructure/dependencies";
 import { personController } from "../../../dependencies";
+import { queryValidationMiddleware } from "../../../../../lib-core/middlewares/validators/validation-query-params.middleware";
+import { PersonListValidator } from "../../application/validations/person-qlist.validator";
+import { buildPersonListQueryParams } from "../middlewares/person-query-params.middleware";
 
 const personsRoutes = express.Router();
 
 personsRoutes.get("/",
     authMiddleware.authenticateToken,
     authorizationMiddleware.checkAccess('0201'),
+    queryValidationMiddleware(new PersonListValidator(), buildPersonListQueryParams),
     personController.getList.bind(personController));
 
 personsRoutes.get("/:id",

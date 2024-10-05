@@ -4,17 +4,17 @@ import { HttpError } from "../../../../../api-gateway/domain/entities/error.enti
 import { PersonEntity } from "../../domain/entities/person.entity";
 import { PersonModel } from "../models/person.model";
 import { PersonsRepository } from "../../domain/repositories/persons.repository";
+import { QueryParams } from "../../../../../lib-entities/query-params.entity";
 
 export class PersonsRepositoryImpl implements PersonsRepository {
 
-    async getList(
-        { limit, offset }: { limit: number; offset: number },
-        filters: { filters: [] }): Promise<{ rows: PersonModel[]; count: number; }> {
+    async getList(queryParams: QueryParams): Promise<{ rows: PersonModel[]; count: number; }> {
         try {
             return await PersonModel.findAndCountAll({
+                where: queryParams.filters,
                 order: [["createdAt", "desc"]],
-                limit: limit,
-                offset: offset,
+                limit: queryParams.limit,
+                offset: queryParams.offset,
             });
         } catch (e) {
             console.debug(e);
@@ -36,15 +36,15 @@ export class PersonsRepositoryImpl implements PersonsRepository {
     }
 
     async add(person: PersonEntity): Promise<PersonModel> {
-        try {
-            return await PersonModel.create(
-                person as Optional<any, string>);
-        } catch (error) {
+        /* try { */
+        return await PersonModel.create(
+            person as Optional<any, string>);
+        /* } catch (error) {
             if (error instanceof UniqueConstraintError) {
                 throw error;
             }
             throw new HttpError("000000");
-        }
+        } */
     }
 
     async edit(id: string, person: PersonEntity): Promise<PersonModel> {

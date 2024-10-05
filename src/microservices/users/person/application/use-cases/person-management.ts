@@ -1,3 +1,4 @@
+import { QueryParams } from "../../../../../lib-entities/query-params.entity";
 import { PersonEntity } from "../../domain/entities/person.entity";
 import { PersonsRepository } from "../../domain/repositories/persons.repository";
 import { PersonModel } from "../../infrastructure/models/person.model";
@@ -7,9 +8,9 @@ export class PersonManagement {
         private readonly _personsRepository: PersonsRepository
     ) { }
 
-    async getList({ limit, offset }: { limit: number; offset: number }): Promise<{ rows: PersonModel[]; count: number; }> {
+    async getList(queryParams: QueryParams): Promise<{ rows: PersonModel[]; count: number; }> {
         try {
-            return await this._personsRepository.getList({ limit, offset }, { filters: [] });
+            return await this._personsRepository.getList(queryParams);
         } catch (e) {
             throw e;
         }

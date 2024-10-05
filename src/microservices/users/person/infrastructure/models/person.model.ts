@@ -35,6 +35,7 @@ export class PersonModel extends Model {
   @Column({
     type: DataType.STRING,
     field: 'email',
+    unique: true,
     allowNull: false,
   })
   declare email: string;
@@ -42,6 +43,7 @@ export class PersonModel extends Model {
   @Column({
     type: DataType.STRING,
     field: 'phone',
+    unique: true,
     allowNull: false,
   })
   declare phone: string;

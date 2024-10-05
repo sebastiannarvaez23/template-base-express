@@ -95,10 +95,12 @@ module.exports = {
       },
       email: {
         type: Sequelize.STRING,
+        unique: true,
         allowNull: false,
       },
       phone: {
         type: Sequelize.STRING,
+        unique: true,
         allowNull: false,
       },
       birth_date: {
