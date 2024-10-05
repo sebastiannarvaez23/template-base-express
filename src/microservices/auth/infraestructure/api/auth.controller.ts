@@ -59,4 +59,21 @@ export class AuthController {
             this._handlerError.handle(error as HttpError | Error, req, res);
         }
     }
+
+    async requestPasswordReset(req: Request, res: Response) {
+        try {
+
+        } catch (error) {
+            this._handlerError.handle(error as HttpError | Error, req, res);
+        }
+    }
+
+    async passwordReset(req: Request, res: Response) {
+        try {
+
+        } catch (error) {
+            this._handlerError.handle(error as HttpError | Error, req, res);
+        }
+    }
+
 }

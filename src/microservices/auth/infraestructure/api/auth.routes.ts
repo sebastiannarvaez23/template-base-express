@@ -10,4 +10,10 @@ authRoutes.post("/token",
 authRoutes.post('/logout',
     authController.logout.bind(authController));
 
+authRoutes.post('/request-password-reset',
+    authController.requestPasswordReset.bind(authController));
+
+authRoutes.post('/reset-password/:token',
+    authController.passwordReset.bind(authController));
+
 export default authRoutes;
