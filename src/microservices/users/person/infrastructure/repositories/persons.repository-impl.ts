@@ -1,10 +1,11 @@
-import { Optional, UniqueConstraintError } from "sequelize";
+import { ForeignKeyConstraintError, Optional, UniqueConstraintError } from "sequelize";
 
 import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
 import { PersonEntity } from "../../domain/entities/person.entity";
 import { PersonModel } from "../models/person.model";
 import { PersonsRepository } from "../../domain/repositories/persons.repository";
 import { QueryParams } from "../../../../../lib-entities/query-params.entity";
+import { RoleModel } from "../../../../security/role/infraestructure/models/role.model";
 
 export class PersonsRepositoryImpl implements PersonsRepository {
 
@@ -36,15 +37,18 @@ export class PersonsRepositoryImpl implements PersonsRepository {
     }
 
     async add(person: PersonEntity): Promise<PersonModel> {
-        /* try { */
-        return await PersonModel.create(
-            person as Optional<any, string>);
-        /* } catch (error) {
-            if (error instanceof UniqueConstraintError) {
+        try {
+            const roleExists = await RoleModel.findOne({ where: { id: person.roleId, deletedAt: null } });
+            console.log({ roleExists });
+            if (!roleExists) throw new HttpError("030001");
+            return await PersonModel.create(
+                person as Optional<any, string>);
+        } catch (error) {
+            if (error instanceof UniqueConstraintError || error instanceof ForeignKeyConstraintError) {
                 throw error;
             }
-            throw new HttpError("000000");
-        } */
+            throw error;
+        }
     }
 
     async edit(id: string, person: PersonEntity): Promise<PersonModel> {

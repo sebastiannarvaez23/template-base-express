@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UniqueConstraintError, ValidationErrorItem, DatabaseError } from "sequelize";
+import { UniqueConstraintError, ValidationErrorItem, DatabaseError, ForeignKeyConstraintError } from "sequelize";
 
 import { HttpError } from "../../api-gateway/domain/entities/error.entity";
 
@@ -21,6 +21,24 @@ export class ErrorHandlerService {
                 errors: {
                     internalCode: httpError.internalCode,
                     message: httpError.message,
+                    details: errors
+                }
+            });
+        }
+
+        if (err instanceof ForeignKeyConstraintError) {
+            const parts = err.index ? err.index.split('_') : [];
+            const field = parts.length > 1 ? parts.slice(1).join('_') : 'unknown';
+            const errors = {
+                [field]: ["The provided foreign key does not exist"]
+            };
+
+            const httpError = new HttpError("000012");
+            return res.status(httpError.statusCode).json({
+                data: null,
+                errors: {
+                    internalCode: httpError.internalCode,
+                    message: "Foreign key violation on field: " + field,
                     details: errors
                 }
             });

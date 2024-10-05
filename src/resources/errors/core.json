@@ -58,5 +58,10 @@
         "serverStatusCode": 403,
         "messageClient": "Access denied. You do not have permissions for this service.",
         "messageLog": "Access denied. You do not have permissions for this service"
+    },
+    "000012": {
+        "serverStatusCode": 400,
+        "messageClient": "Foreign key violation.",
+        "messageLog": "Foreign key violation"
     }
 }

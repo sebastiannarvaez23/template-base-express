@@ -7,6 +7,7 @@ export interface PersonEntity {
     email?: string;
     phone?: string;
     birthDate?: Date;
+    roleId?: string;
     role?: RoleEntity;
     createdAt?: Date;
     updatedAt?: Date;
