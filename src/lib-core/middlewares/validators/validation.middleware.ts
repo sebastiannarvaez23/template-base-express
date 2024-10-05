@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
-import { isRequired } from './validation.type';
+import { Request, Response, NextFunction } from "express";
+import { isRequired } from "./validation.type";
 
 type ValidatorFn = (value: any) => boolean | string;
 

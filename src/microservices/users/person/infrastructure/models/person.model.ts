@@ -1,7 +1,7 @@
-import { Column, CreatedAt, DataType, DeletedAt, Model, Table, UpdatedAt, BelongsTo, ForeignKey } from 'sequelize-typescript';
+import { Column, CreatedAt, DataType, DeletedAt, Model, Table, UpdatedAt, BelongsTo, ForeignKey } from "sequelize-typescript";
 
-import { UserModel } from '../../../user/infrastructure/models/user.model';
-import { RoleModel } from '../../../../security/role/infraestructure/models/role.model';
+import { UserModel } from "../../../user/infrastructure/models/user.model";
+import { RoleModel } from "../../../../security/role/infraestructure/models/role.model";
 
 @Table({
   timestamps: true,

@@ -1,6 +1,6 @@
-import { PersonEntity } from '../../domain/entities/person.entity';
+import { PersonEntity } from "../../domain/entities/person.entity";
 import { PersonsRepository } from "../../domain/repositories/persons.repository";
-import { PersonModel } from '../../infrastructure/models/person.model';
+import { PersonModel } from "../../infrastructure/models/person.model";
 
 export class PersonManagement {
     constructor(

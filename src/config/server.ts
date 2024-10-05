@@ -1,4 +1,4 @@
-import { Application } from 'express';
+import { Application } from "express";
 
 export class Server {
     constructor(private readonly _app: Application) { }

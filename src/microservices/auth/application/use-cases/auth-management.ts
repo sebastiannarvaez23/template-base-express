@@ -1,9 +1,9 @@
-import { config } from 'dotenv';
-import jwt from 'jsonwebtoken';
+import { config } from "dotenv";
+import jwt from "jsonwebtoken";
 
-import { AuthEntity } from '../../../auth/domain/entities/auth.entity';
-import { HttpError } from '../../../../api-gateway/domain/entities/error.entity';
-import { UsersRepository } from '../../../users/user/domain/repositories/users.repository';
+import { AuthEntity } from "../../../auth/domain/entities/auth.entity";
+import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
+import { UsersRepository } from "../../../users/user/domain/repositories/users.repository";
 
 config();
 

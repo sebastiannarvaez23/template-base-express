@@ -1,6 +1,6 @@
-import { config } from 'dotenv';
-import { createClient } from 'redis';
-import { HttpError } from '../api-gateway/domain/entities/error.entity';
+import { config } from "dotenv";
+import { createClient } from "redis";
+import { HttpError } from "../api-gateway/domain/entities/error.entity";
 
 config();
 
