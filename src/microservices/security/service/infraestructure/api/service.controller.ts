@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 
-import { ErrorHandlerService } from "../../../../lib-core/services/error-handler.service";
-import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
+import { ErrorHandlerService } from "../../../../../lib-core/services/error-handler.service";
+import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
 import { ServiceManagement } from "../../application/use-cases/service-management";
-import { ServiceMiddleware } from "../middlewares/service.middleware";
 
 export class ServicesController {
 

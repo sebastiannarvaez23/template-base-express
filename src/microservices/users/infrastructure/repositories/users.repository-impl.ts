@@ -3,7 +3,7 @@ import { Optional, UniqueConstraintError } from "sequelize";
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
 import { PersonModel } from "../models/person.model";
 import { RoleModel } from "../../../security/role/infraestructure/models/role.model";
-import { ServiceModel } from "../../../security/infraestructure/models/service.model";
+import { ServiceModel } from "../../../security/service/infraestructure/models/service.model";
 import { UserEntity } from "../../domain/entities/user.entity";
 import { UserModel } from "../models/user.model";
 import { UsersRepository } from "../../domain/repositories/users.repository";

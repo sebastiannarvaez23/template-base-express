@@ -1,4 +1,4 @@
-import { ServiceEntity } from "./service.entity";
+import { ServiceEntity } from "../../../service/domain/entities/service.entity";
 
 export interface RoleEntity {
     id?: string;

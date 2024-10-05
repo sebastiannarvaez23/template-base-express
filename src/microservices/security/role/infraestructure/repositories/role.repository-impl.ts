@@ -4,7 +4,7 @@ import { HttpError } from "../../../../../api-gateway/domain/entities/error.enti
 import { RoleEntity } from "../../domain/entities/role.entity";
 import { RoleModel } from "../models/role.model";
 import { RolesRepository } from "../../domain/repositories/roles.repository";
-import { ServiceModel } from "../../../infraestructure/models/service.model";
+import { ServiceModel } from "../../../service/infraestructure/models/service.model";
 
 export class RolesRepositoryImpl implements RolesRepository {
 

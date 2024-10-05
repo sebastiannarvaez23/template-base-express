@@ -5,7 +5,7 @@ import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import { PersonModel } from '../microservices/users/infrastructure/models/person.model';
 import { RoleModel } from '../microservices/security/role/infraestructure/models/role.model';
 import { RoleServiceModel } from '../microservices/security/role/infraestructure/models/role-service.model';
-import { ServiceModel } from '../microservices/security/infraestructure/models/service.model';
+import { ServiceModel } from '../microservices/security/service/infraestructure/models/service.model';
 import { UserModel } from '../microservices/users/infrastructure/models/user.model';
 
 config();
