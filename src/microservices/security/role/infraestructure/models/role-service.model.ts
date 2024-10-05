@@ -1,7 +1,7 @@
 import { Column, DataType, Model, Table, ForeignKey } from 'sequelize-typescript';
 
 import { RoleModel } from './role.model';
-import { ServiceModel } from './service.model';
+import { ServiceModel } from '../../../infraestructure/models/service.model';
 
 @Table({
     tableName: 'roles_services',

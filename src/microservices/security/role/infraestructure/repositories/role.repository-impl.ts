@@ -1,10 +1,10 @@
 import { Optional, UniqueConstraintError } from "sequelize";
 
-import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
+import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
 import { RoleEntity } from "../../domain/entities/role.entity";
 import { RoleModel } from "../models/role.model";
 import { RolesRepository } from "../../domain/repositories/roles.repository";
-import { ServiceModel } from "../models/service.model";
+import { ServiceModel } from "../../../infraestructure/models/service.model";
 
 export class RolesRepositoryImpl implements RolesRepository {
 

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
-import { ErrorHandlerService } from "../../../../lib-core/services/error-handler.service";
-import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
+import { ErrorHandlerService } from "../../../../../lib-core/services/error-handler.service";
+import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
 import { RoleManagement } from "../../application/use-cases/role-management";
 import { RoleMiddleware } from "../middlewares/role.middleware";
 
