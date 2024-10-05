@@ -7,10 +7,10 @@ import { RedisConfig } from "../../../config/redis";
 import { RouteGroup } from "../../domain/entities/route-group.entity";
 import apiGatewayRoutes from "./api-gateway.routes";
 import authRoutes from "../../../microservices/auth/infraestructure/api/auth.routes";
-import personsRoutes from "../../../microservices/users/infrastructure/api/persons.routes";
+import personsRoutes from "../../../microservices/users/person/infrastructure/api/persons.routes";
 import rolesRoutes from "../../../microservices/security/role/infraestructure/api/roles.routes";
 import servicesRoutes from "../../../microservices/security/service/infraestructure/api/service.routes";
-import usersRoutes from "../../../microservices/users/infrastructure/api/users.routes";
+import usersRoutes from "../../../microservices/users/user/infrastructure/api/users.routes";
 
 export class AppRoutes {
 

@@ -4,10 +4,10 @@ import { AuthMiddleware } from "./middlewares/auth.middleware";
 import { AuthorizationMiddleware } from "./middlewares/authorization.middleware";
 import { AuthValidator } from "../application/validations/auth.validator";
 import { ErrorHandlerService } from "../../../lib-core/services/error-handler.service";
-import { PersonMiddleware } from "../../users/infrastructure/middlewares/person.middleware";
+import { PersonMiddleware } from "../../users/person/infrastructure/middlewares/person.middleware";
 import { RedisConfig } from "../../../config/redis";
-import { UserMiddleware } from "../../users/infrastructure/middlewares/user.middleware";
-import { UsersRepositoryImpl } from "../../users/infrastructure/repositories/users.repository-impl";
+import { UserMiddleware } from "../../users/user/infrastructure/middlewares/user.middleware";
+import { UsersRepositoryImpl } from "../../users/user/infrastructure/repositories/users.repository-impl";
 
 const authValidator: AuthValidator = new AuthValidator();
 const handlerError: ErrorHandlerService = new ErrorHandlerService();
