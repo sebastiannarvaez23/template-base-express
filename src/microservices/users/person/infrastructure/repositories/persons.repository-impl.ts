@@ -7,7 +7,9 @@ import { PersonsRepository } from "../../domain/repositories/persons.repository"
 
 export class PersonsRepositoryImpl implements PersonsRepository {
 
-    async getList({ limit, offset }: { limit: number; offset: number }): Promise<{ rows: PersonModel[]; count: number; }> {
+    async getList(
+        { limit, offset }: { limit: number; offset: number },
+        filters: { filters: [] }): Promise<{ rows: PersonModel[]; count: number; }> {
         try {
             return await PersonModel.findAndCountAll({
                 order: [["createdAt", "desc"]],

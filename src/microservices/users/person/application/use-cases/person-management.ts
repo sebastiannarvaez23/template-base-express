@@ -9,7 +9,7 @@ export class PersonManagement {
 
     async getList({ limit, offset }: { limit: number; offset: number }): Promise<{ rows: PersonModel[]; count: number; }> {
         try {
-            return await this._personsRepository.getList({ limit, offset });
+            return await this._personsRepository.getList({ limit, offset }, { filters: [] });
         } catch (e) {
             throw e;
         }
