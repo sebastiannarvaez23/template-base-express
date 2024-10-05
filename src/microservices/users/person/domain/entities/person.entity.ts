@@ -8,6 +8,7 @@ export interface PersonEntity {
     phone?: string;
     birthDate?: Date;
     roleId?: string;
+    userId?: string;
     role?: RoleEntity;
     createdAt?: Date;
     updatedAt?: Date;
