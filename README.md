@@ -56,7 +56,7 @@ Existen diferentes Frameworks como Django que cuenta con estas caracteristicas y
    $ npm run build
 3. Levanta los contenedores:
    ```bash
-   $ docker-compone up -d
+   $ docker-compose up -d
 4. Ejecuta las migraciones:
    ```bash
    $ npm run migrate
