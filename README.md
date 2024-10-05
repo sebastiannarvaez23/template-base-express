@@ -1,6 +1,6 @@
 # Template Base Express
 
-**Empieza tu backend en express** aplicando buenas practicas y utilizando la arquitectura hexagonal. Todo esto de forma rapida y organizada.
+**Empieza tu backend en express** aplicando buenas practicas y utilizando la arquitectura hexagonal con vertical slicing. Todo esto de forma rapida y organizada.
 
 ### Características
 - **Usuarios**: CRUD de usuarios.
@@ -63,6 +63,8 @@ Existen diferentes Frameworks como Django que cuenta con estas caracteristicas y
 5. Inicia el servidor de desarrollo:
    ```bash
    $ npm run start
+
+Luego de la ejecución de las migraciones y el inicio del servidor de desarrollo vas a lograr hacer pruebas con un usuario admin que tiene los permisos para consumir todos los servicios. Importa la colección de Postman adjunta en este proyecto y prueba cada uno de los servicios disponibles.
 
 ## Apoyo
 
