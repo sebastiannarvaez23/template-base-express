@@ -68,10 +68,12 @@ Existen diferentes Frameworks como Django que cuenta con estas caracteristicas y
    ```bash
    $ npm run start
    ```
-Nota: Para revertir las migraciones realizadas ejecuta:
+<b>Nota 1:</b> Para revertir las migraciones realizadas ejecuta:
   ```bash
   $ npm run unmigrate
   ```
+<b>Nota 2:</b> Luego de generar el build del backend deberás copiar tu archivo `.env` en la raiz del directorio dist, esto con el fin de que las variables se tomen correctamente al momento de generar las migraciones.
+
 Luego de la ejecución de las migraciones y el inicio del servidor de desarrollo vas a lograr hacer pruebas con un usuario admin que tiene los permisos para consumir todos los servicios. Importa la colección de Postman adjunta en este proyecto y prueba cada uno de los servicios disponibles.
 
 ## Apoyo
