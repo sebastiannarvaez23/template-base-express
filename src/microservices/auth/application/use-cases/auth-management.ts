@@ -2,7 +2,7 @@ import { config } from "dotenv";
 import jwt from "jsonwebtoken";
 
 import { AuthEntity } from "../../../auth/domain/entities/auth.entity";
-import { EncryptionService } from "../../../../lib-core/services/encryption.service";
+import { EncryptionUtil } from "../../../../lib-core/utils/encryption.util";
 import { generateResetToken } from "../../../../lib-core/utils/token-generator.util";
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
 import { RedisConfig } from "../../../../config/redis";
@@ -18,7 +18,7 @@ export class AuthManagement {
 
     constructor(
         private readonly _userRepository: UsersRepository,
-        private readonly _encryptedService: EncryptionService,
+        private readonly _encryptedUtils: EncryptionUtil,
         private readonly _redis: RedisConfig,
     ) {
         this._SECRET = process.env.SECRET_KEY!;
@@ -30,7 +30,7 @@ export class AuthManagement {
             const person = await this._userRepository.getUserByNickName(auth.nickname);
             if (!person?.user) throw new HttpError("010001");
 
-            const decryptedPass = this._encryptedService.decrypt(person?.user.password);
+            const decryptedPass = this._encryptedUtils.decrypt(person?.user.password);
             if (decryptedPass !== auth.password) throw new HttpError("010002");
 
             const role = person.role.name;
@@ -73,7 +73,7 @@ export class AuthManagement {
             const person = await this._userRepository.getUserByNickName(nickname);
             if (!person) throw new HttpError("000014");
 
-            const hashedPassword = await this._encryptedService.encrypt(newPassword);
+            const hashedPassword = await this._encryptedUtils.encrypt(newPassword);
 
             person.user.password = hashedPassword;
             await this._userRepository.edit(person.user.id, person.user);

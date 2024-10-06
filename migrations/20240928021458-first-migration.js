@@ -1,11 +1,11 @@
-const { EncryptionService } = require('../dist/src/lib-core/services/encryption.service');
+const { EncryptionUtil } = require('../dist/src/lib-core/services/encryption.service');
 require('dotenv').config();
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
 
-    const encryptionService = new EncryptionService();
+    const encryptionService = new EncryptionUtil();
 
     await queryInterface.createTable('users', {
       id: {

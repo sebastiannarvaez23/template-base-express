@@ -1,6 +1,6 @@
 import * as CryptoJS from "crypto-js";
 
-export class EncryptionService {
+export class EncryptionUtil {
 
     private readonly key!: string;
     private readonly keySize = 256;

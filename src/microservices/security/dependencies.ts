@@ -1,4 +1,4 @@
-import { ErrorHandlerService } from "../../lib-core/services/error-handler.service";
+import { ErrorHandlerUtil } from "../../lib-core/utils/error-handler.util";
 import { RoleManagement } from "./role/application/use-cases/role-management";
 import { RoleMiddleware } from "./role/infraestructure/middlewares/role.middleware";
 import { RolesController } from "./role/infraestructure/api/roles.controller";
@@ -9,7 +9,7 @@ import { ServicesController } from "./service/infraestructure/api/service.contro
 import { ServicesRepositoryImpl } from "./service/infraestructure/repositories/service.repository-impl";
 
 
-const handlerError: ErrorHandlerService = new ErrorHandlerService();
+const handlerError: ErrorHandlerUtil = new ErrorHandlerUtil();
 const servicesRepository = new ServicesRepositoryImpl();
 const rolesRepository = new RolesRepositoryImpl();
 

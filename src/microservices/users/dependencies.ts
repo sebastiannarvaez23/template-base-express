@@ -1,5 +1,5 @@
-import { EncryptionService } from "../../lib-core/services/encryption.service";
-import { ErrorHandlerService } from "../../lib-core/services/error-handler.service";
+import { EncryptionUtil } from "../../lib-core/utils/encryption.util";
+import { ErrorHandlerUtil } from "../../lib-core/utils/error-handler.util";
 import { PersonManagement } from "./person/application/use-cases/person-management";
 import { PersonsController } from "./person/infrastructure/api/persons.controller";
 import { PersonsRepositoryImpl } from "./person/infrastructure/repositories/persons.repository-impl";
@@ -7,8 +7,8 @@ import { UserManagement } from "./user/application/use-cases/user-management";
 import { UsersController } from "./user/infrastructure/api/users.controller";
 import { UsersRepositoryImpl } from "./user/infrastructure/repositories/users.repository-impl";
 
-const encryptionService: EncryptionService = new EncryptionService();
-const handlerError: ErrorHandlerService = new ErrorHandlerService();
+const encryptionService: EncryptionUtil = new EncryptionUtil();
+const handlerError: ErrorHandlerUtil = new ErrorHandlerUtil();
 
 // abstract
 

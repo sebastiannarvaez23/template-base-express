@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { ErrorHandlerService } from "../../../../../lib-core/services/error-handler.service";
+import { ErrorHandlerUtil } from "../../../../../lib-core/utils/error-handler.util";
 import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
 import { ServiceManagement } from "../../application/use-cases/service-management";
 
@@ -10,7 +10,7 @@ export class ServicesController {
 
     constructor(
         private readonly _serviceManagement: ServiceManagement,
-        private readonly _handlerError: ErrorHandlerService
+        private readonly _handlerError: ErrorHandlerUtil
     ) {
         this._LIST_PAGINATION_LIMIT = Number(process.env.LIST_PAGINATION_LIMIT!);
     }

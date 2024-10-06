@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { ErrorHandlerService } from "../../../../../lib-core/services/error-handler.service";
+import { ErrorHandlerUtil } from "../../../../../lib-core/utils/error-handler.util";
 import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
 import { PersonManagement } from "../../application/use-cases/person-management";
 import { QueryParams } from "../../../../../lib-entities/query-params.entity";
@@ -9,7 +9,7 @@ export class PersonsController {
 
     constructor(
         private readonly _personManagement: PersonManagement,
-        private readonly _handlerError: ErrorHandlerService,
+        private readonly _handlerError: ErrorHandlerUtil,
     ) { }
 
     async getList(req: Request, res: Response) {

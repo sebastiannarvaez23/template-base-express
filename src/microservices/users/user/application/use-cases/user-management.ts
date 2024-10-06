@@ -1,6 +1,6 @@
 import { config } from "dotenv";
 
-import { EncryptionService } from "../../../../../lib-core/services/encryption.service";
+import { EncryptionUtil } from "../../../../../lib-core/utils/encryption.util";
 import { UserEntity } from "../../domain/entities/user.entity";
 import { UsersRepository } from "../../domain/repositories/users.repository";
 
@@ -10,7 +10,7 @@ export class UserManagement {
 
     constructor(
         private readonly _userRepository: UsersRepository,
-        private readonly _encriptionService: EncryptionService,
+        private readonly _encriptionService: EncryptionUtil,
     ) { }
 
     async add(user: UserEntity): Promise<UserEntity | null> {

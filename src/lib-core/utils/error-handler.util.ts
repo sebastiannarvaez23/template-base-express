@@ -3,9 +3,9 @@ import { UniqueConstraintError, ValidationErrorItem, DatabaseError, ForeignKeyCo
 
 import { HttpError } from "../../api-gateway/domain/entities/error.entity";
 
-export class ErrorHandlerService {
+export class ErrorHandlerUtil {
     handle(err: HttpError | Error, req: Request, res: Response) {
-        console.error('Error caught by ErrorHandlerService:', err);
+        console.error('Error caught by ErrorHandlerUtil:', err);
 
         if (err instanceof UniqueConstraintError) {
             const errors = err.errors.reduce((acc: { [key: string]: string[] | string }, e: ValidationErrorItem) => {

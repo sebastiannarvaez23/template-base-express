@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import { AuthManagement } from "../../application/use-cases/auth-management";
 import { AuthMiddleware } from "../middlewares/auth.middleware";
-import { ErrorHandlerService } from "../../../../lib-core/services/error-handler.service";
+import { ErrorHandlerUtil } from "../../../../lib-core/utils/error-handler.util";
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
 import { RedisConfig } from "../../../../config/redis";
 
@@ -12,7 +12,7 @@ export class AuthController {
         private readonly _authManagement: AuthManagement,
         private readonly _redis: RedisConfig,
         private readonly _authMiddleware: AuthMiddleware,
-        private readonly _handlerError: ErrorHandlerService
+        private readonly _handlerError: ErrorHandlerUtil
     ) { }
 
     async authentication(req: Request, res: Response) {

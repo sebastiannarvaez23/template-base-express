@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { ErrorHandlerService } from "../../../../../lib-core/services/error-handler.service";
+import { ErrorHandlerUtil } from "../../../../../lib-core/utils/error-handler.util";
 import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
 import { UserManagement } from "../../application/use-cases/user-management";
 
@@ -8,7 +8,7 @@ export class UsersController {
 
     constructor(
         private readonly _userManagement: UserManagement,
-        private readonly _handlerError: ErrorHandlerService,
+        private readonly _handlerError: ErrorHandlerUtil,
     ) { }
 
     async add(req: Request, res: Response) {
