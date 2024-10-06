@@ -1,4 +1,5 @@
 const { EncryptionService } = require('../dist/src/lib-core/services/encryption.service');
+require('dotenv').config();
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -393,13 +394,13 @@ module.exports = {
       },
     ]);
 
-    //const encryptedPassword = encryptionService.encrypt('admin');
+    const encryptedPassword = encryptionService.encrypt('admin');
 
     await queryInterface.bulkInsert('users', [
       {
         id: 'b04dd987-27ae-4368-a15b-97ee6feee7d2',
         nickname: 'admin',
-        password: 'encryptedPassword',
+        password: encryptedPassword,
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -421,11 +422,17 @@ module.exports = {
     ]);
   },
 
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('roles_services', null, {});
-    await queryInterface.bulkDelete('users', null, {});
+  async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('persons', null, {});
-    await queryInterface.bulkDelete('roles', null, {});
+    await queryInterface.bulkDelete('users', null, {});
+    await queryInterface.bulkDelete('roles_services', null, {});
     await queryInterface.bulkDelete('services', null, {});
+    await queryInterface.bulkDelete('roles', null, {});
+
+    await queryInterface.dropTable('roles_services');
+    await queryInterface.dropTable('persons');
+    await queryInterface.dropTable('services');
+    await queryInterface.dropTable('roles');
+    await queryInterface.dropTable('users');
   }
 };

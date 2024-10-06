@@ -8,15 +8,17 @@ import { PersonMiddleware } from "../../users/person/infrastructure/middlewares/
 import { RedisConfig } from "../../../config/redis";
 import { UserMiddleware } from "../../users/user/infrastructure/middlewares/user.middleware";
 import { UsersRepositoryImpl } from "../../users/user/infrastructure/repositories/users.repository-impl";
+import { EncryptionService } from "../../../lib-core/services/encryption.service";
 
 const authValidator: AuthValidator = new AuthValidator();
 const handlerError: ErrorHandlerService = new ErrorHandlerService();
-const redisConfig = new RedisConfig();
+const redisConfig: RedisConfig = new RedisConfig();
+const encryptedService: EncryptionService = new EncryptionService();
 
 // abstract
 
 const usersRepository = new UsersRepositoryImpl();
-const authManagement = new AuthManagement(usersRepository);
+const authManagement = new AuthManagement(usersRepository, encryptedService);
 
 // dependencies
 
