@@ -51,19 +51,27 @@ Existen diferentes Frameworks como Django que cuenta con estas caracteristicas y
 1. Instala las dependencias:
    ```bash
    $ npm install
+   ```
 2. Transpila el codigo a JavaScript:
    ```bash
    $ npm run build
+   ```
 3. Levanta los contenedores:
    ```bash
    $ docker-compose up -d
+   ```
 4. Ejecuta las migraciones:
    ```bash
    $ npm run migrate
+   ```
 5. Inicia el servidor de desarrollo:
    ```bash
    $ npm run start
-
+   ```
+Nota: Para revertir las migraciones realizadas ejecuta:
+  ```bash
+  $ npm run unmigrate
+  ```
 Luego de la ejecución de las migraciones y el inicio del servidor de desarrollo vas a lograr hacer pruebas con un usuario admin que tiene los permisos para consumir todos los servicios. Importa la colección de Postman adjunta en este proyecto y prueba cada uno de los servicios disponibles.
 
 ## Apoyo
