@@ -21,6 +21,22 @@ export class UsersRepositoryImpl implements UsersRepository {
         }
     }
 
+    async edit(id: string, user: UserEntity): Promise<UserModel> {
+        try {
+            const [affectRows, editedUser] = await UserModel.update(
+                user as Optional<any, string>, {
+                where: {
+                    id: id,
+                },
+                returning: true
+            });
+            if (!editedUser[0]) throw new HttpError("010001")
+            return editedUser[0];
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async getUserByNickName(nickname: string): Promise<PersonModel | null> {
         try {
             return await PersonModel.findOne({
@@ -39,6 +55,25 @@ export class UsersRepositoryImpl implements UsersRepository {
                                 }
                             }
                         ]
+                    }
+                ]
+            });
+        } catch (error) {
+            console.error(error);
+            if (error instanceof UniqueConstraintError) {
+                throw error;
+            }
+            throw new HttpError("000000");
+        }
+    }
+
+    async getUserByEmail(email: string): Promise<PersonModel | null> {
+        try {
+            return await PersonModel.findOne({
+                include: [
+                    {
+                        model: UserModel,
+                        where: { email },
                     }
                 ]
             });

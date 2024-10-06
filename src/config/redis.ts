@@ -1,5 +1,6 @@
 import { config } from "dotenv";
 import { createClient } from "redis";
+
 import { HttpError } from "../api-gateway/domain/entities/error.entity";
 
 config();
@@ -11,7 +12,7 @@ export class RedisConfig {
     private readonly _SESION_SG_EXP: number;
 
     constructor() {
-        this._redisUrl = process.env.URL_REDIS!;
+        this._redisUrl = process.env.REDIS_URL!;
         this._SESION_SG_EXP = Number(process.env.SESION_SG_EXP!);
         this._redisClient = createClient({ url: this._redisUrl });
 
@@ -44,9 +45,31 @@ export class RedisConfig {
         }
     }
 
+    async getResetPassTokenFromRedis(token: string) {
+        try {
+            return await this._redisClient.get(`passwordReset:${token}`);
+        } catch (err) {
+            console.error('Error retrieving token from Redis:', err);
+            throw new HttpError("000002");
+        }
+    }
+
+    async storeResetPassToken(resetToken: string, userId: string) {
+        this._redisClient.set(`passwordReset:${resetToken}`, userId, 'EX', 300);
+    }
+
     async deleteToken(nickname: string) {
         try {
             return await this._redisClient.del(nickname);
+        } catch (err) {
+            console.error('Error retrieving token from Redis:', err);
+            throw new HttpError("000002");
+        }
+    }
+
+    async deleteResetPassToken(token: string) {
+        try {
+            return await this._redisClient.del(`passwordReset:${token}`);
         } catch (err) {
             console.error('Error retrieving token from Redis:', err);
             throw new HttpError("000002");

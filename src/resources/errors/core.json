@@ -63,5 +63,15 @@
         "serverStatusCode": 400,
         "messageClient": "Foreign key violation.",
         "messageLog": "Foreign key violation"
+    },
+    "000013": {
+        "serverStatusCode": 401,
+        "messageClient": "Reset pass token expired.",
+        "messageLog": "Reset pass token expired"
+    },
+    "000014": {
+        "serverStatusCode": 401,
+        "messageClient": "The user associated with the token does not exist.",
+        "messageLog": "The user associated with the token does not exist"
     }
 }

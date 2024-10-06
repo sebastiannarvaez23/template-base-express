@@ -62,7 +62,8 @@ export class AuthController {
 
     async requestPasswordReset(req: Request, res: Response) {
         try {
-
+            const { email } = req.body;
+            res.status(200).json(await this._authManagement.requestPasswordReset(email));
         } catch (error) {
             this._handlerError.handle(error as HttpError | Error, req, res);
         }
@@ -70,10 +71,11 @@ export class AuthController {
 
     async passwordReset(req: Request, res: Response) {
         try {
-
+            const { token } = req.params;
+            const { newPassword } = req.body;
+            res.status(200).json(await this._authManagement.passwordReset(token, newPassword));
         } catch (error) {
             this._handlerError.handle(error as HttpError | Error, req, res);
         }
     }
-
 }
