@@ -30,10 +30,9 @@ Existen diferentes Frameworks como Django que cuenta con estas caracteristicas y
 - **Kafka**: Comunicación entre microservicios.
 
 <p align="left">
-  <img src="https://github.com/user-attachments/assets/b2972b29-f40e-488a-aadd-ef4372659a4e" width="auto" height="90">
   <img src="https://github.com/user-attachments/assets/13496a22-10a0-4e91-8ec2-7286f43ee6e3" width="auto" height="90">
+  <img src="https://github.com/user-attachments/assets/b2972b29-f40e-488a-aadd-ef4372659a4e" width="auto" height="90">
   <img src="https://github.com/user-attachments/assets/3824bcf1-0ba3-4881-a7d1-1bd2f0434b12" width="auto" height="90">
-  <img src="https://github.com/user-attachments/assets/6271bef9-24f0-4cd8-bfd9-35999a87021b" width="auto" height="90">
   <img src="https://github.com/user-attachments/assets/4a347abe-6baa-40da-84ad-47e9b81f3017" width="auto" height="90">
   <img src="https://github.com/user-attachments/assets/0e8b5d78-b2e3-441e-9047-216c65683658" width="auto" height="90">
   <img src="https://github.com/user-attachments/assets/07fd9bed-e2a5-4933-af2c-caa359652598" width="auto" height="90">
