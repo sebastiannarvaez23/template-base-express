@@ -19,4 +19,13 @@ export class UsersController {
             this._handlerError.handle(error as HttpError | Error, req, res);
         }
     }
+
+    async validateCredential(req: Request, res: Response) {
+        try {
+            const result = await this._userManagement.validateCredential(req.body);
+            res.status(200).json({ validate: result });
+        } catch (error) {
+            this._handlerError.handle(error as HttpError | Error, req, res);
+        }
+    }
 }

@@ -1,4 +1,4 @@
-import { AuthMiddleware } from "../../lib-core/middlewares/auth/auth.middleware";
+import { AuthMiddleware } from "../../lib-core/middlewares/auth/authenticate.middleware";
 import { AuthorizationMiddleware } from "../../lib-core/middlewares/auth/authorization.middleware";
 import { AuthValidator } from "../auth/application/validations/auth.validator";
 import { EncryptionUtil } from "../../lib-core/utils/encryption.util";

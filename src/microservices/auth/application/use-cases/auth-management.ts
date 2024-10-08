@@ -10,6 +10,7 @@ import { RedisConfig } from "../../../../config/redis";
 import { sendPasswordResetEmail } from "../../../../lib-core/utils/mailer.util";
 import { UsersRepository } from "../../../users/user/domain/repositories/users.repository";
 import { PersonEntity } from "../../../users/person/domain/entities/person.entity";
+import { UserClientFeign } from "../../../../lib-client-feign/users/users.client";
 
 config();
 
@@ -23,19 +24,22 @@ export class AuthManagement {
         private readonly _encryptedUtils: EncryptionUtil,
         private readonly _redis: RedisConfig,
         private readonly _personClientFeign: PersonClientFeign,
+        private readonly _userClientFeign: UserClientFeign,
     ) {
         this._SECRET = process.env.SECRET_KEY!;
         this._SESION_SG_EXP = Number(process.env.SESION_SG_EXP)!;
     }
 
-    async authentication(auth: AuthEntity): Promise<{ token: string | null }> {
+    async authentication(credentials: AuthEntity): Promise<{ token: string | null }> {
         try {
-            const person: PersonEntity = await this._personClientFeign.getPersonByNickname(auth.nickname);
-            console.log({ person })
-            if (!person?.user) throw new HttpError("010001");
+            const validateCredentials: boolean | undefined = await this._userClientFeign.validateCredential(credentials);
+            if (!validateCredentials) throw new HttpError("010002");
 
-            const decryptedPass = this._encryptedUtils.decrypt(person?.user!.password!);
-            if (decryptedPass !== auth.password) throw new HttpError("010002");
+            const existingToken = await this._redis.getTokenFromRedis(credentials.nickname);
+            if (existingToken) return existingToken;
+
+            const person: PersonEntity = await this._personClientFeign.getPersonByNickname(credentials.nickname);
+            if (!person?.user) throw new HttpError("010001");
 
             const role = person.role!.name;
             const services = person.role!.services!.map((service: any) => service.code);
@@ -47,9 +51,8 @@ export class AuthManagement {
                 services: services,
                 exp: Date.now() + this._SESION_SG_EXP * 1000,
             }, this._SECRET);
-
+            await this._redis.storeTokenInRedis(credentials.nickname, token!);
             return { token };
-
         } catch (e) {
             throw e;
         }

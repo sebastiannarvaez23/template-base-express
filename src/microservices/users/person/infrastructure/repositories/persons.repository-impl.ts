@@ -87,7 +87,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
         }
     }
 
-    async getPersonByNickName(nickname: string): Promise<PersonModel | null> {
+    async getPersonByNickname(nickname: string): Promise<PersonModel | null> {
         try {
             return await PersonModel.findOne({
                 include: [

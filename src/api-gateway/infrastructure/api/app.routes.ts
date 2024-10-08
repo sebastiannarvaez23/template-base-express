@@ -1,7 +1,7 @@
 import cors from "cors";
 import express, { Application, Request, Response, NextFunction } from "express";
 
-import { AuthMiddleware } from "../../../lib-core/middlewares/auth/auth.middleware";
+import { AuthMiddleware } from "../../../lib-core/middlewares/auth/authenticate.middleware";
 import { AuthValidator } from "../../../microservices/auth/application/validations/auth.validator";
 import { RedisConfig } from "../../../config/redis";
 import { RouteGroup } from "../../domain/entities/route-group.entity";

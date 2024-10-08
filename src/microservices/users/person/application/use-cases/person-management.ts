@@ -51,9 +51,9 @@ export class PersonManagement {
         }
     }
 
-    async getPersonByNickName(nickname: string): Promise<PersonModel | null> {
+    async getPersonByNickname(nickname: string): Promise<PersonModel | null> {
         try {
-            const resultUser = await this._personsRepository.getPersonByNickName(nickname);
+            const resultUser = await this._personsRepository.getPersonByNickname(nickname);
             return resultUser;
         } catch (e) {
             throw e;

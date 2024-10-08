@@ -57,10 +57,10 @@ export class PersonsController {
         }
     };
 
-    async getPersonByNickName(req: Request, res: Response) {
+    async getPersonByNickname(req: Request, res: Response) {
         try {
             const { nickname } = req.params;
-            res.status(200).json(await this._personManagement.getPersonByNickName(nickname));
+            res.status(200).json(await this._personManagement.getPersonByNickname(nickname));
         } catch (error) {
             this._handlerError.handle(error as HttpError | Error, req, res);
         }

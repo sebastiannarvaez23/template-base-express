@@ -36,7 +36,7 @@ personsRoutes.delete("/:id",
     personController.delete.bind(personController));
 
 personsRoutes.get("/by-nickname/:nickname",
-    personController.getPersonByNickName.bind(personController));
+    personController.getPersonByNickname.bind(personController));
 
 personsRoutes.get("/by-email/:email",
     personController.getPersonByEmail.bind(personController));

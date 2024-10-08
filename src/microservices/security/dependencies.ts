@@ -9,7 +9,7 @@ import { ServicesController } from "./service/infraestructure/api/service.contro
 import { ServicesRepositoryImpl } from "./service/infraestructure/repositories/service.repository-impl";
 import { AuthValidator } from "../auth/application/validations/auth.validator";
 import { RedisConfig } from "../../config/redis";
-import { AuthMiddleware } from "../../lib-core/middlewares/auth/auth.middleware";
+import { AuthMiddleware } from "../../lib-core/middlewares/auth/authenticate.middleware";
 import { AuthorizationMiddleware } from "../../lib-core/middlewares/auth/authorization.middleware";
 
 

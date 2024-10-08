@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { AuthManagement } from "../../application/use-cases/auth-management";
-import { AuthMiddleware } from "../../../../lib-core/middlewares/auth/auth.middleware";
+import { AuthMiddleware } from "../../../../lib-core/middlewares/auth/authenticate.middleware";
 import { ErrorHandlerUtil } from "../../../../lib-core/utils/error-handler.util";
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
 import { RedisConfig } from "../../../../config/redis";
@@ -18,16 +18,7 @@ export class AuthController {
     async authentication(req: Request, res: Response) {
         await this._authMiddleware.getValidateAuth()(req, res, async () => {
             try {
-                const { nickname } = req.body;
-                const existingToken = await this._redis.getTokenFromRedis(nickname);
-
-                if (existingToken) {
-                    return res.status(200).json({ token: existingToken });
-                }
-
-                const result = await this._authManagement.authentication(req.body);
-                const token = result.token;
-                await this._redis.storeTokenInRedis(nickname, token!);
+                const token = await this._authManagement.authentication(req.body);
                 res.status(200).json({ token });
             } catch (error) {
                 this._handlerError.handle(error as HttpError | Error, req, res);
