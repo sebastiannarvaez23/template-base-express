@@ -26,4 +26,4 @@ const authManagement = new AuthManagement(usersRepository, encryptedService, red
 
 export const authorizationMiddleware = new AuthorizationMiddleware();
 export const authMiddleware = new AuthMiddleware(redisConfig, authValidator);
-export const authController = new AuthController(authManagement, redisConfig, authMiddleware, handlerError);
+export const authController = new AuthController(authManagement, authMiddleware, handlerError);

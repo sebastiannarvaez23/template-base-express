@@ -4,13 +4,11 @@ import { AuthManagement } from "../../application/use-cases/auth-management";
 import { AuthMiddleware } from "../../../../lib-core/middlewares/auth/authenticate.middleware";
 import { ErrorHandlerUtil } from "../../../../lib-core/utils/error-handler.util";
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
-import { RedisConfig } from "../../../../config/redis";
 
 export class AuthController {
 
     constructor(
         private readonly _authManagement: AuthManagement,
-        private readonly _redis: RedisConfig,
         private readonly _authMiddleware: AuthMiddleware,
         private readonly _handlerError: ErrorHandlerUtil
     ) { }

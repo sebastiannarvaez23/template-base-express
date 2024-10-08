@@ -9,7 +9,11 @@ export class UsersRepositoryImpl implements UsersRepository {
 
     async getByNickname(nickname: string): Promise<UserModel | null> {
         try {
-            return await UserModel.findOne({ where: { nickname } });
+            return await UserModel.findOne(
+                {
+                    where: { nickname },
+                    attributes: { exclude: ['password'] }
+                });
         } catch (error) {
             if (error instanceof UniqueConstraintError) {
                 throw error;

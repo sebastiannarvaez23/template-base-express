@@ -38,6 +38,58 @@ export class PersonsRepositoryImpl implements PersonsRepository {
         }
     }
 
+    async getPersonByNickname(nickname: string): Promise<PersonModel | null> {
+        try {
+            return await PersonModel.findOne({
+                include: [
+                    {
+                        model: UserModel,
+                        where: { nickname },
+                        attributes: { exclude: ['password'] }
+                    },
+                    {
+                        model: RoleModel,
+                        include: [
+                            {
+                                model: ServiceModel,
+                                through: {
+                                    attributes: []
+                                }
+                            }
+                        ]
+                    }
+                ]
+            });
+        } catch (error) {
+            console.error(error);
+            if (error instanceof UniqueConstraintError) {
+                throw error;
+            }
+            throw new HttpError("000000");
+        }
+    }
+
+    async getPersonByEmail(email: string): Promise<PersonModel | null> {
+        try {
+            return await PersonModel.findOne(
+                {
+                    attributes: { exclude: ['password'] },
+                    include: [
+                        {
+                            model: UserModel,
+                            where: { email },
+                        },
+                    ]
+                });
+        } catch (error) {
+            console.error(error);
+            if (error instanceof UniqueConstraintError) {
+                throw error;
+            }
+            throw new HttpError("000000");
+        }
+    }
+
     async add(person: PersonEntity): Promise<PersonModel> {
         try {
             const roleExists = await RoleModel.findOne(
@@ -84,55 +136,6 @@ export class PersonsRepositoryImpl implements PersonsRepository {
             return personToDelete;
         } catch (error) {
             throw error;
-        }
-    }
-
-    async getPersonByNickname(nickname: string): Promise<PersonModel | null> {
-        try {
-            return await PersonModel.findOne({
-                include: [
-                    {
-                        model: UserModel,
-                        where: { nickname },
-                    },
-                    {
-                        model: RoleModel,
-                        include: [
-                            {
-                                model: ServiceModel,
-                                through: {
-                                    attributes: []
-                                }
-                            }
-                        ]
-                    }
-                ]
-            });
-        } catch (error) {
-            console.error(error);
-            if (error instanceof UniqueConstraintError) {
-                throw error;
-            }
-            throw new HttpError("000000");
-        }
-    }
-
-    async getPersonByEmail(email: string): Promise<PersonModel | null> {
-        try {
-            return await PersonModel.findOne({
-                include: [
-                    {
-                        model: UserModel,
-                        where: { email },
-                    }
-                ]
-            });
-        } catch (error) {
-            console.error(error);
-            if (error instanceof UniqueConstraintError) {
-                throw error;
-            }
-            throw new HttpError("000000");
         }
     }
 }
