@@ -14,7 +14,7 @@ import usersRoutes from "../../../microservices/users/user/infrastructure/api/us
 
 export class AppRoutes {
 
-  private base: string = process.env.BASE_URL!;
+  private base: string = process.env.API_VERSION!;
   private redis: RedisConfig = new RedisConfig();
   private authValidator: AuthValidator = new AuthValidator();
   private authMiddleware: AuthMiddleware = new AuthMiddleware(this.redis, this.authValidator);

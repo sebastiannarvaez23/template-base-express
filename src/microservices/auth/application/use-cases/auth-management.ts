@@ -8,7 +8,6 @@ import { HttpError } from "../../../../api-gateway/domain/entities/error.entity"
 import { PersonClientFeign } from "../../../../lib-client-feign/users/person.client";
 import { RedisConfig } from "../../../../config/redis";
 import { sendPasswordResetEmail } from "../../../../lib-core/utils/mailer.util";
-import { UsersRepository } from "../../../users/user/domain/repositories/users.repository";
 import { PersonEntity } from "../../../users/person/domain/entities/person.entity";
 import { UserClientFeign } from "../../../../lib-client-feign/users/users.client";
 
@@ -29,7 +28,7 @@ export class AuthManagement {
         this._SESION_SG_EXP = Number(process.env.SESION_SG_EXP)!;
     }
 
-    async authentication(credentials: AuthEntity): Promise<{ token: string | null }> {
+    async authentication(credentials: AuthEntity): Promise<string | undefined> {
         try {
             const validateCredentials: boolean | undefined = await this._userClientFeign.validateCredential(credentials);
             if (!validateCredentials) throw new HttpError("010002");
@@ -37,7 +36,7 @@ export class AuthManagement {
             const existingToken = await this._redis.getTokenFromRedis(credentials.nickname);
             if (existingToken) return existingToken;
 
-            const person: PersonEntity = await this._personClientFeign.getPersonByNickname(credentials.nickname);
+            const person: PersonEntity | undefined = await this._personClientFeign.getPersonByNickname(credentials.nickname);
             if (!person?.user) throw new HttpError("010001");
 
             const role = person.role!.name;
@@ -51,7 +50,7 @@ export class AuthManagement {
                 exp: Date.now() + this._SESION_SG_EXP * 1000,
             }, this._SECRET);
             await this._redis.storeTokenInRedis(credentials.nickname, token!);
-            return { token };
+            return token;
         } catch (e) {
             throw e;
         }
@@ -92,7 +91,7 @@ export class AuthManagement {
             const nickname = await this._redis.getResetPassTokenFromRedis(token);
             if (!nickname) throw new HttpError("000013");
 
-            const person: PersonEntity = await this._personClientFeign.getPersonByNickname(nickname);
+            const person: PersonEntity | undefined = await this._personClientFeign.getPersonByNickname(nickname);
             if (!person) throw new HttpError("000014");
 
             const hashedPassword = await this._encryptedUtils.encrypt(newPassword);
