@@ -14,7 +14,7 @@ import usersRoutes from "../../../microservices/users/user/infrastructure/api/us
 
 export class AppRoutes {
 
-  private base: string = '/api/v1/';
+  private base: string = process.env.BASE_URL!;
   private redis: RedisConfig = new RedisConfig();
   private authValidator: AuthValidator = new AuthValidator();
   private authMiddleware: AuthMiddleware = new AuthMiddleware(this.redis, this.authValidator);
@@ -25,23 +25,23 @@ export class AppRoutes {
       router: apiGatewayRoutes
     },
     {
-      path: `${this.base}auth`,
+      path: `${this.base}/auth`,
       router: authRoutes
     },
     {
-      path: `${this.base}user`,
+      path: `${this.base}/user`,
       router: usersRoutes
     },
     {
-      path: `${this.base}person`,
+      path: `${this.base}/person`,
       router: personsRoutes
     },
     {
-      path: `${this.base}role`,
+      path: `${this.base}/role`,
       router: rolesRoutes
     },
     {
-      path: `${this.base}service`,
+      path: `${this.base}/service`,
       router: servicesRoutes
     },
   ];

@@ -2,9 +2,12 @@
 import axios, { AxiosInstance } from "axios";
 
 export class ClientFeignConfig {
+    private baseURL: string;
     private httpClient: AxiosInstance;
 
     constructor() {
+        this.baseURL = process.env.BASE_URL! + process.env.API_VERSION!;
+
         this.httpClient = axios.create({
             timeout: 5000,
             headers: {
@@ -34,5 +37,9 @@ export class ClientFeignConfig {
 
     public getHttpClient(): AxiosInstance {
         return this.httpClient;
+    }
+
+    public getBaseUrl(): string {
+        return this.baseURL;
     }
 }

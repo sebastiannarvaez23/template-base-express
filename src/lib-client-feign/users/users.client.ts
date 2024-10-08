@@ -5,17 +5,14 @@ import { ClientFeignConfig } from "../config";
 
 export class UserClientFeign extends ClientFeignConfig {
 
-    private baseURL: string;
-
     constructor() {
         super();
-        this.baseURL = "http://localhost:3000/api/v1";
     }
 
     public async edit(userId: string, user: UserEntity): Promise<UserEntity | undefined> {
         try {
             const response = await this.getHttpClient()
-                .put<UserEntity>(`${this.baseURL}/user/${userId}`, user);
+                .put<UserEntity>(`${this.getBaseUrl()}/user/${userId}`, user);
             return response.data;
         } catch (error: any) {
             error.response.data.errors.forEach((error: any) => {
@@ -27,7 +24,7 @@ export class UserClientFeign extends ClientFeignConfig {
     public async validateCredential(credentials: AuthEntity): Promise<boolean | undefined> {
         try {
             const response = await this.getHttpClient()
-                .post<{ validate: boolean }>(`${this.baseURL}/user/validate-credentials`, credentials);
+                .post<{ validate: boolean }>(`${this.getBaseUrl()}/user/validate-credentials`, credentials);
             return response.data.validate;
         } catch (error: any) {
             error.response.data.errors.forEach((error: any) => {
