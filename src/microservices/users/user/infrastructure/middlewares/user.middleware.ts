@@ -13,6 +13,10 @@ export class UserMiddleware {
         validationMiddleware(userValidator)(req, res, next);
     }
 
+    validateEdit(req: Request, res: Response, next: NextFunction): void {
+        validationMiddleware(userValidator)(req, res, next);
+    }
+
     validateCredentialBody(req: Request, res: Response, next: NextFunction): void {
         validationMiddleware(credentialBodyValidator)(req, res, next);
     }

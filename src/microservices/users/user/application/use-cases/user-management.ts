@@ -23,6 +23,15 @@ export class UserManagement {
         }
     }
 
+    async edit(id: string, user: UserEntity): Promise<UserEntity | null> {
+        try {
+            const resultUser = await this._userRepository.edit(id, user);
+            return resultUser;
+        } catch (e) {
+            throw e;
+        }
+    }
+
     async validateCredential({ nickname, password }: Partial<UserEntity>): Promise<boolean> {
         try {
             const user = await this._userRepository.getUserPasswordByNickname(nickname!);

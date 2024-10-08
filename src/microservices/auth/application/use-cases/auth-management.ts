@@ -20,7 +20,6 @@ export class AuthManagement {
     private readonly _SESION_SG_EXP: number;
 
     constructor(
-        private readonly _userRepository: UsersRepository,
         private readonly _encryptedUtils: EncryptionUtil,
         private readonly _redis: RedisConfig,
         private readonly _personClientFeign: PersonClientFeign,
@@ -99,7 +98,7 @@ export class AuthManagement {
             const hashedPassword = await this._encryptedUtils.encrypt(newPassword);
 
             person.user!.password = hashedPassword;
-            await this._userRepository.edit(person.user!.id!, person.user!);
+            await this._userClientFeign.edit(person.user!.id!, person.user!);
             await this._redis.deleteResetPassToken(token);
             return { message: "The password has been reset successfully." };
         } catch (error) {

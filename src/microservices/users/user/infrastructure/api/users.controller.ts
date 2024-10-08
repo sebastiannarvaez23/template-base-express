@@ -20,6 +20,15 @@ export class UsersController {
         }
     }
 
+    async edit(req: Request, res: Response) {
+        const { id } = req.params;
+        try {
+            res.status(200).json(await this._userManagement.edit(id, req.body));
+        } catch (error) {
+            this._handlerError.handle(error as HttpError | Error, req, res);
+        }
+    }
+
     async validateCredential(req: Request, res: Response) {
         try {
             const result = await this._userManagement.validateCredential(req.body);

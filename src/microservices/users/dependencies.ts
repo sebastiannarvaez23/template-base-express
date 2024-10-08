@@ -13,6 +13,7 @@ import { UserMiddleware } from "./user/infrastructure/middlewares/user.middlewar
 import { UsersController } from "./user/infrastructure/api/users.controller";
 import { UsersRepositoryImpl } from "./user/infrastructure/repositories/users.repository-impl";
 
+
 const encryptionService: EncryptionUtil = new EncryptionUtil();
 const handlerError: ErrorHandlerUtil = new ErrorHandlerUtil();
 const redisConfig: RedisConfig = new RedisConfig();
