@@ -36,9 +36,13 @@ personsRoutes.delete("/:id",
     personController.delete.bind(personController));
 
 personsRoutes.get("/by-nickname/:nickname",
+    authMiddleware.authenticateToken,
+    authorizationMiddleware.checkAccess('0206'),
     personController.getPersonByNickname.bind(personController));
 
 personsRoutes.get("/by-email/:email",
+    authMiddleware.authenticateToken,
+    authorizationMiddleware.checkAccess('0207'),
     personController.getPersonByEmail.bind(personController));
 
 

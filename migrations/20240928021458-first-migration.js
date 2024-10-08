@@ -238,6 +238,20 @@ module.exports = {
         updated_at: new Date(),
       },
       {
+        id: 'a5fd20f3-bcee-4f0e-91d6-7b11cbb8c249',
+        code: '0206',
+        name: 'Obtener persona por nickname',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        id: 'e4031627-c90d-4ca0-9ec9-dacd5037fab0',
+        code: '0207',
+        name: 'Obtener persona por email',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
         id: 'e529088b-c564-4c2c-86b1-f10c827d60c6',
         code: '0301',
         name: 'Listar roles',
@@ -390,6 +404,14 @@ module.exports = {
       },
       {
         service_id: '14b98ca6-9326-43b1-bf3d-c9995d64fa54',
+        role_id: '3ba6c285-e5f6-4e3f-9d7d-a64519105593',
+      },
+      {
+        service_id: 'a5fd20f3-bcee-4f0e-91d6-7b11cbb8c249',
+        role_id: '3ba6c285-e5f6-4e3f-9d7d-a64519105593',
+      },
+      {
+        service_id: 'e4031627-c90d-4ca0-9ec9-dacd5037fab0',
         role_id: '3ba6c285-e5f6-4e3f-9d7d-a64519105593',
       },
     ]);

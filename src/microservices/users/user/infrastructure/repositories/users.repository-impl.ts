@@ -7,6 +7,20 @@ import { UsersRepository } from "../../domain/repositories/users.repository";
 
 export class UsersRepositoryImpl implements UsersRepository {
 
+    async getUserPasswordByNickname(nickname: string): Promise<UserModel | null> {
+        try {
+            return await UserModel.findOne(
+                {
+                    where: { nickname }
+                });
+        } catch (error) {
+            if (error instanceof UniqueConstraintError) {
+                throw error;
+            }
+            throw new HttpError("000000");
+        }
+    }
+
     async getByNickname(nickname: string): Promise<UserModel | null> {
         try {
             return await UserModel.findOne(

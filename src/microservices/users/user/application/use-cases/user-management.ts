@@ -25,7 +25,7 @@ export class UserManagement {
 
     async validateCredential({ nickname, password }: Partial<UserEntity>): Promise<boolean> {
         try {
-            const user = await this._userRepository.getByNickname(nickname!);
+            const user = await this._userRepository.getUserPasswordByNickname(nickname!);
             if (!user) throw new HttpError("010001");
             const decriptedPass = this._encriptionService.decrypt(user.password);
             return (password === decriptedPass);
