@@ -6,6 +6,7 @@ import { PersonModel } from "../models/person.model";
 import { PersonsRepository } from "../../domain/repositories/persons.repository";
 import { QueryParams } from "../../../../../lib-entities/query-params.entity";
 import { RoleModel } from "../../../../security/role/infraestructure/models/role.model";
+import { ServiceModel } from "../../../../security/service/infraestructure/models/service.model";
 import { UserModel } from "../../../user/infrastructure/models/user.model";
 
 export class PersonsRepositoryImpl implements PersonsRepository {
@@ -83,6 +84,55 @@ export class PersonsRepositoryImpl implements PersonsRepository {
             return personToDelete;
         } catch (error) {
             throw error;
+        }
+    }
+
+    async getPersonByNickName(nickname: string): Promise<PersonModel | null> {
+        try {
+            return await PersonModel.findOne({
+                include: [
+                    {
+                        model: UserModel,
+                        where: { nickname },
+                    },
+                    {
+                        model: RoleModel,
+                        include: [
+                            {
+                                model: ServiceModel,
+                                through: {
+                                    attributes: []
+                                }
+                            }
+                        ]
+                    }
+                ]
+            });
+        } catch (error) {
+            console.error(error);
+            if (error instanceof UniqueConstraintError) {
+                throw error;
+            }
+            throw new HttpError("000000");
+        }
+    }
+
+    async getPersonByEmail(email: string): Promise<PersonModel | null> {
+        try {
+            return await PersonModel.findOne({
+                include: [
+                    {
+                        model: UserModel,
+                        where: { email },
+                    }
+                ]
+            });
+        } catch (error) {
+            console.error(error);
+            if (error instanceof UniqueConstraintError) {
+                throw error;
+            }
+            throw new HttpError("000000");
         }
     }
 }

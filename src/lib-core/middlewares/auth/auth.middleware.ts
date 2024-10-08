@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
-import { AuthValidator } from "../../application/validations/auth.validator";
-import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
-import { RedisConfig } from "../../../../config/redis";
-import { validationMiddleware } from "../../../../lib-core/middlewares/validators/validation.middleware";
+import { AuthValidator } from "../../../microservices/auth/application/validations/auth.validator";
+import { HttpError } from "../../../api-gateway/domain/entities/error.entity";
+import { RedisConfig } from "../../../config/redis";
+import { validationMiddleware } from "../validators/validation.middleware";
 
 declare global {
     namespace Express {
@@ -27,15 +27,16 @@ export class AuthMiddleware {
         this.secret = process.env.SECRET_KEY!;
         this.redis = _redis;
         this.authValidator = _authValidator;
-        this.validateAuth = validationMiddleware(this.authValidator);
     }
 
-    public validateAuth;
+    public getValidateAuth() {
+        return validationMiddleware(this.authValidator);
+    }
 
     public authenticateToken = async (req: Request, res: Response, next: NextFunction) => {
-        const token = req.headers.authorization?.split(" ")[1];
-        if (!token) return next(new HttpError("000003"));
         try {
+            const token = req.headers.authorization?.split(" ")[1];
+            if (!token) return next(new HttpError("000003"));
             const payload = jwt.verify(token, this.secret) as JwtPayload;
             if (Date.now() > (payload.exp || 0)) return next(new HttpError("000006"));
             const nickname = payload.name;

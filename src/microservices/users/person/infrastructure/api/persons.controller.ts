@@ -56,4 +56,22 @@ export class PersonsController {
             this._handlerError.handle(error as HttpError | Error, req, res);
         }
     };
+
+    async getPersonByNickName(req: Request, res: Response) {
+        try {
+            const { nickname } = req.params;
+            res.status(200).json(await this._personManagement.getPersonByNickName(nickname));
+        } catch (error) {
+            this._handlerError.handle(error as HttpError | Error, req, res);
+        }
+    }
+
+    async getPersonByEmail(req: Request, res: Response) {
+        try {
+            const { email } = req.params;
+            res.status(200).json(await this._personManagement.getPersonByEmail(email));
+        } catch (error) {
+            this._handlerError.handle(error as HttpError | Error, req, res);
+        }
+    }
 }

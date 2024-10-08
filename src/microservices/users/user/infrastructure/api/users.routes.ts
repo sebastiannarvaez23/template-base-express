@@ -1,7 +1,6 @@
 import express from "express";
 
-import { userController } from "../../../dependencies";
-import { userMiddleware } from "../../../../auth/infraestructure/dependencies";
+import { userController, userMiddleware } from "../../../dependencies";
 
 const usersRoutes = express.Router();
 

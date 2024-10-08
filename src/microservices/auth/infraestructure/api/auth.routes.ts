@@ -1,6 +1,6 @@
 import express from "express";
 
-import { authController } from "../dependencies";
+import { authController } from "../../dependencies";
 
 const authRoutes = express.Router();
 

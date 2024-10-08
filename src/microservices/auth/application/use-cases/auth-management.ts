@@ -5,9 +5,11 @@ import { AuthEntity } from "../../../auth/domain/entities/auth.entity";
 import { EncryptionUtil } from "../../../../lib-core/utils/encryption.util";
 import { generateResetToken } from "../../../../lib-core/utils/token-generator.util";
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
+import { PersonClientFeign } from "../../../../lib-client-feign/users/person.client";
 import { RedisConfig } from "../../../../config/redis";
 import { sendPasswordResetEmail } from "../../../../lib-core/utils/mailer.util";
 import { UsersRepository } from "../../../users/user/domain/repositories/users.repository";
+import { PersonEntity } from "../../../users/person/domain/entities/person.entity";
 
 config();
 
@@ -20,6 +22,7 @@ export class AuthManagement {
         private readonly _userRepository: UsersRepository,
         private readonly _encryptedUtils: EncryptionUtil,
         private readonly _redis: RedisConfig,
+        private readonly _personClientFeign: PersonClientFeign,
     ) {
         this._SECRET = process.env.SECRET_KEY!;
         this._SESION_SG_EXP = Number(process.env.SESION_SG_EXP)!;
@@ -27,14 +30,15 @@ export class AuthManagement {
 
     async authentication(auth: AuthEntity): Promise<{ token: string | null }> {
         try {
-            const person = await this._userRepository.getUserByNickName(auth.nickname);
+            const person: PersonEntity = await this._personClientFeign.getPersonByNickname(auth.nickname);
+            console.log({ person })
             if (!person?.user) throw new HttpError("010001");
 
-            const decryptedPass = this._encryptedUtils.decrypt(person?.user.password);
+            const decryptedPass = this._encryptedUtils.decrypt(person?.user!.password!);
             if (decryptedPass !== auth.password) throw new HttpError("010002");
 
-            const role = person.role.name;
-            const services = person.role.services.map((service: any) => service.code);
+            const role = person.role!.name;
+            const services = person.role!.services!.map((service: any) => service.code);
 
             const token = jwt.sign({
                 sub: person.user.id,
@@ -53,11 +57,11 @@ export class AuthManagement {
 
     async requestPasswordReset(email: string): Promise<{ message: string | null }> {
         try {
-            const user = await this._userRepository.getUserByEmail(email);
+            const user = await this._personClientFeign.getPersonByEmail(email);
             if (!user) throw new HttpError("010001");
             const resetToken = generateResetToken();
-            await this._redis.storeResetPassToken(resetToken, user.id);
-            await sendPasswordResetEmail(user.email, resetToken);
+            await this._redis.storeResetPassToken(resetToken, user.id!);
+            await sendPasswordResetEmail(user.email!, resetToken);
             return { message: "Mail have sent correctly. Review your inbox." };
         } catch (e) {
             throw e;
@@ -70,13 +74,13 @@ export class AuthManagement {
             const nickname = await this._redis.getResetPassTokenFromRedis(token);
             if (!nickname) throw new HttpError("000013");
 
-            const person = await this._userRepository.getUserByNickName(nickname);
+            const person: PersonEntity = await this._personClientFeign.getPersonByNickname(nickname);
             if (!person) throw new HttpError("000014");
 
             const hashedPassword = await this._encryptedUtils.encrypt(newPassword);
 
-            person.user.password = hashedPassword;
-            await this._userRepository.edit(person.user.id, person.user);
+            person.user!.password = hashedPassword;
+            await this._userRepository.edit(person.user!.id!, person.user!);
             await this._redis.deleteResetPassToken(token);
             return { message: "The password has been reset successfully." };
         } catch (error) {

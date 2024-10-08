@@ -8,4 +8,6 @@ export interface PersonsRepository {
     add(person: PersonEntity): Promise<PersonModel>;
     edit(id: string, person: PersonEntity): Promise<PersonModel>;
     delete(id: string): Promise<PersonModel>;
+    getPersonByNickName(nickname: string): Promise<PersonModel | null>;
+    getPersonByEmail(email: string): Promise<PersonModel | null>;
 }

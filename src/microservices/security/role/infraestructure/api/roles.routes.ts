@@ -1,7 +1,6 @@
 import express from "express";
 
-import { authMiddleware, authorizationMiddleware } from "../../../../auth/infraestructure/dependencies";
-import { roleController, roleMiddleware } from "../../../dependencies";
+import { roleController, roleMiddleware, authMiddleware, authorizationMiddleware } from "../../../dependencies";
 
 const rolesRoutes = express.Router();
 

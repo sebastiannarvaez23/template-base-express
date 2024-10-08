@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
+import { HttpError } from "../../../api-gateway/domain/entities/error.entity";
 
 export class AuthorizationMiddleware {
     constructor() { }

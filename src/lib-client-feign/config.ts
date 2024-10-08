@@ -1,7 +1,7 @@
+// src/config/ClientFeignConfig.ts
 import axios, { AxiosInstance } from "axios";
 
-export class ClientFeingConfig {
-
+export class ClientFeignConfig {
     private httpClient: AxiosInstance;
 
     constructor() {
@@ -32,7 +32,7 @@ export class ClientFeingConfig {
         );
     }
 
-    getHttpClient() {
+    public getHttpClient(): AxiosInstance {
         return this.httpClient;
     }
 }

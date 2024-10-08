@@ -1,4 +1,5 @@
 import { RoleEntity } from "../../../../security/role/domain/entities/role.entity";
+import { UserEntity } from "../../../user/domain/entities/user.entity";
 
 export interface PersonEntity {
     id?: string;
@@ -10,6 +11,7 @@ export interface PersonEntity {
     roleId?: string;
     userId?: string;
     role?: RoleEntity;
+    user?: UserEntity;
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;

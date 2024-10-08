@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { AuthManagement } from "../../application/use-cases/auth-management";
-import { AuthMiddleware } from "../middlewares/auth.middleware";
+import { AuthMiddleware } from "../../../../lib-core/middlewares/auth/auth.middleware";
 import { ErrorHandlerUtil } from "../../../../lib-core/utils/error-handler.util";
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
 import { RedisConfig } from "../../../../config/redis";
@@ -16,7 +16,7 @@ export class AuthController {
     ) { }
 
     async authentication(req: Request, res: Response) {
-        await this._authMiddleware.validateAuth(req, res, async () => {
+        await this._authMiddleware.getValidateAuth()(req, res, async () => {
             try {
                 const { nickname } = req.body;
                 const existingToken = await this._redis.getTokenFromRedis(nickname);

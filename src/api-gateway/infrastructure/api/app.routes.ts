@@ -1,7 +1,7 @@
 import cors from "cors";
 import express, { Application, Request, Response, NextFunction } from "express";
 
-import { AuthMiddleware } from "../../../microservices/auth/infraestructure/middlewares/auth.middleware";
+import { AuthMiddleware } from "../../../lib-core/middlewares/auth/auth.middleware";
 import { AuthValidator } from "../../../microservices/auth/application/validations/auth.validator";
 import { RedisConfig } from "../../../config/redis";
 import { RouteGroup } from "../../domain/entities/route-group.entity";
@@ -51,11 +51,7 @@ export class AppRoutes {
   public init() {
     this.middlewares();
     this.routeGroup.forEach(route => {
-      if (route.path === `${this.base}person`) {
-        this._app.use(route.path, this.authMiddleware.authenticateToken, route.router);
-      } else {
-        this._app.use(route.path, route.router);
-      }
+      this._app.use(route.path, route.router);
     });
     this.errorHandlingMiddleware();
   }
