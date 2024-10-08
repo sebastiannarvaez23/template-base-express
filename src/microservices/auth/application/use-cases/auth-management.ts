@@ -58,6 +58,22 @@ export class AuthManagement {
         }
     }
 
+    async logout(authHeader: string | undefined, nickname: string): Promise<boolean> {
+        try {
+            if (!authHeader) throw new HttpError("000003");
+            const token = authHeader.split(' ')[1];
+            if (!token) throw new HttpError("000003");
+            const response = await this._redis.deleteToken(nickname)
+                .catch((err: any) => {
+                    throw new HttpError("000004");
+                });
+            if (response !== 1) throw new HttpError("000005");
+            return true;
+        } catch (e) {
+            throw e;
+        }
+    }
+
     async requestPasswordReset(email: string): Promise<{ message: string | null }> {
         try {
             const user = await this._personClientFeign.getPersonByEmail(email);

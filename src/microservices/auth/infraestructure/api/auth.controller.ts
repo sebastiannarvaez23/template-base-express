@@ -30,22 +30,8 @@ export class AuthController {
         try {
             const authHeader = req.headers['authorization'];
             const { nickname } = req.body;
-
-            if (!authHeader) throw new HttpError("000003");
-
-            const token = authHeader.split(' ')[1];
-
-            if (!token) throw new HttpError("000003");
-
-            const response = await this._redis.deleteToken(nickname)
-                .catch((err: any) => {
-                    throw new HttpError("000004");
-                });
-
-            if (response === 1) {
-                return res.status(200).json({ message: 'Logout successful' });
-            } else throw new HttpError("000005");
-
+            await this._authManagement.logout(authHeader, nickname);
+            return res.status(200).json({ message: 'Logout successful' });
         } catch (error) {
             this._handlerError.handle(error as HttpError | Error, req, res);
         }
