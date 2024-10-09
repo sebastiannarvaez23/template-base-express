@@ -19,7 +19,7 @@ export class RoleModel extends Model {
     declare id: string;
 
     @Column({
-        type: DataType.STRING,
+        type: DataType.STRING(100),
         field: 'name',
         allowNull: false,
         unique: true,

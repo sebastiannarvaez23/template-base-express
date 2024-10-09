@@ -19,7 +19,7 @@ export class ServiceModel extends Model {
     declare id: string;
 
     @Column({
-        type: DataType.STRING,
+        type: DataType.STRING(4),
         field: 'code',
         unique: true,
         allowNull: false,
@@ -27,7 +27,7 @@ export class ServiceModel extends Model {
     declare code: string;
 
     @Column({
-        type: DataType.STRING,
+        type: DataType.STRING(70),
         field: 'name',
         allowNull: false,
     })

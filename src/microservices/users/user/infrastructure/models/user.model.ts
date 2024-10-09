@@ -18,7 +18,7 @@ export class UserModel extends Model {
   declare id: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(50),
     allowNull: false,
     field: 'nickname',
     unique: true,
@@ -26,7 +26,7 @@ export class UserModel extends Model {
   declare nickname: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(255),
     allowNull: false,
     field: 'password',
   })

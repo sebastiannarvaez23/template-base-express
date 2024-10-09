@@ -19,21 +19,21 @@ export class PersonModel extends Model {
   declare id: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(100),
     field: 'first_name',
     allowNull: false,
   })
   declare firstName: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(100),
     field: 'last_name',
     allowNull: false,
   })
   declare lastName: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(100),
     field: 'email',
     unique: true,
     allowNull: false,
@@ -41,7 +41,7 @@ export class PersonModel extends Model {
   declare email: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(10),
     field: 'phone',
     unique: true,
     allowNull: false,
