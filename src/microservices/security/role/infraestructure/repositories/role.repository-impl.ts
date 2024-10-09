@@ -14,8 +14,12 @@ export class RolesRepositoryImpl implements RolesRepository {
                 order: [["createdAt", "desc"]],
                 limit: limit,
                 offset: offset,
+                attributes: {
+                    exclude: ['updatedAt', 'deletedAt']
+                },
                 include: [{
                     model: ServiceModel,
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                     through: {
                         attributes: []
                     }

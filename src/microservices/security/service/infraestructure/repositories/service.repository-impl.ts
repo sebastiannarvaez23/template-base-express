@@ -11,6 +11,7 @@ export class ServicesRepositoryImpl implements ServicesRepository {
         try {
             return await ServiceModel.findAndCountAll({
                 order: [["createdAt", "desc"]],
+                attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                 limit: limit,
                 offset: offset,
             });

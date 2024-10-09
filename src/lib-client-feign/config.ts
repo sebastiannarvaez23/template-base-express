@@ -1,4 +1,3 @@
-// src/config/ClientFeignConfig.ts
 import axios, { AxiosInstance } from "axios";
 
 export class ClientFeignConfig {

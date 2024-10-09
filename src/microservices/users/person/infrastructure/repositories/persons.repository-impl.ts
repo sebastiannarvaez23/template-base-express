@@ -16,6 +16,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
             return await PersonModel.findAndCountAll({
                 where: queryParams.filters,
                 order: [["createdAt", "desc"]],
+                attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                 limit: queryParams.limit,
                 offset: queryParams.offset,
             });
@@ -28,7 +29,10 @@ export class PersonsRepositoryImpl implements PersonsRepository {
     async get(id: string): Promise<PersonModel | null> {
         try {
             const person = await PersonModel.findOne(
-                { where: { id } });
+                {
+                    where: { id },
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
+                });
             if (!person) {
                 throw new HttpError("020001");
             }
@@ -45,13 +49,15 @@ export class PersonsRepositoryImpl implements PersonsRepository {
                     {
                         model: UserModel,
                         where: { nickname },
-                        attributes: { exclude: ['password'] }
+                        attributes: { exclude: ['password', 'lastAuth', 'origin', 'createdAt', 'updatedAt', 'deletedAt'] }
                     },
                     {
                         model: RoleModel,
+                        attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                         include: [
                             {
                                 model: ServiceModel,
+                                attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                                 through: {
                                     attributes: []
                                 }
@@ -73,7 +79,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
         try {
             return await PersonModel.findOne(
                 {
-                    attributes: { exclude: ['password'] },
+                    attributes: { exclude: ['password', 'lastAuth', 'origin', 'createdAt', 'updatedAt', 'deletedAt'] },
                     include: [
                         {
                             model: UserModel,
