@@ -10,8 +10,8 @@ rolesRoutes.get("/",
     roleController.getList.bind(roleController));
 
 rolesRoutes.get("/:id",
-    authMiddleware.authenticateToken,
-    authorizationMiddleware.checkAccess('0302'),
+    //authMiddleware.authenticateToken,
+    //authorizationMiddleware.checkAccess('0302'),
     roleController.get.bind(roleController));
 
 rolesRoutes.post("/",

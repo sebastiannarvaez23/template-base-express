@@ -34,7 +34,18 @@ export class RolesRepositoryImpl implements RolesRepository {
     async get(id: string): Promise<RoleModel | null> {
         try {
             const person = await RoleModel.findOne(
-                { where: { id } });
+                {
+                    where: { id },
+                    include: [
+                        {
+                            model: ServiceModel,
+                            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
+                            through: {
+                                attributes: []
+                            }
+                        }
+                    ]
+                });
             if (!person) {
                 throw new HttpError("030001");
             }

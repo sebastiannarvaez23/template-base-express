@@ -51,19 +51,6 @@ export class PersonsRepositoryImpl implements PersonsRepository {
                         where: { nickname },
                         attributes: { exclude: ['password', 'lastAuth', 'origin', 'createdAt', 'updatedAt', 'deletedAt'] }
                     },
-                    {
-                        model: RoleModel,
-                        attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                        include: [
-                            {
-                                model: ServiceModel,
-                                attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                                through: {
-                                    attributes: []
-                                }
-                            }
-                        ]
-                    }
                 ]
             });
         } catch (error) {

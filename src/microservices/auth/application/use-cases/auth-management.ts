@@ -10,6 +10,7 @@ import { RedisConfig } from "../../../../config/redis";
 import { sendPasswordResetEmail } from "../../../../lib-core/utils/mailer.util";
 import { PersonEntity } from "../../../users/person/domain/entities/person.entity";
 import { UserClientFeign } from "../../../../lib-client-feign/users/users.client";
+import { RoleClientFeign } from "../../../../lib-client-feign/security/role.client";
 
 config();
 
@@ -23,6 +24,7 @@ export class AuthManagement {
         private readonly _redis: RedisConfig,
         private readonly _personClientFeign: PersonClientFeign,
         private readonly _userClientFeign: UserClientFeign,
+        private readonly _roleClientFeign: RoleClientFeign,
     ) {
         this._SECRET = process.env.SECRET_KEY!;
         this._SESION_SG_EXP = Number(process.env.SESION_SG_EXP)!;
@@ -39,13 +41,15 @@ export class AuthManagement {
             const person: PersonEntity | undefined = await this._personClientFeign.getPersonByNickname(credentials.nickname);
             if (!person?.user) throw new HttpError("010001");
 
-            const role = person.role!.name;
-            const services = person.role!.services!.map((service: any) => service.code);
+            const roleId = person.roleId!;
+            const role = await this._roleClientFeign.getPersonById(roleId);
+
+            const services = role!.services!.map((service: any) => service.code);
 
             const token = jwt.sign({
                 sub: person.user.id,
                 name: person.user.nickname,
-                role: role,
+                role: role!.name,
                 services: services,
                 exp: Date.now() + this._SESION_SG_EXP * 1000,
             }, this._SECRET);
