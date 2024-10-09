@@ -36,6 +36,59 @@
 					"response": []
 				},
 				{
+					"name": "request password reset",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nickname\": \"admin\",\r\n    \"password\": \"encryptedPassword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}auth/request-password-reset",
+							"host": [
+								"{{host}}auth"
+							],
+							"path": [
+								"request-password-reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "password reset",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nickname\": \"admin\",\r\n    \"password\": \"encryptedPassword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}auth/password-reset/{token-reset}",
+							"host": [
+								"{{host}}auth"
+							],
+							"path": [
+								"password-reset",
+								"{token-reset}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "logout",
 					"request": {
 						"auth": {
@@ -83,7 +136,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nickname\": \"user10\",\r\n    \"password\": \"admin\"\r\n}",
+							"raw": "{\r\n    \"nickname\": \"user4\",\r\n    \"password\": \"admin\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -162,6 +215,52 @@
 					"response": []
 				},
 				{
+					"name": "person by nickname",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}person/by-nickname/admin",
+							"host": [
+								"{{host}}person"
+							],
+							"path": [
+								"by-nickname",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "person by email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}person/by-email/admin@email.com",
+							"host": [
+								"{{host}}person"
+							],
+							"path": [
+								"by-email",
+								"admin@email.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "person",
 					"request": {
 						"auth": {
@@ -178,7 +277,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"Cristian\",\r\n    \"lastName\": \"Narvaez\",\r\n    \"email\": \"micorreo07@mail.com\",\r\n    \"phone\": \"3153213211\",\r\n    \"birthDate\": \"1998-03-17\",\r\n    \"userId\": \"b1b279eb-c4b8-48c5-b277-b4b4f5562d2c\",\r\n    \"roleId\": \"ebb293f3-146d-4489-a0d0-e627a24488f0\"\r\n}",
+							"raw": "{\r\n    \"firstName\": \"Cristian\",\r\n    \"lastName\": \"Narvaez\",\r\n    \"email\": \"micorreo03@mail.com\",\r\n    \"phone\": \"3152159878\",\r\n    \"birthDate\": \"1998-03-17\",\r\n    \"userId\": \"324a2e7b-047d-475f-a854-03530649e15d\",\r\n    \"roleId\": \"4ec5acc6-20d0-436d-8c85-ba487f9668e5\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -255,12 +354,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}person/a62e3f18-07ad-46b7-8c9c-00697b5231fe",
+							"raw": "{{host}}person/664a2813-e374-4176-b3ee-06774593a0e9",
 							"host": [
 								"{{host}}person"
 							],
 							"path": [
-								"a62e3f18-07ad-46b7-8c9c-00697b5231fe"
+								"664a2813-e374-4176-b3ee-06774593a0e9"
 							]
 						}
 					},
@@ -317,12 +416,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}role/88bff530-fa14-44c7-b8b4-c6ac4a1bb2ea",
+							"raw": "{{host}}role/3ba6c285-e5f6-4e3f-9d7d-a64519105593",
 							"host": [
 								"{{host}}role"
 							],
 							"path": [
-								"88bff530-fa14-44c7-b8b4-c6ac4a1bb2ea"
+								"3ba6c285-e5f6-4e3f-9d7d-a64519105593"
 							]
 						}
 					},
@@ -345,7 +444,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"root\"\r\n}",
+							"raw": "{\r\n    \"name\": \"staff\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -422,12 +521,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}role/a878644c-11b9-4843-9d07-5725b656cd65",
+							"raw": "{{host}}role/4ec5acc6-20d0-436d-8c85-ba487f9668e5",
 							"host": [
 								"{{host}}role"
 							],
 							"path": [
-								"a878644c-11b9-4843-9d07-5725b656cd65"
+								"4ec5acc6-20d0-436d-8c85-ba487f9668e5"
 							]
 						}
 					},
@@ -450,7 +549,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"services\": [\r\n        \"4f851d66-0d95-4de9-b1f7-ec6fdfa2fdf6\",\r\n        \"0f0edb81-1855-4f49-845c-a35ddaf4204f\",\r\n        \"f06220a3-f854-4762-add8-ab4927919f82\",\r\n        \"62832b04-98bd-4b73-94e9-3008caaa2e3a\",\r\n        \"992920ac-fcbd-47ea-8a49-60dffc655a3c\",\r\n        \"e529088b-c564-4c2c-86b1-f10c827d60c6\",\r\n        \"5d6719dc-e1f8-47ab-89c5-8e85df90fff9\",\r\n        \"19c363ce-2e6c-46f1-ba2f-a60d3b88cd35\",\r\n        \"7d8366d5-ade4-4bfe-8fd3-e14068710ab4\",\r\n        \"4c48b143-e3e0-4352-b359-199f90f89baf\",\r\n        \"0a212b8f-bd48-4395-b671-fe9012f0932f\",\r\n        \"7d9afd08-1648-4f4b-a52a-c18d8d0b81ae\",\r\n        \"f8424ed4-dbc3-4165-8ba2-4bfdbd074c71\",\r\n        \"c8726e82-306b-4893-a8b7-a35278dc7be9\",\r\n        \"d66f0a1d-dbd7-4cbf-85ec-52239a2c77d0\",\r\n        \"000cb939-cfef-4d95-a557-1574e7701da6\",\r\n        \"14b98ca6-9326-43b1-bf3d-c9995d64fa54\"\r\n    ]\r\n}",
+							"raw": "{\r\n    \"services\": [\r\n        \"4f851d66-0d95-4de9-b1f7-ec6fdfa2fdf6\",\r\n        \"0f0edb81-1855-4f49-845c-a35ddaf4204f\",\r\n        \"f06220a3-f854-4762-add8-ab4927919f82\",\r\n        \"62832b04-98bd-4b73-94e9-3008caaa2e3a\",\r\n        \"992920ac-fcbd-47ea-8a49-60dffc655a3c\",\r\n        \"e529088b-c564-4c2c-86b1-f10c827d60c6\",\r\n        \"5d6719dc-e1f8-47ab-89c5-8e85df90fff9\",\r\n        \"19c363ce-2e6c-46f1-ba2f-a60d3b88cd35\",\r\n        \"7d8366d5-ade4-4bfe-8fd3-e14068710ab4\",\r\n        \"4c48b143-e3e0-4352-b359-199f90f89baf\",\r\n        \"0a212b8f-bd48-4395-b671-fe9012f0932f\",\r\n        \"7d9afd08-1648-4f4b-a52a-c18d8d0b81ae\",\r\n        \"f8424ed4-dbc3-4165-8ba2-4bfdbd074c71\",\r\n        \"c8726e82-306b-4893-a8b7-a35278dc7be9\",\r\n        \"d66f0a1d-dbd7-4cbf-85ec-52239a2c77d0\",\r\n        \"000cb939-cfef-4d95-a557-1574e7701da6\",\r\n        \"14b98ca6-9326-43b1-bf3d-c9995d64fa54\",\r\n        \"a5fd20f3-bcee-4f0e-91d6-7b11cbb8c249\",\r\n        \"e4031627-c90d-4ca0-9ec9-dacd5037fab0\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -586,7 +685,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{   \r\n    \"code\": \"0307\",\r\n    \"name\": \"Eliminar assignación de servicio\"\r\n}",
+							"raw": "{   \r\n    \"code\": \"0207\",\r\n    \"name\": \"Obtener persona por email\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
