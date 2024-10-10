@@ -3,8 +3,8 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 
 import { AuthValidator } from "../../../microservices/auth/application/validations/auth.validator";
 import { HttpError } from "../../../api-gateway/domain/entities/error.entity";
-import { RedisConfig } from "../../../config/redis";
 import { validationMiddleware } from "../validators/validation.middleware";
+import { tokenManager } from "../../../microservices/auth/dependencies";
 
 declare global {
     namespace Express {
@@ -18,14 +18,11 @@ export class AuthMiddleware {
 
     private secret: string;
     private authValidator: AuthValidator;
-    private redis: RedisConfig;
 
     constructor(
-        _redis: RedisConfig,
         _authValidator: AuthValidator
     ) {
         this.secret = process.env.SECRET_KEY!;
-        this.redis = _redis;
         this.authValidator = _authValidator;
     }
 
@@ -35,19 +32,27 @@ export class AuthMiddleware {
 
     public authenticateToken = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const token = req.headers.authorization?.split(" ")[1];
-            if (!token) return next(new HttpError("000003"));
-            const payload = jwt.verify(token, this.secret) as JwtPayload;
-            if (Date.now() > (payload.exp || 0)) return next(new HttpError("000006"));
-            const nickname = payload.name;
-            const storedToken = await this.redis.getTokenFromRedis(nickname);
-            if (storedToken !== token) return next(new HttpError("000007"));
+            const authHeader = req.headers.authorization;
+            if (!authHeader) {
+                return next(new HttpError("000003"));
+            }
+
+            const token = authHeader.split(" ")[1];
+            if (!token) {
+                return next(new HttpError("000003"));
+            }
+
+            const payload = await tokenManager.verifyToken(token, this.secret);
+
             req.user = payload;
             next();
-        } catch (err) {
-            console.log({ err });
+        } catch (err: any) {
+            console.error({ err });
             if (err instanceof jwt.JsonWebTokenError) {
                 return next(new HttpError("000007"));
+            }
+            if (err instanceof HttpError) {
+                return next(err);
             }
             return next(new HttpError("000000"));
         }

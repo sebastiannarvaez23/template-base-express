@@ -1,9 +1,6 @@
 import cors from "cors";
 import express, { Application, Request, Response, NextFunction } from "express";
 
-import { AuthMiddleware } from "../../../lib-core/middlewares/auth/authenticate.middleware";
-import { AuthValidator } from "../../../microservices/auth/application/validations/auth.validator";
-import { RedisConfig } from "../../../config/redis";
 import { RouteGroup } from "../../domain/entities/route-group.entity";
 import apiGatewayRoutes from "./api-gateway.routes";
 import authRoutes from "../../../microservices/auth/infraestructure/api/auth.routes";
@@ -15,9 +12,6 @@ import usersRoutes from "../../../microservices/users/user/infrastructure/api/us
 export class AppRoutes {
 
   private base: string = process.env.API_VERSION!;
-  private redis: RedisConfig = new RedisConfig();
-  private authValidator: AuthValidator = new AuthValidator();
-  private authMiddleware: AuthMiddleware = new AuthMiddleware(this.redis, this.authValidator);
 
   private routeGroup: RouteGroup[] = [
     {

@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from "axios";
+import { tokenManager } from "../microservices/auth/dependencies";
 
 export class ClientFeignConfig {
     private baseURL: string;
@@ -15,8 +16,8 @@ export class ClientFeignConfig {
         });
 
         this.httpClient.interceptors.request.use(
-            config => {
-                const token = process.env.AUTH_TOKEN;
+            async config => {
+                const token = tokenManager.getToken();
                 if (token) {
                     config.headers.Authorization = `Bearer ${token}`;
                 }

@@ -8,6 +8,7 @@ import { ErrorHandlerUtil } from "../../lib-core/utils/error-handler.util";
 import { PersonClientFeign } from "../../lib-client-feign/users/person.client";
 import { RedisConfig } from "../../config/redis";
 import { RoleClientFeign } from "../../lib-client-feign/security/role.client";
+import { TokenManager } from "../../lib-core/utils/token-manager.util";
 import { UserClientFeign } from "../../lib-client-feign/users/users.client";
 
 
@@ -25,6 +26,7 @@ const authManagement = new AuthManagement(encryptedService, redisConfig, personC
 
 // dependencies
 
+export const tokenManager = TokenManager.getInstance(redisConfig);
 export const authorizationMiddleware = new AuthorizationMiddleware();
-export const authMiddleware = new AuthMiddleware(redisConfig, authValidator);
+export const authMiddleware = new AuthMiddleware(authValidator);
 export const authController = new AuthController(authManagement, authMiddleware, handlerError);

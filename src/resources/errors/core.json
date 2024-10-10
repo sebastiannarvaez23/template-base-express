@@ -73,5 +73,20 @@
         "serverStatusCode": 401,
         "messageClient": "The user associated with the token does not exist.",
         "messageLog": "The user associated with the token does not exist"
+    },
+    "000015": {
+        "serverStatusCode": 401,
+        "messageClient": "Invalid expiry time.",
+        "messageLog": "Invalid expiry time token"
+    },
+    "000017": {
+        "serverStatusCode": 401,
+        "messageClient": "Invalid or revoked token.",
+        "messageLog": "Token is invalid, expired, or has been revoked."
+    },
+    "000018": {
+        "serverStatusCode": 500,
+        "messageClient": "Failed to revoke token.",
+        "messageLog": "An internal error occurred while attempting to revoke the token."
     }
 }

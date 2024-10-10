@@ -30,7 +30,7 @@ const userManagement = new UserManagement(usersRepository, encryptionService);
 // dependencies
 
 export const authorizationMiddleware = new AuthorizationMiddleware();
-export const authMiddleware = new AuthMiddleware(redisConfig, authValidator);
+export const authMiddleware = new AuthMiddleware(authValidator);
 export const personMiddleware = new PersonMiddleware();
 export const userMiddleware = new UserMiddleware();
 export const personController = new PersonsController(personManagement, handlerError);

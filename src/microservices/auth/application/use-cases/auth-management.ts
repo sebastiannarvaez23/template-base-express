@@ -11,6 +11,7 @@ import { sendPasswordResetEmail } from "../../../../lib-core/utils/mailer.util";
 import { PersonEntity } from "../../../users/person/domain/entities/person.entity";
 import { UserClientFeign } from "../../../../lib-client-feign/users/users.client";
 import { RoleClientFeign } from "../../../../lib-client-feign/security/role.client";
+import { tokenManager } from "../../dependencies";
 
 config();
 
@@ -27,7 +28,7 @@ export class AuthManagement {
         private readonly _roleClientFeign: RoleClientFeign,
     ) {
         this._SECRET = process.env.SECRET_KEY!;
-        this._SESION_SG_EXP = Number(process.env.SESION_SG_EXP)!;
+        this._SESION_SG_EXP = Number(process.env.SESION_SG_EXP!); // En segundos
     }
 
     async authentication(credentials: AuthEntity): Promise<string | undefined> {
@@ -36,7 +37,10 @@ export class AuthManagement {
             if (!validateCredentials) throw new HttpError("010002");
 
             const existingToken = await this._redis.getTokenFromRedis(credentials.nickname);
-            if (existingToken) return existingToken;
+            if (existingToken) {
+                tokenManager.setToken(existingToken);
+                return existingToken;
+            }
 
             const person: PersonEntity | undefined = await this._personClientFeign.getPersonByNickname(credentials.nickname);
             if (!person?.user) throw new HttpError("010001");
@@ -46,14 +50,15 @@ export class AuthManagement {
 
             const services = role!.services!.map((service: any) => service.code);
 
-            const token = jwt.sign({
-                sub: person.user.id,
-                name: person.user.nickname,
-                role: role!.name,
+            const token = await tokenManager.generateToken({
+                sub: person.user.id!,
+                name: person.user.nickname!,
+                role: role!.name!,
                 services: services,
-                exp: Date.now() + this._SESION_SG_EXP * 1000,
-            }, this._SECRET);
-            await this._redis.storeTokenInRedis(credentials.nickname, token!);
+            }, this._SECRET, Date.now() + this._SESION_SG_EXP * 1000);
+
+            await this._redis.storeTokenInRedis(credentials.nickname, token);
+
             return token;
         } catch (e) {
             throw e;
@@ -65,11 +70,8 @@ export class AuthManagement {
             if (!authHeader) throw new HttpError("000003");
             const token = authHeader.split(' ')[1];
             if (!token) throw new HttpError("000003");
-            const response = await this._redis.deleteToken(nickname)
-                .catch((err: any) => {
-                    throw new HttpError("000004");
-                });
-            if (response !== 1) throw new HttpError("000005");
+            await tokenManager.revokeToken(nickname);
+
             return true;
         } catch (e) {
             throw e;
@@ -83,7 +85,7 @@ export class AuthManagement {
             const resetToken = generateResetToken();
             await this._redis.storeResetPassToken(resetToken, user.id!);
             await sendPasswordResetEmail(user.email!, resetToken);
-            return { message: "Mail have sent correctly. Review your inbox." };
+            return { message: "Mail has been sent correctly. Review your inbox." };
         } catch (e) {
             throw e;
         }
@@ -91,7 +93,6 @@ export class AuthManagement {
 
     async passwordReset(token: string, newPassword: string): Promise<{ message: string }> {
         try {
-
             const nickname = await this._redis.getResetPassTokenFromRedis(token);
             if (!nickname) throw new HttpError("000013");
 

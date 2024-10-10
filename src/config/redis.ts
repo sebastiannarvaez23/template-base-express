@@ -26,7 +26,7 @@ export class RedisConfig {
     async storeTokenInRedis(nickname: string, token: string) {
         const expiryTime = this._SESION_SG_EXP;
         if (isNaN(expiryTime)) {
-            throw new HttpError("Invalid expiry time");
+            throw new HttpError("000015");
         }
 
         await this._redisClient.setEx(nickname, expiryTime, token)
