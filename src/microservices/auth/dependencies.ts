@@ -10,6 +10,8 @@ import { RedisConfig } from "../../config/redis";
 import { RoleClientFeign } from "../../lib-client-feign/security/role.client";
 import { TokenManager } from "../../lib-core/utils/token-manager.util";
 import { UserClientFeign } from "../../lib-client-feign/users/users.client";
+import { OAuth2TokenManager } from "../../lib-core/utils/o-auth2-token-generator.util";
+import { OAuthClientRepository } from './infraestructure/repositories/o-auth-client-impl.repository';
 
 
 const authValidator: AuthValidator = new AuthValidator();
@@ -19,14 +21,16 @@ const encryptedService: EncryptionUtil = new EncryptionUtil();
 const personClientFeign: PersonClientFeign = new PersonClientFeign();
 const userClientFeign: UserClientFeign = new UserClientFeign();
 const roleClientFeign: RoleClientFeign = new RoleClientFeign();
+const oAuthClientRepository: OAuthClientRepository = new OAuthClientRepository();
 
 // abstract
 
-const authManagement = new AuthManagement(encryptedService, redisConfig, personClientFeign, userClientFeign, roleClientFeign);
+const authManagement = new AuthManagement(encryptedService, redisConfig, oAuthClientRepository, personClientFeign, userClientFeign, roleClientFeign);
 
 // dependencies
 
 export const tokenManager = TokenManager.getInstance(redisConfig);
+export const oAuth2TokenManager = OAuth2TokenManager.getInstance(redisConfig);
 export const authorizationMiddleware = new AuthorizationMiddleware();
 export const authMiddleware = new AuthMiddleware(authValidator);
 export const authController = new AuthController(authManagement, authMiddleware, handlerError);

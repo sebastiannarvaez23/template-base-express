@@ -1,17 +1,17 @@
 import { config } from "dotenv";
-import jwt from "jsonwebtoken";
 
 import { AuthEntity } from "../../../auth/domain/entities/auth.entity";
 import { EncryptionUtil } from "../../../../lib-core/utils/encryption.util";
 import { generateResetToken } from "../../../../lib-core/utils/token-generator.util";
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
+import { OAuthClientRepository } from "../../infraestructure/repositories/o-auth-client-impl.repository";
 import { PersonClientFeign } from "../../../../lib-client-feign/users/person.client";
-import { RedisConfig } from "../../../../config/redis";
-import { sendPasswordResetEmail } from "../../../../lib-core/utils/mailer.util";
 import { PersonEntity } from "../../../users/person/domain/entities/person.entity";
-import { UserClientFeign } from "../../../../lib-client-feign/users/users.client";
+import { RedisConfig } from "../../../../config/redis";
 import { RoleClientFeign } from "../../../../lib-client-feign/security/role.client";
-import { tokenManager } from "../../dependencies";
+import { sendPasswordResetEmail } from "../../../../lib-core/utils/mailer.util";
+import { tokenManager, oAuth2TokenManager } from '../../dependencies';
+import { UserClientFeign } from "../../../../lib-client-feign/users/users.client";
 
 config();
 
@@ -23,6 +23,7 @@ export class AuthManagement {
     constructor(
         private readonly _encryptedUtils: EncryptionUtil,
         private readonly _redis: RedisConfig,
+        private readonly _oAuthClientRepository: OAuthClientRepository,
         private readonly _personClientFeign: PersonClientFeign,
         private readonly _userClientFeign: UserClientFeign,
         private readonly _roleClientFeign: RoleClientFeign,
@@ -108,5 +109,18 @@ export class AuthManagement {
         } catch (error) {
             throw error;
         }
+    }
+
+    async generateOAuth2Token(clientId: string, clientSecret: string): Promise<string> {
+        const client = await this._oAuthClientRepository.findByIdAndSecret(clientId, clientSecret);
+        if (!client) {
+            throw new HttpError("000020");
+        }
+        const payload = {
+            sub: client.id,
+            scope: client.scopes,
+        };
+        const token = await oAuth2TokenManager.generateToken(payload);
+        return token;
     }
 }

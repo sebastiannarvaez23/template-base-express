@@ -88,5 +88,15 @@
         "serverStatusCode": 500,
         "messageClient": "Failed to revoke token.",
         "messageLog": "An internal error occurred while attempting to revoke the token."
+    },
+    "000019": {
+        "serverStatusCode": 400,
+        "messageClient": "client_id and client_secret are required.",
+        "messageLog": "client_id and client_secret are required."
+    },
+    "000020": {
+        "serverStatusCode": 401,
+        "messageClient": "invalid Client.",
+        "messageLog": "invalid Client."
     }
 }

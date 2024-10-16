@@ -16,4 +16,7 @@ authRoutes.post('/request-password-reset',
 authRoutes.post('/reset-password/:token',
     authController.passwordReset.bind(authController));
 
+authRoutes.post("/token-oauth",
+    authController.generateOAuth2Token.bind(authController));
+
 export default authRoutes;
