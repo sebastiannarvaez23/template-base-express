@@ -1,29 +1,22 @@
 import axios, { AxiosInstance } from "axios";
+
 import { oAuth2TokenManager } from "../microservices/auth/dependencies";
-
-import { OAuthClientRepository } from "../microservices/auth/infraestructure/repositories/o-auth-client-impl.repository";
-import { OAuth2TokenManager } from "../lib-core/utils/o-auth2-token-generator.util";
-import { RedisConfig } from "../config/redis";
 import { HttpError } from "../api-gateway/domain/entities/error.entity";
-
-const oAuthClientRepository = new OAuthClientRepository();
-
-const redisConfig = new RedisConfig();
 
 export class ClientFeignConfig {
 
     private baseURL: string;
     private httpClient: AxiosInstance;
-    private oauth2TokenManager: OAuth2TokenManager;
     private clientId: string;
-    private clientSecret: string;
     private token: string | null = null;
+    private secretKey: string;
+    private exp: string;
 
     constructor(clientId: string, clientSecret: string) {
         this.baseURL = process.env.BASE_URL! + process.env.API_VERSION!;
-        this.oauth2TokenManager = oAuth2TokenManager;
+        this.secretKey = process.env.SECRET_KEY!;
+        this.exp = process.env.SESION_SG_EXP!;
         this.clientId = clientId;
-        this.clientSecret = clientSecret;
 
         this.httpClient = axios.create({
             timeout: 5000,
@@ -36,14 +29,11 @@ export class ClientFeignConfig {
             async config => {
                 if (!this.token) {
                     try {
-                        // Crear el payload con `clientId` y los scopes necesarios
                         const payload = {
-                            sub: this.clientId,          // ID del cliente como sujeto
-                            scope: ['read', 'write'],    // Ajusta los scopes según tus necesidades
+                            sub: this.clientId,
+                            scope: ['read', 'write'],
                         };
-
-                        // Generar el token pasando el payload completo
-                        this.token = await this.oauth2TokenManager.generateToken(payload);
+                        this.token = await oAuth2TokenManager.generateToken(payload, this.secretKey, this.exp);
                     } catch (error) {
                         console.error("Error obteniendo token OAuth2:", error);
                         throw new HttpError("000016");
@@ -59,19 +49,14 @@ export class ClientFeignConfig {
             response => response,
             async error => {
                 if (error.response && error.response.status === 401) {
-                    // Token inválido o expirado, intentar renovar
-                    this.token = null; // Resetear el token
+                    this.token = null;
                     try {
-                        // Crear el payload nuevamente para generar un nuevo token
                         const payload = {
-                            sub: this.clientId,          // ID del cliente
-                            scope: ['read', 'write'],    // Ajusta los scopes según necesidad
+                            sub: this.clientId,
+                            scope: ['read', 'write'],
                         };
 
-                        // Generar un nuevo token
-                        this.token = await this.oauth2TokenManager.generateToken(payload);
-
-                        // Reintentar la solicitud original con el nuevo token
+                        this.token = await oAuth2TokenManager.generateToken(payload, this.secretKey, this.exp);
                         error.config.headers.Authorization = `Bearer ${this.token}`;
                         return axios.request(error.config);
                     } catch (tokenError) {

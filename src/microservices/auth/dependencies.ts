@@ -10,7 +10,7 @@ import { RedisConfig } from "../../config/redis";
 import { RoleClientFeign } from "../../lib-client-feign/security/role.client";
 import { TokenManager } from "../../lib-core/utils/token-manager.util";
 import { UserClientFeign } from "../../lib-client-feign/users/users.client";
-import { OAuth2TokenManager } from "../../lib-core/utils/o-auth2-token-generator.util";
+import { OAuth2TokenManager } from "../../lib-core/utils/o-auth2-token-manager.util";
 import { OAuthClientRepository } from './infraestructure/repositories/o-auth-client-impl.repository';
 
 

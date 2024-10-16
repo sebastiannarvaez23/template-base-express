@@ -113,14 +113,12 @@ export class AuthManagement {
 
     async generateOAuth2Token(clientId: string, clientSecret: string): Promise<string> {
         const client = await this._oAuthClientRepository.findByIdAndSecret(clientId, clientSecret);
-        if (!client) {
-            throw new HttpError("000020");
-        }
+        if (!client) throw new HttpError("000020");
         const payload = {
             sub: client.id,
             scope: client.scopes,
         };
-        const token = await oAuth2TokenManager.generateToken(payload);
+        const token = await oAuth2TokenManager.generateToken(payload, this._SECRET, Date.now() + this._SESION_SG_EXP * 1000);
         return token;
     }
 }

@@ -1,9 +1,6 @@
-import { OAuthClient } from "../../domain/entities/o-auth-client.model";
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
-
-export interface IOAuthClientRepository {
-    findByIdAndSecret(clientId: string, clientSecret: string): Promise<OAuthClient | null>;
-}
+import { IOAuthClientRepository } from "../../domain/repositories/o-auth-client.repository";
+import { OAuthClient } from "../../domain/entities/o-auth-client.model";
 
 export class OAuthClientRepository implements IOAuthClientRepository {
 
