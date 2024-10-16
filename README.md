@@ -27,7 +27,6 @@ Existen diferentes Frameworks como Django que cuenta con estas caracteristicas y
 - **GIT**: Sistema de versionamiento de código.
 - **Postgresql**: Sistema de base de datos de la aplicación.
 - **Redis**: Sistema de base de datos de caché.
-- **Kafka**: Comunicación entre microservicios.
 
 <p align="left">
   <img src="https://github.com/user-attachments/assets/13496a22-10a0-4e91-8ec2-7286f43ee6e3" width="auto" height="90">
@@ -37,7 +36,6 @@ Existen diferentes Frameworks como Django que cuenta con estas caracteristicas y
   <img src="https://github.com/user-attachments/assets/0e8b5d78-b2e3-441e-9047-216c65683658" width="auto" height="90">
   <img src="https://github.com/user-attachments/assets/07fd9bed-e2a5-4933-af2c-caa359652598" width="auto" height="90">
   <img src="https://github.com/user-attachments/assets/8abd3fce-7bcc-4c24-9a4a-a4d767846f26" width="auto" height="90">
-  <img src="https://github.com/user-attachments/assets/6ef60069-5378-4d02-922c-6f52ef2ab011" width="auto" height="90">
 </p>
 
 
