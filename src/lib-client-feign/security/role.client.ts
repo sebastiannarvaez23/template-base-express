@@ -6,7 +6,7 @@ import { ClientFeignConfig } from "../config";
 export class RoleClientFeign extends ClientFeignConfig {
 
     constructor() {
-        super(process.env.OAUTH_CLIENT_ID!, process.env.OAUTH_CLIENT_SECRET!);
+        super(process.env.SECURITY_OAUTH_CLIENT_ID!, process.env.SECURITY_CLIENT_SECRET!);
     }
 
     public async getPersonById(id: string): Promise<RoleEntity | undefined> {

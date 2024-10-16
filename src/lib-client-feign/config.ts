@@ -36,10 +36,10 @@ export class ClientFeignConfig {
             async config => {
                 if (!this.token) {
                     try {
-                        // Crear el payload con `clientId` y otros valores necesarios
+                        // Crear el payload con `clientId` y los scopes necesarios
                         const payload = {
                             sub: this.clientId,          // ID del cliente como sujeto
-                            scope: ['your_scope_here'],  // Ajusta el scope a lo que necesites
+                            scope: ['read', 'write'],    // Ajusta los scopes según tus necesidades
                         };
 
                         // Generar el token pasando el payload completo
@@ -62,10 +62,10 @@ export class ClientFeignConfig {
                     // Token inválido o expirado, intentar renovar
                     this.token = null; // Resetear el token
                     try {
-                        // Crear el payload de nuevo para generar un nuevo token
+                        // Crear el payload nuevamente para generar un nuevo token
                         const payload = {
                             sub: this.clientId,          // ID del cliente
-                            scope: ['your_scope_here'],  // Ajustar el scope según necesidad
+                            scope: ['read', 'write'],    // Ajusta los scopes según necesidad
                         };
 
                         // Generar un nuevo token

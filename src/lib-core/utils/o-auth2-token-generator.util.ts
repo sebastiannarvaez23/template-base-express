@@ -45,15 +45,14 @@ export class OAuth2TokenManager {
      */
     public async generateToken(payload: Omit<OAuth2TokenPayload, 'iss' | 'aud' | 'exp' | 'iat'>): Promise<string> {
         try {
-            const fullPayload: OAuth2TokenPayload = {
+            // Construir el payload sin 'iss', 'aud', 'exp', 'iat'
+            const fullPayload: Omit<OAuth2TokenPayload, 'exp' | 'iat'> = {
                 ...payload,
                 iss: this.issuer,
                 aud: this.audience,
-                iat: Math.floor(Date.now() / 1000),
-                exp: Math.floor(Date.now() / 1000) + this.getExpiryInSeconds(),
             };
 
-            // Firmar el token
+            // Firmar el token, dejando que jwt.sign maneje 'iat' y 'exp'
             const token = jwt.sign(fullPayload, this.secret, { expiresIn: this.tokenExpiry });
 
             // Almacenar el token en Redis con expiración

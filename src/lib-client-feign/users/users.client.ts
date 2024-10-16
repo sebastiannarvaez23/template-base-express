@@ -6,7 +6,7 @@ import { ClientFeignConfig } from "../config";
 export class UserClientFeign extends ClientFeignConfig {
 
     constructor() {
-        super(process.env.OAUTH_CLIENT_ID!, process.env.OAUTH_CLIENT_SECRET!);
+        super(process.env.USERS_OAUTH_CLIENT_ID!, process.env.USERS_CLIENT_SECRET!);
     }
 
     public async edit(userId: string, user: UserEntity): Promise<UserEntity | undefined> {

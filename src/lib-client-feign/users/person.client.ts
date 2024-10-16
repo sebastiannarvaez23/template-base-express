@@ -5,7 +5,7 @@ import { ClientFeignConfig } from "../config";
 export class PersonClientFeign extends ClientFeignConfig {
 
     constructor() {
-        super(process.env.OAUTH_CLIENT_ID!, process.env.OAUTH_CLIENT_SECRET!);
+        super(process.env.USERS_OAUTH_CLIENT_ID!, process.env.USERS_CLIENT_SECRET!);
     }
 
     public async getPersonByNickname(nickname: string): Promise<PersonEntity | undefined> {
