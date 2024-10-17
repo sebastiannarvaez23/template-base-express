@@ -44,6 +44,10 @@ export class AuthMiddleware {
 
             const payload = await tokenManager.verifyToken(token, this.secret);
 
+            if (payload.sub && payload.sub.startsWith("microservice_")) {
+                req.user = payload;
+                return next();
+            }
             req.user = payload;
             next();
         } catch (err: any) {

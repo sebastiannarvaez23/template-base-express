@@ -2,7 +2,7 @@ import { Optional, UniqueConstraintError } from "sequelize";
 
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
 import { IOAuthClientRepository } from "../../domain/repositories/o-auth-client.repository";
-import { OAuthClientModel } from '../../domain/entities/o-auth-client.model';
+import { OAuthClientModel } from '../models/o-auth-client.model';
 
 export class OAuthClientRepository implements IOAuthClientRepository {
 

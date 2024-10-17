@@ -9,8 +9,8 @@ usersRoutes.post("/",
     userController.add.bind(userController));
 
 usersRoutes.put("/:id",
-    // authMiddleware.authenticateToken,
-    // authorizationMiddleware.checkAccess('0204'),
+    authMiddleware.authenticateToken,
+    authorizationMiddleware.checkAccess('0204'),
     userMiddleware.validateEdit.bind(userMiddleware),
     userController.edit.bind(userController));
 

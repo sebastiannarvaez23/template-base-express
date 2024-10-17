@@ -2,7 +2,7 @@ import { config } from "dotenv";
 import { Dialect } from "sequelize";
 import { Sequelize, SequelizeOptions } from "sequelize-typescript";
 
-import { OAuthClientModel } from "../microservices/auth/domain/entities/o-auth-client.model";
+import { OAuthClientModel } from "../microservices/auth/infraestructure/models/o-auth-client.model";
 import { PersonModel } from "../microservices/users/person/infrastructure/models/person.model";
 import { RoleModel } from "../microservices/security/role/infraestructure/models/role.model";
 import { RoleServiceModel } from "../microservices/security/role/infraestructure/models/role-service.model";

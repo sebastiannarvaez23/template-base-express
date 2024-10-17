@@ -11,7 +11,7 @@ import { RoleClientFeign } from "../../../../lib-client-feign/security/role.clie
 import { sendPasswordResetEmail } from "../../../../lib-core/utils/mailer.util";
 import { tokenManager, oAuth2TokenManager } from '../../dependencies';
 import { UserClientFeign } from "../../../../lib-client-feign/users/users.client";
-import { OAuthClientModel } from "../../domain/entities/o-auth-client.model";
+import { OAuthClientModel } from "../../infraestructure/models/o-auth-client.model";
 import { IOAuthClientRepository } from "../../domain/repositories/o-auth-client.repository";
 
 config();
@@ -35,7 +35,9 @@ export class AuthManagement {
 
     async authentication(credentials: AuthEntity): Promise<string | undefined> {
         try {
+            console.log("auth 1");
             const validateCredentials: boolean | undefined = await this._userClientFeign.validateCredential(credentials);
+            console.log("auth 2");
             if (!validateCredentials) throw new HttpError("010002");
 
             const existingToken = await this._redis.getTokenFromRedis(credentials.nickname);
