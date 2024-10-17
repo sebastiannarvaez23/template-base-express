@@ -1,5 +1,6 @@
-import { OAuthClient } from "../entities/o-auth-client.model";
+import { OAuthClientModel } from "../entities/o-auth-client.model";
 
 export interface IOAuthClientRepository {
-    findByIdAndSecret(clientId: string, clientSecret: string): Promise<OAuthClient | null>;
+    findByClientName(clientId: string): Promise<OAuthClientModel | null>;
+    addMicroservice(credential: { name: string, secret: string }): Promise<OAuthClientModel | null>;
 }

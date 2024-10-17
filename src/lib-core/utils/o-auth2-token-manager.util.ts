@@ -5,7 +5,6 @@ import { HttpError } from "../../api-gateway/domain/entities/error.entity";
 
 interface OAuth2TokenPayload {
     sub: string;      // Identificador del cliente
-    scope: string[];  // Alcances del token
     iss: string;      // Emisor del token
     aud: string;      // Audiencia del token
     exp: number;      // Tiempo de expiración (Unix timestamp)
@@ -41,10 +40,8 @@ export class OAuth2TokenManager {
                 iss: this.issuer,
                 aud: this.audience,
             };
-
             const token = jwt.sign(fullPayload, secret, { expiresIn });
             await this.redisConfig.storeTokenInRedis(fullPayload.sub, token);
-
             return token;
         } catch (error) {
             console.error("Error generando token OAuth2:", error);

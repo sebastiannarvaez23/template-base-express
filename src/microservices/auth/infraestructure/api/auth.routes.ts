@@ -19,4 +19,7 @@ authRoutes.post('/reset-password/:token',
 authRoutes.post("/token-oauth",
     authController.generateOAuth2Token.bind(authController));
 
+authRoutes.post("/register-microservice",
+    authController.registerMicroservice.bind(authController));
+
 export default authRoutes;

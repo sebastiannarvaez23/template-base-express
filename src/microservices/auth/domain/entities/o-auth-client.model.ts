@@ -4,24 +4,29 @@ import { Table, Column, Model, PrimaryKey, DataType } from "sequelize-typescript
     tableName: "oauth_clients",
     timestamps: false,
 })
-export class OAuthClient extends Model<OAuthClient> {
-    @PrimaryKey
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
-    })
-    id!: string;
+export class OAuthClientModel extends Model {
 
     @Column({
-        type: DataType.STRING,
-        allowNull: false,
+        primaryKey: true,
+        type: DataType.UUID,
+        field: 'id',
+        defaultValue: DataType.UUIDV4,
     })
-    secret!: string;
+    declare id: string;
 
     @Column({
-        type: DataType.ARRAY(DataType.STRING),
+        type: DataType.STRING(50),
         allowNull: false,
-        defaultValue: [],
+        field: 'name',
+        unique: true,
     })
-    scopes!: string[];
+    declare name: string;
+
+    @Column({
+        type: DataType.STRING(255),
+        allowNull: false,
+        field: 'secret',
+    })
+    declare secret: string;
+
 }

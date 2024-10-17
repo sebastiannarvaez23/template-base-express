@@ -64,4 +64,13 @@ export class AuthController {
             this._handlerError.handle(error as HttpError | Error, req, res);
         }
     }
+
+    async registerMicroservice(req: Request, res: Response) {
+        try {
+            const result = await this._authManagement.addMicroservice(req.body);
+            res.status(200).json(result);
+        } catch (error) {
+            this._handlerError.handle(error as HttpError | Error, req, res);
+        }
+    }
 }

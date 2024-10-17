@@ -4,7 +4,6 @@ import { AuthEntity } from "../../../auth/domain/entities/auth.entity";
 import { EncryptionUtil } from "../../../../lib-core/utils/encryption.util";
 import { generateResetToken } from "../../../../lib-core/utils/token-generator.util";
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
-import { OAuthClientRepository } from "../../infraestructure/repositories/o-auth-client-impl.repository";
 import { PersonClientFeign } from "../../../../lib-client-feign/users/person.client";
 import { PersonEntity } from "../../../users/person/domain/entities/person.entity";
 import { RedisConfig } from "../../../../config/redis";
@@ -12,6 +11,8 @@ import { RoleClientFeign } from "../../../../lib-client-feign/security/role.clie
 import { sendPasswordResetEmail } from "../../../../lib-core/utils/mailer.util";
 import { tokenManager, oAuth2TokenManager } from '../../dependencies';
 import { UserClientFeign } from "../../../../lib-client-feign/users/users.client";
+import { OAuthClientModel } from "../../domain/entities/o-auth-client.model";
+import { IOAuthClientRepository } from "../../domain/repositories/o-auth-client.repository";
 
 config();
 
@@ -23,7 +24,7 @@ export class AuthManagement {
     constructor(
         private readonly _encryptedUtils: EncryptionUtil,
         private readonly _redis: RedisConfig,
-        private readonly _oAuthClientRepository: OAuthClientRepository,
+        private readonly _oAuthClientRepository: IOAuthClientRepository,
         private readonly _personClientFeign: PersonClientFeign,
         private readonly _userClientFeign: UserClientFeign,
         private readonly _roleClientFeign: RoleClientFeign,
@@ -112,13 +113,24 @@ export class AuthManagement {
     }
 
     async generateOAuth2Token(clientId: string, clientSecret: string): Promise<string> {
-        const client = await this._oAuthClientRepository.findByIdAndSecret(clientId, clientSecret);
-        if (!client) throw new HttpError("000020");
-        const payload = {
-            sub: client.id,
-            scope: client.scopes,
-        };
-        const token = await oAuth2TokenManager.generateToken(payload, this._SECRET, Date.now() + this._SESION_SG_EXP * 1000);
-        return token;
+        try {
+            const client = await this._oAuthClientRepository.findByClientName(clientId);
+            if (!client) throw new HttpError("000020");
+            if (this._encryptedUtils.decrypt(client.secret) !== clientSecret) throw new HttpError("000020");
+            const payload = { sub: client.name };
+            const token = await oAuth2TokenManager.generateToken(payload, this._SECRET, Date.now() + this._SESION_SG_EXP * 1000);
+            return token;
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    async addMicroservice(credential: { client_id: string, client_secret: string }): Promise<OAuthClientModel | null> {
+        try {
+            credential.client_secret = this._encryptedUtils.encrypt(credential.client_secret!);
+            return await this._oAuthClientRepository.addMicroservice({ name: credential.client_id, secret: credential.client_secret });
+        } catch (e) {
+            throw e;
+        }
     }
 }

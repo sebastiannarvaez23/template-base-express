@@ -11,12 +11,12 @@ export class UserManagement {
 
     constructor(
         private readonly _userRepository: UsersRepository,
-        private readonly _encriptionService: EncryptionUtil,
+        private readonly _encryptedUtils: EncryptionUtil,
     ) { }
 
     async add(user: UserEntity): Promise<UserEntity | null> {
         try {
-            user.password = this._encriptionService.encrypt(user.password!);
+            user.password = this._encryptedUtils.encrypt(user.password!);
             return await this._userRepository.add(user);
         } catch (e) {
             throw e;
@@ -36,7 +36,7 @@ export class UserManagement {
         try {
             const user = await this._userRepository.getUserPasswordByNickname(nickname!);
             if (!user) throw new HttpError("010001");
-            const decriptedPass = this._encriptionService.decrypt(user.password);
+            const decriptedPass = this._encryptedUtils.decrypt(user.password);
             return (password === decriptedPass);
         } catch (e) {
             throw e;
