@@ -23,8 +23,6 @@ export class UserClientFeign extends ClientFeignConfig {
 
     public async validateCredential(credentials: AuthEntity): Promise<boolean | undefined> {
         try {
-            console.log("validateCredential 1")
-            console.log(this.token);
             const response = await this.getHttpClient()
                 .post<{ validate: boolean }>(`${this.getBaseUrl()}/user/validate-credentials`, credentials);
             return response.data.validate;

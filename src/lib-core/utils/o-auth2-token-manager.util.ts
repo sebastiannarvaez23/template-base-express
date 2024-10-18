@@ -52,7 +52,7 @@ export class OAuth2TokenManager {
 
     public async verifyToken(token: string, secret: string): Promise<OAuth2TokenPayload> {
         try {
-            const decoded = jwt.verify(token, secret, { issuer: this.issuer, audience: this.audience }) as OAuth2TokenPayload;
+            const decoded = jwt.verify(token, secret) as OAuth2TokenPayload;
             const isTokenValid = await this.redisConfig.getTokenFromRedis(decoded.sub);
             if (!isTokenValid) throw new HttpError("000007");
             return decoded;

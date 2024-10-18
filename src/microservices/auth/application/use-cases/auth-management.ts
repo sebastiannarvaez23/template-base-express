@@ -35,9 +35,7 @@ export class AuthManagement {
 
     async authentication(credentials: AuthEntity): Promise<string | undefined> {
         try {
-            console.log("auth 1");
             const validateCredentials: boolean | undefined = await this._userClientFeign.validateCredential(credentials);
-            console.log("auth 2");
             if (!validateCredentials) throw new HttpError("010002");
 
             const existingToken = await this._redis.getTokenFromRedis(credentials.nickname);

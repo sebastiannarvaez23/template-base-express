@@ -23,6 +23,7 @@ export class ClientFeignConfig {
             },
         });
 
+        // Interceptor para añadir el token a las peticiones
         this.httpClient.interceptors.request.use(
             async config => {
                 if (!this.token) {
@@ -42,14 +43,20 @@ export class ClientFeignConfig {
         );
     }
 
+    // Método para obtener el token utilizando un cliente separado
     async getToken() {
         try {
-            console.log({ client_id: this.clientId, client_secret: this.clientSecret });
-            console.log(`${this.baseURL}/auth/token-oauth`);
-            const tokenE = await this.httpClient.post<{ token: string }>(
-                `${this.baseURL}/auth/token-oauth`,
-                { client_id: this.clientId, client_secret: this.clientSecret });
-            console.log({ tokenE });
+            const tokenClient = axios.create({
+                baseURL: this.baseURL,
+                timeout: 5000,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            const tokenE = await tokenClient.post<{ token: string }>(
+                `/auth/token-oauth`,
+                { client_id: this.clientId, client_secret: this.clientSecret }
+            );
             this.token = tokenE.data.token;
         } catch (error) {
             console.error("Error al obtener el token:", error);

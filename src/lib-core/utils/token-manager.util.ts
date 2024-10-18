@@ -44,10 +44,8 @@ export class TokenManager {
     public async verifyToken(token: string, secret: string): Promise<TokenPayload> {
         try {
             const decoded = jwt.verify(token, secret) as TokenPayload;
-            const storedToken = await this.redisConfig.getTokenFromRedis(decoded.name);
-            if (storedToken !== token) {
-                throw new HttpError("000017");
-            }
+            const storedToken = await this.redisConfig.getTokenFromRedis(decoded.sub);
+            if (storedToken !== token) throw new HttpError("000017");
             return decoded;
         } catch (error) {
             console.error("Error verificando token:", error);
