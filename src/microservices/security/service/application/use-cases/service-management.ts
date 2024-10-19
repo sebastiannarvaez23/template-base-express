@@ -1,6 +1,6 @@
 import { QueryParams } from "../../../../../lib-entities/query-params.entity";
 import { ServiceEntity } from "../../domain/entities/service.entity";
-import { ServiceModel } from "../../infraestructure/models/service.model";
+import { ServiceModel } from "../../domain/models/service.model";
 import { ServicesRepository } from "../../domain/repositories/service.repository";
 
 export class ServiceManagement {

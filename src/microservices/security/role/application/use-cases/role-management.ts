@@ -1,6 +1,6 @@
 import { QueryParams } from "../../../../../lib-entities/query-params.entity";
 import { RoleEntity } from "../../domain/entities/role.entity";
-import { RoleModel } from "../../infraestructure/models/role.model";
+import { RoleModel } from "../../domain/models/role.model";
 import { RolesRepository } from "../../domain/repositories/roles.repository";
 
 export class RoleManagement {

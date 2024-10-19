@@ -1,7 +1,7 @@
 import { QueryParams } from "../../../../../lib-entities/query-params.entity";
 import { PersonEntity } from "../../domain/entities/person.entity";
 import { PersonsRepository } from "../../domain/repositories/persons.repository";
-import { PersonModel } from "../../infrastructure/models/person.model";
+import { PersonModel } from "../../domain/models/person.model";
 
 export class PersonManagement {
 

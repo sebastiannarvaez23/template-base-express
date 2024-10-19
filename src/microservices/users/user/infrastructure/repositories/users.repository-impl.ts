@@ -2,7 +2,7 @@ import { Optional, UniqueConstraintError } from "sequelize";
 
 import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
 import { UserEntity } from "../../domain/entities/user.entity";
-import { UserModel } from "../models/user.model";
+import { UserModel } from "../../domain/models/user.model";
 import { UsersRepository } from "../../domain/repositories/users.repository";
 
 export class UsersRepositoryImpl implements UsersRepository {

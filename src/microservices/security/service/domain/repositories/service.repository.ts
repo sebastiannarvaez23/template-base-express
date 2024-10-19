@@ -1,6 +1,6 @@
 import { QueryParams } from "../../../../../lib-entities/query-params.entity";
 import { ServiceEntity } from "../entities/service.entity";
-import { ServiceModel } from "../../infraestructure/models/service.model";
+import { ServiceModel } from "../models/service.model";
 
 export interface ServicesRepository {
     getList(queryParams: QueryParams): Promise<{ rows: ServiceModel[]; count: number; }>;

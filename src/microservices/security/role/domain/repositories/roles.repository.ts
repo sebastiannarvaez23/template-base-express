@@ -1,6 +1,6 @@
 import { QueryParams } from "../../../../../lib-entities/query-params.entity";
 import { RoleEntity } from "../entities/role.entity";
-import { RoleModel } from "../../infraestructure/models/role.model";
+import { RoleModel } from "../models/role.model";
 
 export interface RolesRepository {
     getList(queryParams: QueryParams): Promise<{ rows: RoleModel[]; count: number; }>;

@@ -2,12 +2,12 @@ import { config } from "dotenv";
 import { Dialect } from "sequelize";
 import { Sequelize, SequelizeOptions } from "sequelize-typescript";
 
-import { OAuthClientModel } from "../microservices/auth/infraestructure/models/o-auth-client.model";
-import { PersonModel } from "../microservices/users/person/infrastructure/models/person.model";
-import { RoleModel } from "../microservices/security/role/infraestructure/models/role.model";
-import { RoleServiceModel } from "../microservices/security/role/infraestructure/models/role-service.model";
-import { ServiceModel } from "../microservices/security/service/infraestructure/models/service.model";
-import { UserModel } from "../microservices/users/user/infrastructure/models/user.model";
+import { OAuthClientModel } from "../microservices/auth/domain/models/o-auth-client.model";
+import { PersonModel } from "../microservices/users/person/domain/models/person.model";
+import { RoleModel } from "../microservices/security/role/domain/models/role.model";
+import { RoleServiceModel } from "../microservices/security/role/domain/models/role-service.model";
+import { ServiceModel } from "../microservices/security/service/domain/models/service.model";
+import { UserModel } from "../microservices/users/user/domain/models/user.model";
 
 config();
 
