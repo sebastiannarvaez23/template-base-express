@@ -13,7 +13,7 @@ export class QueryParamsMiddleware {
             const { valid, errors } = validator.validate(data);
 
             if (!valid) {
-                return res.status(400).json({ errors });
+                return res.status(400).json({ errors }); // TODO: http error con internal code
             }
 
             try {
@@ -21,7 +21,7 @@ export class QueryParamsMiddleware {
                 (req as any).queryParams = queryParams;
                 next();
             } catch (error) {
-                return res.status(400).json({ error: 'Invalid query parameters' });
+                return res.status(400).json({ error: 'Invalid query parameters' }); // TODO: http error con internal code
             }
         };
     };

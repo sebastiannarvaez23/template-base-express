@@ -14,7 +14,7 @@ export function buildServiceListQueryParams(data: ServiceListParams): QueryParam
     const filters: { [key: string]: any } = {};
 
     if (data.name) {
-        filters.firstName = { [Op.iLike]: `%${data.name}%` };
+        filters.name = { [Op.iLike]: `%${data.name}%` };
     }
 
     if (data.code) {

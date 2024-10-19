@@ -14,7 +14,7 @@ export function buildRolListQueryParams(data: RolListParams): QueryParams {
     const filters: { [key: string]: any } = {};
 
     if (data.name) {
-        filters.firstName = { [Op.iLike]: `%${data.name}%` };
+        filters.name = { [Op.iLike]: `%${data.name}%` };
     }
 
     return { limit, offset, filters };

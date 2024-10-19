@@ -4,10 +4,10 @@ export class ClientFeignConfig {
 
     private baseURL: string;
     private httpClient: AxiosInstance;
-    public token: string | null = null;
     private isTokenBeingFetched: boolean = false;
     private tokenPromise: Promise<void> | null = null;
 
+    public token: string | null = null;
     public clientSecret: string;
     public clientId: string;
 
@@ -23,7 +23,6 @@ export class ClientFeignConfig {
             },
         });
 
-        // Interceptor para añadir el token a las peticiones
         this.httpClient.interceptors.request.use(
             async config => {
                 if (!this.token) {
@@ -43,7 +42,6 @@ export class ClientFeignConfig {
         );
     }
 
-    // Método para obtener el token utilizando un cliente separado
     async getToken() {
         try {
             const tokenClient = axios.create({
