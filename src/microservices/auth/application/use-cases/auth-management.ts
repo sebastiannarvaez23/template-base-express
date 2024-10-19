@@ -4,6 +4,8 @@ import { AuthEntity } from "../../../auth/domain/entities/auth.entity";
 import { EncryptionUtil } from "../../../../lib-core/utils/encryption.util";
 import { generateResetToken } from "../../../../lib-core/utils/token-generator.util";
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
+import { IOAuthClientRepository } from "../../domain/repositories/o-auth-client.repository";
+import { OAuthClientModel } from "../../infraestructure/models/o-auth-client.model";
 import { PersonClientFeign } from "../../../../lib-client-feign/users/person.client";
 import { PersonEntity } from "../../../users/person/domain/entities/person.entity";
 import { RedisConfig } from "../../../../config/redis";
@@ -11,8 +13,6 @@ import { RoleClientFeign } from "../../../../lib-client-feign/security/role.clie
 import { sendPasswordResetEmail } from "../../../../lib-core/utils/mailer.util";
 import { tokenManager, oAuth2TokenManager } from '../../dependencies';
 import { UserClientFeign } from "../../../../lib-client-feign/users/users.client";
-import { OAuthClientModel } from "../../infraestructure/models/o-auth-client.model";
-import { IOAuthClientRepository } from "../../domain/repositories/o-auth-client.repository";
 
 config();
 

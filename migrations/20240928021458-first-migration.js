@@ -7,6 +7,26 @@ module.exports = {
 
     const encryptionService = new EncryptionUtil();
 
+    // Create tables
+
+    await queryInterface.createTable('oauth_clients', {
+      id: {
+        type: Sequelize.UUID,
+        primaryKey: true,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false,
+      },
+      name: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+        unique: true,
+      },
+      secret: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+      }
+    });
+
     await queryInterface.createTable('users', {
       id: {
         type: Sequelize.UUID,
@@ -240,7 +260,36 @@ module.exports = {
       }
     });
 
+    // Data initial migration
+
     const encryptedPassword = encryptionService.encrypt('admin');
+    const encryptedSecretAuth = encryptionService.encrypt('secret_auth');
+    const encryptedSecretSecurity = encryptionService.encrypt('secret_security');
+    const encryptedSecretUsers = encryptionService.encrypt('secret_users');
+
+    await queryInterface.bulkInsert('oauth_clients', [
+      {
+        id: '73ec884e-b96f-4181-8b90-8510dae8db44',
+        name: 'auth',
+        secret: encryptedSecretAuth,
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        id: '929b2f4a-f065-4431-b5a2-a36f3148b57e',
+        name: 'security',
+        secret: encryptedSecretSecurity,
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        id: '69eb5fc0-6bf1-446d-9dc2-ddd7ed2d2026',
+        name: 'users',
+        secret: encryptedSecretUsers,
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+    ]);
 
     await queryInterface.bulkInsert('users', [
       {
@@ -540,11 +589,13 @@ module.exports = {
     await queryInterface.bulkDelete('services', null, {});
     await queryInterface.bulkDelete('roles', null, {});
     await queryInterface.bulkDelete('users', null, {});
+    await queryInterface.bulkDelete('oauth_clients', null, {});
 
     await queryInterface.dropTable('roles_services');
     await queryInterface.dropTable('persons');
     await queryInterface.dropTable('services');
     await queryInterface.dropTable('roles');
     await queryInterface.dropTable('users');
+    await queryInterface.dropTable('oauth_clients');
   }
 };
