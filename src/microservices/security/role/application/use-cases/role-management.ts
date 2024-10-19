@@ -1,3 +1,4 @@
+import { QueryParams } from "../../../../../lib-entities/query-params.entity";
 import { RoleEntity } from "../../domain/entities/role.entity";
 import { RoleModel } from "../../infraestructure/models/role.model";
 import { RolesRepository } from "../../domain/repositories/roles.repository";
@@ -7,9 +8,9 @@ export class RoleManagement {
         private readonly _rolesRepository: RolesRepository
     ) { }
 
-    async getList({ limit, offset }: { limit: number; offset: number }): Promise<{ rows: RoleModel[]; count: number; }> {
+    async getList(queryParams: QueryParams): Promise<{ rows: RoleModel[]; count: number; }> {
         try {
-            return await this._rolesRepository.getList({ limit, offset });
+            return await this._rolesRepository.getList(queryParams);
         } catch (e) {
             throw e;
         }

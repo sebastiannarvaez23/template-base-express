@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { ErrorHandlerUtil } from "../../../../../lib-core/utils/error-handler.util";
 import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
 import { RoleManagement } from "../../application/use-cases/role-management";
+import { QueryParams } from "../../../../../lib-entities/query-params.entity";
 
 export class RolesController {
 
@@ -17,10 +18,8 @@ export class RolesController {
 
     async getList(req: Request, res: Response) {
         try {
-            const page = parseInt(req.query.page as string) || 1;
-            const limit = this._LIST_PAGINATION_LIMIT || 10;
-            const offset = (page - 1) * limit;
-            res.status(200).json(await this._roleManagement.getList({ limit, offset }));
+            const queryParams: QueryParams = (req as any).queryParams;
+            res.status(200).json(await this._roleManagement.getList(queryParams));
         } catch (error) {
             this._handlerError.handle(error as HttpError | Error, req, res);
         }

@@ -1,6 +1,7 @@
 import { Optional, UniqueConstraintError } from "sequelize";
 
 import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
+import { QueryParams } from "../../../../../lib-entities/query-params.entity";
 import { RoleEntity } from "../../domain/entities/role.entity";
 import { RoleModel } from "../models/role.model";
 import { RolesRepository } from "../../domain/repositories/roles.repository";
@@ -8,12 +9,13 @@ import { ServiceModel } from "../../../service/infraestructure/models/service.mo
 
 export class RolesRepositoryImpl implements RolesRepository {
 
-    async getList({ limit, offset }: { limit: number; offset: number }): Promise<{ rows: RoleModel[]; count: number; }> {
+    async getList(queryParams: QueryParams): Promise<{ rows: RoleModel[]; count: number; }> {
         try {
             return await RoleModel.findAndCountAll({
+                where: queryParams.filters,
                 order: [["createdAt", "desc"]],
-                limit: limit,
-                offset: offset,
+                limit: queryParams.limit,
+                offset: queryParams.offset,
                 attributes: {
                     exclude: ['updatedAt', 'deletedAt']
                 },
