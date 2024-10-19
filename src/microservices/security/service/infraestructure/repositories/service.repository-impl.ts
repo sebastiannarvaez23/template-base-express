@@ -1,19 +1,21 @@
 import { Optional, UniqueConstraintError } from "sequelize";
 
 import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
+import { QueryParams } from "../../../../../lib-entities/query-params.entity";
 import { ServiceEntity } from "../../domain/entities/service.entity";
 import { ServiceModel } from "../models/service.model";
 import { ServicesRepository } from "../../domain/repositories/service.repository";
 
 export class ServicesRepositoryImpl implements ServicesRepository {
 
-    async getList({ limit, offset }: { limit: number; offset: number }): Promise<{ rows: ServiceModel[]; count: number; }> {
+    async getList(queryParams: QueryParams): Promise<{ rows: ServiceModel[]; count: number; }> {
         try {
             return await ServiceModel.findAndCountAll({
+                where: queryParams.filters,
                 order: [["createdAt", "desc"]],
                 attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                limit: limit,
-                offset: offset,
+                limit: queryParams.limit,
+                offset: queryParams.offset,
             });
         } catch (e) {
             console.debug(e);

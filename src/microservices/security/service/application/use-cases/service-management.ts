@@ -1,3 +1,4 @@
+import { QueryParams } from "../../../../../lib-entities/query-params.entity";
 import { ServiceEntity } from "../../domain/entities/service.entity";
 import { ServiceModel } from "../../infraestructure/models/service.model";
 import { ServicesRepository } from "../../domain/repositories/service.repository";
@@ -7,9 +8,9 @@ export class ServiceManagement {
         private readonly _servicesRepository: ServicesRepository
     ) { }
 
-    async getList({ limit, offset }: { limit: number; offset: number }): Promise<{ rows: ServiceModel[]; count: number; }> {
+    async getList(queryParams: QueryParams): Promise<{ rows: ServiceModel[]; count: number; }> {
         try {
-            return await this._servicesRepository.getList({ limit, offset });
+            return await this._servicesRepository.getList(queryParams);
         } catch (e) {
             throw e;
         }
