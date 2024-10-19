@@ -5,7 +5,6 @@ import { PersonEntity } from "../../domain/entities/person.entity";
 import { PersonModel } from "../models/person.model";
 import { PersonsRepository } from "../../domain/repositories/persons.repository";
 import { QueryParams } from "../../../../../lib-entities/query-params.entity";
-import { RoleModel } from "../../../../security/role/infraestructure/models/role.model"; // TODO: DESACOPLAR
 import { UserModel } from "../../../user/infrastructure/models/user.model";
 
 export class PersonsRepositoryImpl implements PersonsRepository {
@@ -86,9 +85,6 @@ export class PersonsRepositoryImpl implements PersonsRepository {
 
     async add(person: PersonEntity): Promise<PersonModel> {
         try {
-            const roleExists = await RoleModel.findOne(
-                { where: { id: person.roleId, deletedAt: null } });
-            if (!roleExists) throw new HttpError("030001");
             const userExists = await UserModel.findOne(
                 { where: { id: person.userId, deletedAt: null } });
             if (!userExists) throw new HttpError("010001");

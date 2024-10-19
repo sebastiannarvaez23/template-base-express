@@ -1,7 +1,6 @@
 import { Column, CreatedAt, DataType, DeletedAt, Model, Table, UpdatedAt, BelongsTo, ForeignKey } from "sequelize-typescript";
 
 import { UserModel } from "../../../user/infrastructure/models/user.model";
-import { RoleModel } from "../../../../security/role/infraestructure/models/role.model";
 
 @Table({
   timestamps: true,
@@ -63,7 +62,6 @@ export class PersonModel extends Model {
   })
   declare userId: string;
 
-  @ForeignKey(() => RoleModel)
   @Column({
     type: DataType.UUID,
     field: 'role_id',
@@ -107,12 +105,6 @@ export class PersonModel extends Model {
     field: 'deleted_at',
   })
   declare deletedAt: Date;
-
-  @BelongsTo(() => RoleModel, {
-    foreignKey: 'roleId',
-    targetKey: 'id',
-  })
-  declare role: RoleModel;
 
   @BelongsTo(() => UserModel, {
     foreignKey: 'userId',
