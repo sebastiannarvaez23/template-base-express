@@ -53,8 +53,8 @@ export class AuthManagement {
             const services = role!.services!.map((service: any) => service.code);
 
             const token = await tokenManager.generateToken({
-                sub: person.user.id!,
-                name: person.user.nickname!,
+                sub: person.user.nickname!,
+                userId: person.user.id!,
                 role: role!.name!,
                 services: services,
             }, this._SECRET, Date.now() + this._SESION_SG_EXP * 1000);

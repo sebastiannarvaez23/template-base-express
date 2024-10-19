@@ -41,7 +41,7 @@ export class OAuth2TokenManager {
                 aud: this.audience,
                 sub: "microservice_" + payload.sub
             };
-            const token = jwt.sign(fullPayload, secret, { expiresIn });
+            const token = jwt.sign(fullPayload, secret);
             await this.redisConfig.storeTokenInRedis(fullPayload.sub, token);
             return token;
         } catch (error) {

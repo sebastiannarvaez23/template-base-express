@@ -5,7 +5,7 @@ import { HttpError } from "../../api-gateway/domain/entities/error.entity";
 
 interface TokenPayload {
     sub: string;
-    name: string;
+    userId: string;
     role: string;
     services: string[];
 }
@@ -32,7 +32,7 @@ export class TokenManager {
     public async generateToken(payload: TokenPayload, secret: string, expiresIn: string | number): Promise<string> {
         try {
             const token = jwt.sign(payload, secret, { expiresIn });
-            await this.redisConfig.storeTokenInRedis(payload.name, token);
+            await this.redisConfig.storeTokenInRedis(payload.sub, token);
             this.currentToken = token;
             return token;
         } catch (error) {
