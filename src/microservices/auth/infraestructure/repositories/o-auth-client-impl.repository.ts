@@ -6,8 +6,6 @@ import { OAuthClientModel } from '../models/o-auth-client.model';
 
 export class OAuthClientRepository implements IOAuthClientRepository {
 
-    constructor() { }
-
     async findByClientName(clientId: string): Promise<OAuthClientModel | null> {
         try {
             const client = await OAuthClientModel.findOne({

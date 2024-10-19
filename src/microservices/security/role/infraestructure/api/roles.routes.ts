@@ -1,12 +1,16 @@
 import express from "express";
 
+import { buildRolListQueryParams } from "../middlewares/rol-query-params.middleware";
+import { queryParamsMiddleware } from "../../../../users/dependencies";
 import { roleController, roleMiddleware, authMiddleware, authorizationMiddleware } from "../../../dependencies";
+import { RolListValidator } from "../../application/validations/rol-qlist.validator";
 
 const rolesRoutes = express.Router();
 
 rolesRoutes.get("/",
     authMiddleware.authenticateToken,
     authorizationMiddleware.checkAccess('0301'),
+    queryParamsMiddleware.queryValidationMiddleware(new RolListValidator(), buildRolListQueryParams),
     roleController.getList.bind(roleController));
 
 rolesRoutes.get("/:id",
