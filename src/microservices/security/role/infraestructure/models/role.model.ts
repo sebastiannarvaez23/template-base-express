@@ -26,6 +26,22 @@ export class RoleModel extends Model {
     })
     declare name: string;
 
+    @Column({
+        type: DataType.UUID,
+        field: 'created_by',
+        allowNull: false,
+        unique: true,
+    })
+    declare createdBy: string;
+
+    @Column({
+        type: DataType.UUID,
+        field: 'updated_by',
+        allowNull: true,
+        unique: true,
+    })
+    declare updatedBy: string;
+
     @CreatedAt
     @Column({
         type: DataType.DATE,
