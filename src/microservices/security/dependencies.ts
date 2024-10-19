@@ -2,6 +2,7 @@ import { AuthMiddleware } from "../../lib-core/middlewares/auth/authenticate.mid
 import { AuthorizationMiddleware } from "../../lib-core/middlewares/auth/authorization.middleware";
 import { AuthValidator } from "../auth/application/validations/auth.validator";
 import { ErrorHandlerUtil } from "../../lib-core/utils/error-handler.util";
+import { QueryParamsMiddleware } from "../../lib-core/middlewares/validators/validation-query-params.middleware";
 import { RoleManagement } from "./role/application/use-cases/role-management";
 import { RoleMiddleware } from "./role/infraestructure/middlewares/role.middleware";
 import { RolesController } from "./role/infraestructure/api/roles.controller";
@@ -25,6 +26,7 @@ const serviceManagement = new ServiceManagement(servicesRepository);
 
 // dependencies
 
+export const queryParamsMiddleware = new QueryParamsMiddleware();
 export const authorizationMiddleware = new AuthorizationMiddleware();
 export const authMiddleware = new AuthMiddleware(authValidator);
 export const serviceMiddleware = new ServiceMiddleware();

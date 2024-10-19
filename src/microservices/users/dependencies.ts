@@ -17,7 +17,6 @@ import { QueryParamsMiddleware } from "../../lib-core/middlewares/validators/val
 
 const encryptionService: EncryptionUtil = new EncryptionUtil();
 const handlerError: ErrorHandlerUtil = new ErrorHandlerUtil();
-const redisConfig: RedisConfig = new RedisConfig();
 const authValidator: AuthValidator = new AuthValidator();
 
 // abstract

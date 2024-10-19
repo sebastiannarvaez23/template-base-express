@@ -1,12 +1,15 @@
 import express from "express";
 
-import { serviceController, serviceMiddleware, authMiddleware, authorizationMiddleware } from "../../../dependencies";
+import { buildServiceListQueryParams } from "../../../../users/person/infrastructure/middlewares/service-query-params.middleware";
+import { serviceController, serviceMiddleware, authMiddleware, authorizationMiddleware, queryParamsMiddleware } from "../../../dependencies";
+import { ServiceListValidator } from "../../application/validations/service-qlist.validator";
 
 const servicesRoutes = express.Router();
 
 servicesRoutes.get("/",
     authMiddleware.authenticateToken,
     authorizationMiddleware.checkAccess('0401'),
+    queryParamsMiddleware.queryValidationMiddleware(new ServiceListValidator(), buildServiceListQueryParams),
     serviceController.getList.bind(serviceController));
 
 servicesRoutes.get("/:id",
