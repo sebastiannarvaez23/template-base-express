@@ -12,6 +12,7 @@ export class AuthorizationMiddleware {
                 return next();
             }
 
+            console.log({ req });
             if (!user || !user.services) {
                 return next(new HttpError("000010"));
             }

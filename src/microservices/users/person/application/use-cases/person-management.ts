@@ -25,7 +25,7 @@ export class PersonManagement {
         }
     }
 
-    async add(person: PersonEntity): Promise<PersonEntity | null> {
+    async add(person: PersonEntity): Promise<PersonModel | null> {
         try {
             return await this._personsRepository.add(person);
         } catch (e) {
@@ -33,7 +33,7 @@ export class PersonManagement {
         }
     }
 
-    async edit(id: string, person: PersonEntity): Promise<PersonEntity | null> {
+    async edit(id: string, person: PersonEntity): Promise<PersonModel | null> {
         try {
             const resultUser = await this._personsRepository.edit(id, person);
             return resultUser;

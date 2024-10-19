@@ -71,6 +71,22 @@ export class PersonModel extends Model {
   })
   declare roleId: string;
 
+  @Column({
+    type: DataType.UUID,
+    field: 'created_by',
+    allowNull: false,
+    unique: true,
+  })
+  declare createdBy: string;
+
+  @Column({
+    type: DataType.UUID,
+    field: 'updated_by',
+    allowNull: true,
+    unique: true,
+  })
+  declare updatedBy: string;
+
   @CreatedAt
   @Column({
     type: DataType.DATE,
@@ -92,15 +108,30 @@ export class PersonModel extends Model {
   })
   declare deletedAt: Date;
 
-  @BelongsTo(() => UserModel, {
-    foreignKey: 'userId',
-    targetKey: 'id',
-  })
-  declare user: UserModel;
-
   @BelongsTo(() => RoleModel, {
     foreignKey: 'roleId',
     targetKey: 'id',
   })
   declare role: RoleModel;
+
+  @BelongsTo(() => UserModel, {
+    foreignKey: 'userId',
+    targetKey: 'id',
+    as: 'user',
+  })
+  declare user: UserModel;
+
+  @BelongsTo(() => UserModel, {
+    foreignKey: 'createdBy',
+    targetKey: 'id',
+    as: 'userCreatedBy',
+  })
+  declare userCreatedBy: UserModel;
+
+  @BelongsTo(() => UserModel, {
+    foreignKey: 'updatedBy',
+    targetKey: 'id',
+    as: 'userUpdatedBy',
+  })
+  declare userUpdatedBy: UserModel;
 }

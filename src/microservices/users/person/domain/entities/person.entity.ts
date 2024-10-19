@@ -10,6 +10,8 @@ export interface PersonEntity {
     birthDate?: Date;
     roleId?: string;
     userId?: string;
+    createdBy?: string;
+    updatedBy?: string;
     role?: RoleEntity;
     user?: UserEntity;
     createdAt?: Date;

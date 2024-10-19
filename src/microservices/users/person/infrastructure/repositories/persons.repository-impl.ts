@@ -5,8 +5,7 @@ import { PersonEntity } from "../../domain/entities/person.entity";
 import { PersonModel } from "../models/person.model";
 import { PersonsRepository } from "../../domain/repositories/persons.repository";
 import { QueryParams } from "../../../../../lib-entities/query-params.entity";
-import { RoleModel } from "../../../../security/role/infraestructure/models/role.model";
-import { ServiceModel } from "../../../../security/service/infraestructure/models/service.model";
+import { RoleModel } from "../../../../security/role/infraestructure/models/role.model"; // TODO: DESACOPLAR
 import { UserModel } from "../../../user/infrastructure/models/user.model";
 
 export class PersonsRepositoryImpl implements PersonsRepository {
@@ -48,6 +47,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
                 include: [
                     {
                         model: UserModel,
+                        as: 'user',
                         where: { nickname },
                         attributes: { exclude: ['password', 'lastAuth', 'origin', 'createdAt', 'updatedAt', 'deletedAt'] }
                     },
@@ -70,6 +70,7 @@ export class PersonsRepositoryImpl implements PersonsRepository {
                     include: [
                         {
                             model: UserModel,
+                            as: 'user',
                             where: { email },
                         },
                     ]

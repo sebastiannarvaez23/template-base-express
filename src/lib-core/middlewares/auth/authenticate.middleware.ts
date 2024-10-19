@@ -44,6 +44,8 @@ export class AuthMiddleware {
 
             const payload = await tokenManager.verifyToken(token, this.secret);
 
+            if (req.body) req.body.createdBy = payload.userId;
+
             if (payload.sub && payload.sub.startsWith("microservice_")) {
                 req.user = payload;
                 return next();
