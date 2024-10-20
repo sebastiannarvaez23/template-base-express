@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-import { QueryParams } from "../../../lib-entities/query-params.entity";
+import { QueryParams } from "../../../lib-entities/core/query-params.entity";
 import { BaseValidator } from "./validation.middleware";
 
 export class QueryParamsMiddleware {

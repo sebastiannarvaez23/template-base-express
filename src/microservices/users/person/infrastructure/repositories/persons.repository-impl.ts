@@ -1,10 +1,10 @@
 import { ForeignKeyConstraintError, Optional, UniqueConstraintError } from "sequelize";
 
 import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
-import { PersonEntity } from "../../domain/entities/person.entity";
+import { PersonEntity } from "../../../../../lib-entities/users/person.entity";
 import { PersonModel } from "../../domain/models/person.model";
 import { PersonsRepository } from "../../domain/repositories/persons.repository";
-import { QueryParams } from "../../../../../lib-entities/query-params.entity";
+import { QueryParams } from "../../../../../lib-entities/core/query-params.entity";
 import { UserModel } from "../../../user/domain/models/user.model";
 
 export class PersonsRepositoryImpl implements PersonsRepository {

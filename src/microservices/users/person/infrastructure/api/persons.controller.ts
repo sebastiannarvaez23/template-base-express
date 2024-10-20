@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { ErrorHandlerUtil } from "../../../../../lib-core/utils/error-handler.util";
 import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
 import { PersonManagement } from "../../application/use-cases/person-management";
-import { QueryParams } from "../../../../../lib-entities/query-params.entity";
+import { QueryParams } from "../../../../../lib-entities/core/query-params.entity";
 
 export class PersonsController {
 

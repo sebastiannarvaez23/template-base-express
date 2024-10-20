@@ -1,5 +1,5 @@
 import { HttpError } from "../../api-gateway/domain/entities/error.entity";
-import { PersonEntity } from "../../microservices/users/person/domain/entities/person.entity";
+import { PersonEntity } from "../../lib-entities/users/person.entity";
 import { ClientFeignConfig } from "../config";
 
 export class PersonClientFeign extends ClientFeignConfig {

@@ -1,6 +1,6 @@
 import { BaseValidator } from "../../../../../lib-core/middlewares/validators/validation.middleware";
 import { isRequired, isString, isEmail, minLength, isDate, maxLength, isNumericString, isUUID } from "../../../../../lib-core/middlewares/validators/validation.type";
-import { PersonEntity } from "../../domain/entities/person.entity";
+import { PersonEntity } from "../../../../../lib-entities/users/person.entity";
 
 export class PersonAddValidator extends BaseValidator<PersonEntity> {
     constructor() {

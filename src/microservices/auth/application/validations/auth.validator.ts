@@ -1,4 +1,4 @@
-import { AuthEntity } from "../../domain/entities/auth.entity";
+import { AuthEntity } from "../../../../lib-entities/auth/auth.entity";
 import { BaseValidator } from "../../../../lib-core/middlewares/validators/validation.middleware";
 import { isRequired, isString, minLength, maxLength } from "../../../../lib-core/middlewares/validators/validation.type";
 

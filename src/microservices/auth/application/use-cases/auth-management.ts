@@ -1,13 +1,13 @@
 import { config } from "dotenv";
 
-import { AuthEntity } from "../../../auth/domain/entities/auth.entity";
+import { AuthEntity } from "../../../../lib-entities/auth/auth.entity";
 import { EncryptionUtil } from "../../../../lib-core/utils/encryption.util";
 import { generateResetToken } from "../../../../lib-core/utils/token-generator.util";
 import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
 import { IOAuthClientRepository } from "../../domain/repositories/o-auth-client.repository";
 import { OAuthClientModel } from "../../domain/models/o-auth-client.model";
 import { PersonClientFeign } from "../../../../lib-client-feign/users/person.client";
-import { PersonEntity } from "../../../users/person/domain/entities/person.entity";
+import { PersonEntity } from "../../../../lib-entities/users/person.entity";
 import { RedisConfig } from "../../../../config/redis";
 import { RoleClientFeign } from "../../../../lib-client-feign/security/role.client";
 import { sendPasswordResetEmail } from "../../../../lib-core/utils/mailer.util";

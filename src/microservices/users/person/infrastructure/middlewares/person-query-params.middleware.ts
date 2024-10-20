@@ -1,7 +1,7 @@
 import { Op } from "sequelize";
 
-import { QueryParams } from "../../../../../lib-entities/query-params.entity";
-import { PersonListParams } from "../../domain/entities/person-qlist.entity";
+import { QueryParams } from "../../../../../lib-entities/core/query-params.entity";
+import { PersonListParams } from "../../../../../lib-entities/users/person-qlist.entity";
 
 export function buildPersonListQueryParams(data: PersonListParams): QueryParams {
 

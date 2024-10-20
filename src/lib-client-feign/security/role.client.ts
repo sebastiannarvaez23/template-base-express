@@ -1,5 +1,5 @@
 import { HttpError } from "../../api-gateway/domain/entities/error.entity";
-import { RoleEntity } from "../../microservices/security/role/domain/entities/role.entity";
+import { RoleEntity } from "../../lib-entities/security/role.entity";
 
 import { ClientFeignConfig } from "../config";
 

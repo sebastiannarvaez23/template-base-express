@@ -1,6 +1,6 @@
 import { BaseValidator } from "../../../../../lib-core/middlewares/validators/validation.middleware";
 import { isRequired, isString, maxLength, isNumericString } from "../../../../../lib-core/middlewares/validators/validation.type";
-import { ServiceEntity } from "../../domain/entities/service.entity";
+import { ServiceEntity } from "../../../../../lib-entities/security/service.entity";
 
 export class ServiceEditValidator extends BaseValidator<ServiceEntity> {
     constructor() {

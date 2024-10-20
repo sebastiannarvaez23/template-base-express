@@ -1,7 +1,7 @@
-import { AuthEntity } from "../../microservices/auth/domain/entities/auth.entity";
+import { AuthEntity } from "../../lib-entities/auth/auth.entity";
 import { ClientFeignConfig } from "../config";
 import { HttpError } from "../../api-gateway/domain/entities/error.entity";
-import { UserEntity } from "../../microservices/users/user/domain/entities/user.entity";
+import { UserEntity } from "../../lib-entities/users/user.entity";
 
 export class UserClientFeign extends ClientFeignConfig {
 

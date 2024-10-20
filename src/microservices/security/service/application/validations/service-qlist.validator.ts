@@ -1,6 +1,6 @@
 import { BaseValidator } from "../../../../../lib-core/middlewares/validators/validation.middleware";
 import { isNumericString, isString, maxLength, minLength } from "../../../../../lib-core/middlewares/validators/validation.type";
-import { ServiceListParams } from "../../domain/entities/rol-qlist.entity";
+import { ServiceListParams } from "../../../../../lib-entities/security/service-qlist.entity";
 
 export class ServiceListValidator extends BaseValidator<ServiceListParams> {
     constructor() {

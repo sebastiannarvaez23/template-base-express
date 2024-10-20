@@ -1,7 +1,7 @@
 import { Op } from "sequelize";
 
-import { QueryParams } from "../../../../../lib-entities/query-params.entity";
-import { ServiceListParams } from "../../../../security/service/domain/entities/rol-qlist.entity";
+import { QueryParams } from "../../../../../lib-entities/core/query-params.entity";
+import { ServiceListParams } from "../../../../../lib-entities/security/service-qlist.entity";
 
 export function buildServiceListQueryParams(data: ServiceListParams): QueryParams {
 

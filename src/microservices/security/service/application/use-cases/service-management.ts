@@ -1,5 +1,5 @@
-import { QueryParams } from "../../../../../lib-entities/query-params.entity";
-import { ServiceEntity } from "../../domain/entities/service.entity";
+import { QueryParams } from "../../../../../lib-entities/core/query-params.entity";
+import { ServiceEntity } from "../../../../../lib-entities/security/service.entity";
 import { ServiceModel } from "../../domain/models/service.model";
 import { ServicesRepository } from "../../domain/repositories/service.repository";
 

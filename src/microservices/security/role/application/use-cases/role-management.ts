@@ -1,5 +1,5 @@
-import { QueryParams } from "../../../../../lib-entities/query-params.entity";
-import { RoleEntity } from "../../domain/entities/role.entity";
+import { QueryParams } from "../../../../../lib-entities/core/query-params.entity";
+import { RoleEntity } from "../../../../../lib-entities/security/role.entity";
 import { RoleModel } from "../../domain/models/role.model";
 import { RolesRepository } from "../../domain/repositories/roles.repository";
 

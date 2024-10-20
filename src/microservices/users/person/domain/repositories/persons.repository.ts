@@ -1,6 +1,6 @@
-import { PersonEntity } from "../entities/person.entity";
+import { PersonEntity } from "../../../../../lib-entities/users/person.entity";
 import { PersonModel } from "../models/person.model";
-import { QueryParams } from '../../../../../lib-entities/query-params.entity';
+import { QueryParams } from '../../../../../lib-entities/core/query-params.entity';
 
 export interface PersonsRepository {
     getList(queryParams: QueryParams): Promise<{ rows: PersonModel[]; count: number; }>;

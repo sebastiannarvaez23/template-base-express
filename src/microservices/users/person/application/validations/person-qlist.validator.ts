@@ -1,6 +1,6 @@
 import { BaseValidator } from "../../../../../lib-core/middlewares/validators/validation.middleware";
 import { isEmail, isNumericString, isString, maxLength, minLength } from "../../../../../lib-core/middlewares/validators/validation.type";
-import { PersonListParams } from "../../domain/entities/person-qlist.entity";
+import { PersonListParams } from "../../../../../lib-entities/users/person-qlist.entity";
 
 export class PersonListValidator extends BaseValidator<PersonListParams> {
     constructor() {

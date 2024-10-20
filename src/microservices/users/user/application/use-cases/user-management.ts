@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 
 import { EncryptionUtil } from "../../../../../lib-core/utils/encryption.util";
-import { UserEntity } from "../../domain/entities/user.entity";
+import { UserEntity } from "../../../../../lib-entities/users/user.entity";
 import { UsersRepository } from "../../domain/repositories/users.repository";
 import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
 

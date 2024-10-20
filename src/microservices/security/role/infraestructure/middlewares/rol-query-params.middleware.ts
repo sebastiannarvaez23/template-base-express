@@ -1,7 +1,7 @@
 import { Op } from "sequelize";
 
-import { QueryParams } from "../../../../../lib-entities/query-params.entity";
-import { RolListParams } from "../../domain/entities/rol-qlist.entity";
+import { QueryParams } from "../../../../../lib-entities/core/query-params.entity";
+import { RolListParams } from "../../../../../lib-entities/security/role-qlist.entity";
 
 export function buildRolListQueryParams(data: RolListParams): QueryParams {
 

@@ -1,5 +1,5 @@
-import { QueryParams } from "../../../../../lib-entities/query-params.entity";
-import { PersonEntity } from "../../domain/entities/person.entity";
+import { QueryParams } from "../../../../../lib-entities/core/query-params.entity";
+import { PersonEntity } from "../../../../../lib-entities/users/person.entity";
 import { PersonsRepository } from "../../domain/repositories/persons.repository";
 import { PersonModel } from "../../domain/models/person.model";
 
