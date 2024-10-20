@@ -7,12 +7,12 @@ import { PersonManagement } from "./person/application/use-cases/person-manageme
 import { PersonMiddleware } from "./person/infrastructure/middlewares/person.middleware";
 import { PersonsController } from "./person/infrastructure/api/persons.controller";
 import { PersonsRepositoryImpl } from "./person/infrastructure/repositories/persons.repository-impl";
-import { RedisConfig } from "../../config/redis";
+import { QueryParamsMiddleware } from "../../lib-core/middlewares/validators/validation-query-params.middleware";
+import { PersonSerialzerMiddleware } from "./person/infrastructure/middlewares/person-serializer.middleware";
 import { UserManagement } from "./user/application/use-cases/user-management";
 import { UserMiddleware } from "./user/infrastructure/middlewares/user.middleware";
 import { UsersController } from "./user/infrastructure/api/users.controller";
 import { UsersRepositoryImpl } from "./user/infrastructure/repositories/users.repository-impl";
-import { QueryParamsMiddleware } from "../../lib-core/middlewares/validators/validation-query-params.middleware";
 
 
 const encryptionService: EncryptionUtil = new EncryptionUtil();
@@ -33,6 +33,7 @@ export const authorizationMiddleware = new AuthorizationMiddleware();
 export const authMiddleware = new AuthMiddleware(authValidator);
 export const queryParamsMiddleware = new QueryParamsMiddleware();
 export const personMiddleware = new PersonMiddleware();
+export const personSerialzerMiddleware = new PersonSerialzerMiddleware();
 export const userMiddleware = new UserMiddleware();
 export const personController = new PersonsController(personManagement, handlerError);
 export const userController = new UsersController(userManagement, handlerError);

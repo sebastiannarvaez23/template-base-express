@@ -49,12 +49,11 @@ export class AuthManagement {
 
             const roleId = person.roleId!;
             const role = await this._roleClientFeign.getPersonById(roleId);
-
             const services = role!.services!.map((service: any) => service.code);
 
             const token = await tokenManager.generateToken({
                 sub: person.user.nickname!,
-                userId: person.user.id!,
+                id: person.user.id!,
                 role: role!.name!,
                 services: services,
             }, this._SECRET, Date.now() + this._SESION_SG_EXP * 1000);
@@ -73,7 +72,6 @@ export class AuthManagement {
             const token = authHeader.split(' ')[1];
             if (!token) throw new HttpError("000003");
             await tokenManager.revokeToken(nickname);
-
             return true;
         } catch (e) {
             throw e;

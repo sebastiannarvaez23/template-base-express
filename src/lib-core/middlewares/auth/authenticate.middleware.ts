@@ -32,25 +32,14 @@ export class AuthMiddleware {
 
     public authenticateToken = async (req: Request, res: Response, next: NextFunction) => {
         try {
+
             const authHeader = req.headers.authorization;
-            if (!authHeader) {
-                return next(new HttpError("000003"));
-            }
+            if (!authHeader) return next(new HttpError("000003"));
 
             const token = authHeader.split(" ")[1];
-            if (!token) {
-                return next(new HttpError("000003"));
-            }
+            if (!token) return next(new HttpError("000003"));
 
-            const payload = await tokenManager.verifyToken(token, this.secret);
-
-            if (req.body) req.body.createdBy = payload.userId;
-
-            if (payload.sub && payload.sub.startsWith("microservice_")) {
-                req.user = payload;
-                return next();
-            }
-            req.user = payload;
+            req.user = await tokenManager.verifyToken(token, this.secret);
             next();
         } catch (err: any) {
             console.error({ err });

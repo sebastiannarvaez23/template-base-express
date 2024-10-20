@@ -5,7 +5,7 @@ import { HttpError } from "../../api-gateway/domain/entities/error.entity";
 
 interface TokenPayload {
     sub: string;
-    userId: string;
+    id: string;
     role: string;
     services: string[];
 }
