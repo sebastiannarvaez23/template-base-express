@@ -1,6 +1,6 @@
 import { Optional, UniqueConstraintError } from "sequelize";
 
-import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
+import { HttpError } from "../../../../../lib-core/utils/error.util";
 import { QueryParams } from "../../../../../lib-entities/core/query-params.entity";
 import { RoleEntity } from "../../../../../lib-entities/security/role.entity";
 import { RoleModel } from "../../domain/models/role.model";

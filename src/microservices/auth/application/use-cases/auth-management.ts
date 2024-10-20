@@ -3,7 +3,7 @@ import { config } from "dotenv";
 import { AuthEntity } from "../../../../lib-entities/auth/auth.entity";
 import { EncryptionUtil } from "../../../../lib-core/utils/encryption.util";
 import { generateResetToken } from "../../../../lib-core/utils/token-generator.util";
-import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
+import { HttpError } from "../../../../lib-core/utils/error.util";
 import { IOAuthClientRepository } from "../../domain/repositories/o-auth-client.repository";
 import { OAuthClientModel } from "../../domain/models/o-auth-client.model";
 import { PersonClientFeign } from "../../../../lib-client-feign/users/person.client";

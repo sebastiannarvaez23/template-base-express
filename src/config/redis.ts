@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 import { createClient } from "redis";
 
-import { HttpError } from "../api-gateway/domain/entities/error.entity";
+import { HttpError } from "../lib-core/utils/error.util";
 
 config();
 

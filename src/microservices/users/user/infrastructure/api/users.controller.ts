@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { ErrorHandlerUtil } from "../../../../../lib-core/utils/error-handler.util";
-import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
+import { HttpError } from "../../../../../lib-core/utils/error.util";
 import { UserManagement } from "../../application/use-cases/user-management";
 
 export class UsersController {

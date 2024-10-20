@@ -3,7 +3,7 @@ import { config } from "dotenv";
 import { EncryptionUtil } from "../../../../../lib-core/utils/encryption.util";
 import { UserEntity } from "../../../../../lib-entities/users/user.entity";
 import { UsersRepository } from "../../domain/repositories/users.repository";
-import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
+import { HttpError } from "../../../../../lib-core/utils/error.util";
 
 config();
 

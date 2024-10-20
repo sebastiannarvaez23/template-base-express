@@ -1,7 +1,7 @@
 import cors from "cors";
 import express, { Application, Request, Response, NextFunction } from "express";
 
-import { RouteGroup } from "../../domain/entities/route-group.entity";
+import { RouteGroup } from "../../../lib-entities/gateway/route-group.entity";
 import apiGatewayRoutes from "./api-gateway.routes";
 import authRoutes from "../../../microservices/auth/infraestructure/api/auth.routes";
 import personsRoutes from "../../../microservices/users/person/infrastructure/api/persons.routes";

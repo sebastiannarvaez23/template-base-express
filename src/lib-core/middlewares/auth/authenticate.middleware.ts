@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
-import { AuthValidator } from "../../../microservices/auth/application/validations/auth.validator";
-import { HttpError } from "../../../api-gateway/domain/entities/error.entity";
+import { AuthValidator } from "../validators/auth.validator";
+import { HttpError } from "../../utils/error.util";
 import { validationMiddleware } from "../validators/validation.middleware";
-import { tokenManager } from "../../../microservices/auth/dependencies";
+import { TokenManager } from "../../utils/token-manager.util";
 
 declare global {
     namespace Express {
@@ -18,12 +18,15 @@ export class AuthMiddleware {
 
     private secret: string;
     private authValidator: AuthValidator;
+    private tokenManager: TokenManager;
 
     constructor(
-        _authValidator: AuthValidator
+        _authValidator: AuthValidator,
+        _tokenManager: TokenManager
     ) {
         this.secret = process.env.SECRET_KEY!;
         this.authValidator = _authValidator;
+        this.tokenManager = _tokenManager;
     }
 
     public getValidateAuth() {
@@ -39,7 +42,7 @@ export class AuthMiddleware {
             const token = authHeader.split(" ")[1];
             if (!token) return next(new HttpError("000003"));
 
-            req.user = await tokenManager.verifyToken(token, this.secret);
+            req.user = await this.tokenManager.verifyToken(token, this.secret);
             next();
         } catch (err: any) {
             console.error({ err });

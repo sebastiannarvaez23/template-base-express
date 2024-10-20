@@ -1,6 +1,6 @@
 import { ForeignKeyConstraintError, Optional, UniqueConstraintError } from "sequelize";
 
-import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
+import { HttpError } from "../../../../../lib-core/utils/error.util";
 import { PersonEntity } from "../../../../../lib-entities/users/person.entity";
 import { PersonModel } from "../../domain/models/person.model";
 import { PersonsRepository } from "../../domain/repositories/persons.repository";

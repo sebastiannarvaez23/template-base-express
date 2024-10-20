@@ -1,5 +1,5 @@
 import { RoleEntity } from "../security/role.entity";
-import { UserEntity } from "../../microservices/users/user/domain/entities/user.entity";
+import { UserEntity } from "./user.entity";
 
 export interface PersonEntity {
     id?: string;

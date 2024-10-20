@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { ErrorHandlerUtil } from "../../../../../lib-core/utils/error-handler.util";
-import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
+import { HttpError } from "../../../../../lib-core/utils/error.util";
 import { PersonManagement } from "../../application/use-cases/person-management";
 import { QueryParams } from "../../../../../lib-entities/core/query-params.entity";
 

@@ -1,4 +1,4 @@
-import { HttpError } from "../../api-gateway/domain/entities/error.entity";
+import { HttpError } from "../../lib-core/utils/error.util";
 import { RoleEntity } from "../../lib-entities/security/role.entity";
 
 import { ClientFeignConfig } from "../config";

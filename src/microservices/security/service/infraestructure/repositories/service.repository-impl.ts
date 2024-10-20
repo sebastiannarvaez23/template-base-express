@@ -1,6 +1,6 @@
 import { Optional, UniqueConstraintError } from "sequelize";
 
-import { HttpError } from "../../../../../api-gateway/domain/entities/error.entity";
+import { HttpError } from "../../../../../lib-core/utils/error.util";
 import { QueryParams } from "../../../../../lib-entities/core/query-params.entity";
 import { ServiceEntity } from "../../../../../lib-entities/security/service.entity";
 import { ServiceModel } from "../../domain/models/service.model";

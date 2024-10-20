@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { AuthManagement } from "../../application/use-cases/auth-management";
 import { AuthMiddleware } from "../../../../lib-core/middlewares/auth/authenticate.middleware";
 import { ErrorHandlerUtil } from "../../../../lib-core/utils/error-handler.util";
-import { HttpError } from "../../../../api-gateway/domain/entities/error.entity";
+import { HttpError } from "../../../../lib-core/utils/error.util";
 
 export class AuthController {
 

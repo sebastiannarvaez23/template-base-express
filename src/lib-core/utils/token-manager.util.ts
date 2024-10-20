@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 import { RedisConfig } from "../../config/redis";
-import { HttpError } from "../../api-gateway/domain/entities/error.entity";
+import { HttpError } from "./error.util";
 
 interface TokenPayload {
     sub: string;
