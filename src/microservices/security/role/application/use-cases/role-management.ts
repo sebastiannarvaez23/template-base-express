@@ -4,6 +4,7 @@ import { RoleModel } from "../../domain/models/role.model";
 import { RolesRepository } from "../../domain/repositories/roles.repository";
 
 export class RoleManagement {
+
     constructor(
         private readonly _rolesRepository: RolesRepository
     ) { }

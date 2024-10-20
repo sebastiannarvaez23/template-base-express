@@ -30,7 +30,7 @@ export class AuthManagement {
         private readonly _roleClientFeign: RoleClientFeign,
     ) {
         this._SECRET = process.env.SECRET_KEY!;
-        this._SESION_SG_EXP = Number(process.env.SESION_SG_EXP!); // En segundos
+        this._SESION_SG_EXP = Number(process.env.SESION_SG_EXP!);
     }
 
     async authentication(credentials: AuthEntity): Promise<string | undefined> {

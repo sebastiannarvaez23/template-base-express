@@ -4,6 +4,7 @@ import { ServiceModel } from "../../domain/models/service.model";
 import { ServicesRepository } from "../../domain/repositories/service.repository";
 
 export class ServiceManagement {
+
     constructor(
         private readonly _servicesRepository: ServicesRepository
     ) { }
