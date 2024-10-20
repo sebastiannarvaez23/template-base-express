@@ -272,22 +272,16 @@ module.exports = {
         id: '73ec884e-b96f-4181-8b90-8510dae8db44',
         name: 'auth',
         secret: encryptedSecretAuth,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         id: '929b2f4a-f065-4431-b5a2-a36f3148b57e',
         name: 'security',
         secret: encryptedSecretSecurity,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         id: '69eb5fc0-6bf1-446d-9dc2-ddd7ed2d2026',
         name: 'users',
         secret: encryptedSecretUsers,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
     ]);
 
