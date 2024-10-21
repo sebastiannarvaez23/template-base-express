@@ -16,7 +16,12 @@ export class ClientFeignConfig {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
 
-        this.httpClient = this.getHttpClient();
+        this.httpClient = axios.create({
+            timeout: 5000,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
         this.httpClient.interceptors.request.use(
             async config => {
@@ -39,9 +44,15 @@ export class ClientFeignConfig {
 
     async getToken() {
         try {
-            const tokenClient = this.getHttpClient();
+            const tokenClient = axios.create({
+                baseURL: this.baseURL,
+                timeout: 5000,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
             const tokenE = await tokenClient.post<{ token: string }>(
-                `${this.baseURL}/auth/token-oauth`,
+                `/auth/token-oauth`,
                 { client_id: this.clientId, client_secret: this.clientSecret }
             );
             this.token = tokenE.data.token;
@@ -52,12 +63,7 @@ export class ClientFeignConfig {
     }
 
     public getHttpClient(): AxiosInstance {
-        return axios.create({
-            timeout: 5000,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        return this.httpClient;
     }
 
     public getBaseUrl(): string {

@@ -18,6 +18,16 @@ export abstract class BaseValidator<T> {
         const errors: Record<string, string[] | string> = {};
         let valid = true;
 
+        // Check for unexpected fields
+        const unexpectedFields = Object.keys(data as object).filter(field => !this.rules[field]);
+        if (unexpectedFields.length > 0) {
+            unexpectedFields.forEach(field => {
+                errors[field] = `The parameter '${field}' was not expected`;
+            });
+            valid = false;
+        }
+
+        // Validate expected fields
         for (const [field, validators] of Object.entries(this.rules)) {
             const value = (data as any)[field];
             errors["internalCode"] = "000000";
@@ -43,6 +53,7 @@ export abstract class BaseValidator<T> {
                 delete errors[field];
             }
         }
+
         return { valid, errors };
     }
 }

@@ -17,7 +17,7 @@ export class HttpError extends Error {
     }
 
     static findErrorDetails(internalCode: string) {
-        const errorsDir = path.resolve(__dirname, '../../../resources/errors');
+        const errorsDir = path.resolve(__dirname, '../../resources/errors');
         const files = fs.readdirSync(errorsDir);
         let errorDetails = null;
 
