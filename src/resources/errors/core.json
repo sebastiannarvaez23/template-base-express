@@ -98,5 +98,10 @@
         "serverStatusCode": 401,
         "messageClient": "invalid Client.",
         "messageLog": "invalid Client."
+    },
+    "000021": {
+        "serverStatusCode": 400,
+        "messageClient": "The parameter was not expected.",
+        "messageLog": "The parameter was not expected."
     }
 }

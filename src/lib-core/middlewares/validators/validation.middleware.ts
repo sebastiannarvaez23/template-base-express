@@ -30,7 +30,7 @@ export abstract class BaseValidator<T> {
         // Validate expected fields
         for (const [field, validators] of Object.entries(this.rules)) {
             const value = (data as any)[field];
-            errors["internalCode"] = "000000";
+            errors["internalCode"] = "000021";
             errors[field] = [];
 
             if (value === undefined) {
