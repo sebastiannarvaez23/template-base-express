@@ -1,4 +1,4 @@
-import { UserEntity } from "../entities/user.entity";
+import { UserEntity } from "../../../../../lib-entities/users/user.entity";
 import { UserModel } from "../models/user.model";
 
 export interface UsersRepository {
