@@ -1,7 +1,5 @@
-/models/
-postgres/
-redis/
-seeders/
+src2/
+minio/
 
 # Logs
 logs
@@ -133,3 +131,4 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+.vercel

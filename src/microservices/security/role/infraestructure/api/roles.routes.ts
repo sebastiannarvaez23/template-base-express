@@ -1,8 +1,8 @@
 import express from "express";
 
 import { buildRolListQueryParams } from "../middlewares/rol-query-params.middleware";
-import { roleController, roleMiddleware, authMiddleware, authorizationMiddleware, queryParamsMiddleware, rolSerialzerMiddleware } from "../../../dependencies";
-import { RolListValidator } from "../../application/validations/rol-qlist.validator";
+import { roleController, roleMiddleware, authMiddleware, authorizationMiddleware, queryParamsMiddleware, roleSerialzerMiddleware } from "../../../dependencies";
+import { RolListValidator } from "../../application/validations/role-qlist.validator";
 
 const rolesRoutes = express.Router();
 
@@ -21,14 +21,14 @@ rolesRoutes.post("/",
     authMiddleware.authenticateToken,
     roleMiddleware.validateAdd.bind(roleMiddleware),
     authorizationMiddleware.checkAccess('0303'),
-    rolSerialzerMiddleware.add(),
+    roleSerialzerMiddleware.add(),
     roleController.add.bind(roleController));
 
 rolesRoutes.put("/:id",
     authMiddleware.authenticateToken,
     authorizationMiddleware.checkAccess('0304'),
     roleMiddleware.validateEdit.bind(roleMiddleware),
-    rolSerialzerMiddleware.edit(),
+    roleSerialzerMiddleware.edit(),
     roleController.edit.bind(roleController));
 
 rolesRoutes.delete("/:id",

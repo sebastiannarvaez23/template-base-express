@@ -29,7 +29,7 @@ export class TokenManager {
         return TokenManager.instance;
     }
 
-    public async generateToken(payload: TokenPayload, secret: string, expiresIn: string | number): Promise<string> {
+    public async generateToken(payload: TokenPayload, secret: string, expiresIn: number): Promise<string> {
         try {
             const token = jwt.sign(payload, secret, { expiresIn });
             await this.redisConfig.storeTokenInRedis(payload.sub, token);

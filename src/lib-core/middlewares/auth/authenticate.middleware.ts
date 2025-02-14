@@ -3,7 +3,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 
 import { AuthValidator } from "../validators/auth.validator";
 import { HttpError } from "../../utils/error.util";
-import { validationMiddleware } from "../validators/validation.middleware";
+import { validationDataMiddleware } from "../validators/validation.middleware";
 import { TokenManager } from "../../utils/token-manager.util";
 
 declare global {
@@ -30,7 +30,7 @@ export class AuthMiddleware {
     }
 
     public getValidateAuth() {
-        return validationMiddleware(this.authValidator);
+        return validationDataMiddleware(this.authValidator);
     }
 
     public authenticateToken = async (req: Request, res: Response, next: NextFunction) => {

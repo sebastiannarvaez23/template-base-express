@@ -5,7 +5,7 @@ import { EncryptionUtil } from "../../../../lib-core/utils/encryption.util";
 import { generateResetToken } from "../../../../lib-core/utils/token-generator.util";
 import { HttpError } from "../../../../lib-core/utils/error.util";
 import { IOAuthClientRepository } from "../../domain/repositories/o-auth-client.repository";
-import { OAuthClientModel } from "../../domain/models/o-auth-client.model";
+import { OAuthClientModel } from "../../../../lib-models/auth/o-auth-client.model";
 import { PersonClientFeign } from "../../../../lib-client-feign/users/person.client";
 import { PersonEntity } from "../../../../lib-entities/users/person.entity";
 import { RedisConfig } from "../../../../config/redis";

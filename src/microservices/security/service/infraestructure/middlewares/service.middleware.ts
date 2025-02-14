@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-import { validationMiddleware } from "../../../../../lib-core/middlewares/validators/validation.middleware";
+import { validationDataMiddleware } from "../../../../../lib-core/middlewares/validators/validation.middleware";
 import { ServiceAddValidator } from "../../application/validations/service-add.validator";
 import { ServiceEditValidator } from "../../application/validations/service-edit.validator";
 
@@ -10,10 +10,10 @@ const serviceEditValidator = new ServiceEditValidator();
 export class ServiceMiddleware {
 
     validateAdd(req: Request, res: Response, next: NextFunction): void {
-        validationMiddleware(serviceAddValidator)(req, res, next);
+        validationDataMiddleware(serviceAddValidator)(req, res, next);
     }
     validateEdit(req: Request, res: Response, next: NextFunction): void {
-        validationMiddleware(serviceEditValidator)(req, res, next);
+        validationDataMiddleware(serviceEditValidator)(req, res, next);
     }
 
 }

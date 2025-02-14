@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "root",
-    "database": "tebaex",
+    "database": "dbdv",
     "host": "127.0.0.1",
     "port": 7894,
     "dialect": "postgres"
@@ -10,7 +10,7 @@
   "test": {
     "username": "root",
     "password": "root",
-    "database": "tebaex",
+    "database": "dbdv",
     "host": "127.0.0.1",
     "port": 7894,
     "dialect": "postgres"
@@ -18,7 +18,7 @@
   "production": {
     "username": "root",
     "password": "root",
-    "database": "tebaex",
+    "database": "dbdv",
     "host": "127.0.0.1",
     "port": 7894,
     "dialect": "postgres"

@@ -1,6 +1,6 @@
 import { QueryParams } from "../../../../../lib-entities/core/query-params.entity";
 import { ServiceEntity } from "../../../../../lib-entities/security/service.entity";
-import { ServiceModel } from "../../domain/models/service.model";
+import { ServiceModel } from "../../../../../lib-models/security/service.model";
 import { ServicesRepository } from "../../domain/repositories/service.repository";
 
 export class ServiceManagement {
@@ -25,17 +25,17 @@ export class ServiceManagement {
         }
     }
 
-    async add(person: ServiceEntity): Promise<ServiceEntity | null> {
+    async add(service: ServiceEntity): Promise<ServiceEntity | null> {
         try {
-            return await this._servicesRepository.add(person);
+            return await this._servicesRepository.add(service);
         } catch (e) {
             throw e;
         }
     }
 
-    async edit(id: string, person: ServiceEntity): Promise<ServiceEntity | null> {
+    async edit(id: string, service: ServiceEntity): Promise<ServiceEntity | null> {
         try {
-            const resultService = await this._servicesRepository.edit(id, person);
+            const resultService = await this._servicesRepository.edit(id, service);
             return resultService;
         } catch (e) {
             throw e;

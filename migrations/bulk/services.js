@@ -170,6 +170,6 @@ module.exports.bulkInsertServices = async (queryInterface) => {
             updated_by: null,
             created_at: new Date(),
             updated_at: new Date(),
-        },
+        }
     ]);
 }

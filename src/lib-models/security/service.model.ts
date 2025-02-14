@@ -1,7 +1,7 @@
 import { BelongsToMany, Column, CreatedAt, DataType, DeletedAt, Model, Table, UpdatedAt } from "sequelize-typescript";
 
-import { RoleModel } from "../../../role/domain/models/role.model";
-import { RoleServiceModel } from "../../../role/domain/models/role-service.model";
+import { RoleModel } from "./role.model";
+import { RoleServiceModel } from "./role-service.model";
 
 @Table({
     timestamps: true,

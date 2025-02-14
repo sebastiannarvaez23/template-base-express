@@ -58,9 +58,24 @@ export abstract class BaseValidator<T> {
     }
 }
 
-export const validationMiddleware = <T>(validator: BaseValidator<T>) => {
+export const validationDataMiddleware = <T>(validator: BaseValidator<T>) => {
     return (req: Request, res: Response, next: NextFunction) => {
         const { valid, errors } = validator.validate(req.body);
+        if (!valid) {
+            return res.status(400).json({ errors });
+        }
+        next();
+    };
+};
+
+export const validationDataFileMiddleware = <T>(validator: BaseValidator<T>) => {
+    return (req: any, res: Response, next: NextFunction) => {
+        const data = {
+            ...req.body,
+            image: req.file,
+        };
+
+        const { valid, errors } = validator.validate(data);
         if (!valid) {
             return res.status(400).json({ errors });
         }

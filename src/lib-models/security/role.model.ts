@@ -1,6 +1,6 @@
 import { BelongsToMany, Column, CreatedAt, DataType, DeletedAt, Model, Table, UpdatedAt } from "sequelize-typescript";
 
-import { ServiceModel } from "../../../service/domain/models/service.model";
+import { ServiceModel } from "./service.model";
 import { RoleServiceModel } from "./role-service.model";
 
 @Table({

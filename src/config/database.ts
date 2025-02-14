@@ -2,12 +2,12 @@ import { config } from "dotenv";
 import { Dialect } from "sequelize";
 import { Sequelize, SequelizeOptions } from "sequelize-typescript";
 
-import { OAuthClientModel } from "../microservices/auth/domain/models/o-auth-client.model";
-import { PersonModel } from "../microservices/users/person/domain/models/person.model";
-import { RoleModel } from "../microservices/security/role/domain/models/role.model";
-import { RoleServiceModel } from "../microservices/security/role/domain/models/role-service.model";
-import { ServiceModel } from "../microservices/security/service/domain/models/service.model";
-import { UserModel } from "../microservices/users/user/domain/models/user.model";
+import { OAuthClientModel } from "../lib-models/auth/o-auth-client.model";
+import { PersonModel } from "../lib-models/user/person.model";
+import { RoleModel } from "../lib-models/security/role.model";
+import { RoleServiceModel } from "../lib-models/security/role-service.model";
+import { ServiceModel } from "../lib-models/security/service.model";
+import { UserModel } from '../lib-models/user/user.model';
 
 config();
 
@@ -37,7 +37,6 @@ export class DatabaseConfig {
                 RoleServiceModel
             ],
         };
-
         this.sequelize = new Sequelize(name, user, password, databaseOptions);
     }
 

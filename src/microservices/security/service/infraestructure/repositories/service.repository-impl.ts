@@ -3,7 +3,7 @@ import { Optional, UniqueConstraintError } from "sequelize";
 import { HttpError } from "../../../../../lib-core/utils/error.util";
 import { QueryParams } from "../../../../../lib-entities/core/query-params.entity";
 import { ServiceEntity } from "../../../../../lib-entities/security/service.entity";
-import { ServiceModel } from "../../domain/models/service.model";
+import { ServiceModel } from "../../../../../lib-models/security/service.model";
 import { ServicesRepository } from "../../domain/repositories/service.repository";
 
 export class ServicesRepositoryImpl implements ServicesRepository {

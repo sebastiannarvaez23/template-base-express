@@ -7,14 +7,10 @@ import { QueryParams } from "../../../../../lib-entities/core/query-params.entit
 
 export class RolesController {
 
-    private readonly _LIST_PAGINATION_LIMIT: number;
-
     constructor(
         private readonly _roleManagement: RoleManagement,
         private readonly _handlerError: ErrorHandlerUtil
-    ) {
-        this._LIST_PAGINATION_LIMIT = Number(process.env.LIST_PAGINATION_LIMIT!);
-    }
+    ) { }
 
     async getList(req: Request, res: Response) {
         try {

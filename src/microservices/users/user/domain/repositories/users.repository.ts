@@ -1,5 +1,5 @@
 import { UserEntity } from "../../../../../lib-entities/users/user.entity";
-import { UserModel } from "../models/user.model";
+import { UserModel } from "../../../../../lib-models/user/user.model";
 
 export interface UsersRepository {
     getUserPasswordByNickname(nickname: string): Promise<UserModel | null>;

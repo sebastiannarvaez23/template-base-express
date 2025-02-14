@@ -2,10 +2,10 @@ import { ForeignKeyConstraintError, Optional, UniqueConstraintError } from "sequ
 
 import { HttpError } from "../../../../../lib-core/utils/error.util";
 import { PersonEntity } from "../../../../../lib-entities/users/person.entity";
-import { PersonModel } from "../../domain/models/person.model";
+import { PersonModel } from "../../../../../lib-models/user/person.model";
 import { PersonsRepository } from "../../domain/repositories/persons.repository";
 import { QueryParams } from "../../../../../lib-entities/core/query-params.entity";
-import { UserModel } from "../../../user/domain/models/user.model";
+import { UserModel } from "../../../../../lib-models/user/user.model";
 
 export class PersonsRepositoryImpl implements PersonsRepository {
 

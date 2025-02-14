@@ -7,8 +7,8 @@ import { RedisConfig } from "../../config/redis";
 import { RoleManagement } from "./role/application/use-cases/role-management";
 import { RoleMiddleware } from "./role/infraestructure/middlewares/role.middleware";
 import { RolesController } from "./role/infraestructure/api/roles.controller";
+import { RoleSerializerMiddleware } from "./role/infraestructure/middlewares/rol-serializer.middleware";
 import { RolesRepositoryImpl } from "./role/infraestructure/repositories/role.repository-impl";
-import { RolSerialzerMiddleware } from "./role/infraestructure/middlewares/rol-serializer.middleware";
 import { ServiceManagement } from "./service/application/use-cases/service-management";
 import { ServiceMiddleware } from "./service/infraestructure/middlewares/service.middleware";
 import { ServicesController } from "./service/infraestructure/api/service.controller";
@@ -32,7 +32,7 @@ const serviceManagement = new ServiceManagement(servicesRepository);
 // dependencies
 
 export const tokenManager = TokenManager.getInstance(redisConfig);
-export const rolSerialzerMiddleware = new RolSerialzerMiddleware();
+export const roleSerialzerMiddleware = new RoleSerializerMiddleware();
 export const serviceSerialzerMiddleware = new ServiceSerialzerMiddleware();
 export const queryParamsMiddleware = new QueryParamsMiddleware();
 export const authorizationMiddleware = new AuthorizationMiddleware();

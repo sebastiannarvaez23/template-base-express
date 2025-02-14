@@ -1,6 +1,6 @@
 import { Column, CreatedAt, DataType, DeletedAt, Model, Table, UpdatedAt, HasOne } from "sequelize-typescript";
 
-import { PersonModel } from "../../../person/domain/models/person.model";
+import { PersonModel } from "./person.model";
 
 @Table({
   timestamps: true,

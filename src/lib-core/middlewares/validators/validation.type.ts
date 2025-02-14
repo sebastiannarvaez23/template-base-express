@@ -1,6 +1,13 @@
 export const isRequired = (value: any): boolean | string =>
     value !== null && value !== undefined ? true : 'This field is required.';
 
+export const isFile = (value: any): boolean | string => {
+    if (value && typeof value === 'object' && value.buffer && typeof value.originalname === 'string') {
+        return true;
+    }
+    return 'Must be a valid file.';
+};
+
 export const isString = (value: any): boolean | string => {
     return typeof value === 'string' ? true : 'Must be a string.';
 };
